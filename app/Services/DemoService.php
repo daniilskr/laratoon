@@ -45,7 +45,8 @@ class DemoService
         $this->allowToIssueUsedDemoUsers();
     }
 
-    protected function belongsToDemoUsersScope($query) {
+    protected function belongsToDemoUsersScope($query)
+    {
         return $query->withoutGlobalScope(DoesNotBelongToOtherDemoUsersScope::class)
             ->whereHas(
                 'user',
@@ -58,9 +59,9 @@ class DemoService
         Likeable::whereHasMorph(
             'owner',
             Comment::class,
-            fn ($qC) => $this->belongsToDemoUsersScope($qC) 
+            fn ($qC) => $this->belongsToDemoUsersScope($qC)
         )->delete();
-        
+
         $this->belongsToDemoUsersScope(Comment::query())->delete();
 
         // Update cache

@@ -33,7 +33,7 @@ class ComicUserListEntryResource extends JsonResource
                 'title' => $this->comic->title,
                 'slug' => $this->comic->slug,
                 'episodesLeft' => ($this->comic->latestEpisode?->number ?? 0) - ($this->comic->cacheLatestViewedEpisodeByRequestUser?->episode?->number ?? 0),
-                
+
                 'cachedLatestViewedEpisode' => new EpisodeResource($this->comic->cacheLatestViewedEpisodeByRequestUser?->episode),
                 'comicPoster' => new ImageResource($this->comic->comicPoster->image),
                 'author' => [

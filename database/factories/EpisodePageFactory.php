@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Episode;
-use App\Models\EpisodePage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

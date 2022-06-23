@@ -226,7 +226,7 @@ class DatabaseSeeder extends Seeder
                                 ->has(
                                     Image::factory()
                                         ->state([
-                                            'medium' => $posters[(($iteration - 1) % count($posters))]
+                                            'medium' => $posters[(($iteration - 1) % count($posters))],
                                         ])
                                 );
 
@@ -254,10 +254,11 @@ class DatabaseSeeder extends Seeder
 
         EpisodePage::factory()
                 ->for($episode)
-                ->has(Image::factory()
+                ->has(
+                    Image::factory()
                     ->sequence(
                         ...collect($images)->map(fn ($i) => [
-                            'medium' => $i
+                            'medium' => $i,
                         ])
                     )
                 )

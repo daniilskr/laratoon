@@ -29,25 +29,25 @@ class CommentResource extends JsonResource
             'publishedAt' => $this->created_at,
             'text' => $this->comment_text,
             'rootChildCommentsCachedCount' => $this->root_child_comments_cached_count,
-            
+
             'author' => [
                 'id' => $this->user->id,
                 'fullName' => $this->user->name,
                 'avatar' => new ImageResource($this->user->userAvatar->image),
             ],
-            
+
             'likeable' => [
                 'id' => $this->likeable->id,
                 'likesCachedCount' => $this->likeable->likes_cached_count,
                 'isLikedByUser' => ! is_null($this->likeable->requestUserLike),
             ],
-            
+
             'commentable' => [
                 'id' => $this->commentable_id,
             ],
 
             'rootCommentId' => $this->root_comment_id,
-            'parentCommentId' => $this->parent_comment_id,    
+            'parentCommentId' => $this->parent_comment_id,
         ];
     }
 }

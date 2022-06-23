@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\Image;
 use App\Models\UserAvatar;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -22,7 +21,7 @@ class UserFactory extends Factory
                     ->has(
                         Image::factory()
                             ->sequence(fn () => [
-                                'medium' => 'images/character-poster-'.Arr::random([1, 2]).'.png'
+                                'medium' => 'images/character-poster-'.Arr::random([1, 2]).'.png',
                             ])
                     )
             );

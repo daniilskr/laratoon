@@ -7,7 +7,6 @@ use App\Models\ComicPoster;
 use App\Models\Image;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -33,7 +32,7 @@ class ComicFactory extends Factory
                     ->has(
                         Image::factory()
                             ->sequence(fn () => [
-                                'medium' => Arr::random($posters)
+                                'medium' => Arr::random($posters),
                             ])
                     )
             )
@@ -42,7 +41,7 @@ class ComicFactory extends Factory
                     ->has(
                         Image::factory()
                             ->sequence(fn () => [
-                                'medium' => Arr::random($headings)
+                                'medium' => Arr::random($headings),
                             ])
                     )
             );

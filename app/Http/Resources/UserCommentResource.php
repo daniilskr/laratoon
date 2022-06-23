@@ -45,7 +45,7 @@ class UserCommentResource extends JsonResource
             'publishedAt' => $this->created_at,
             'text' => $this->comment_text,
             'rootChildCommentsCachedCount' => $this->root_child_comments_cached_count,
-           
+
             'commentable' => [
                 'id' => $this->commentable->id,
                 'owner' => [
@@ -53,7 +53,7 @@ class UserCommentResource extends JsonResource
                     'label' => $this->getCommentableOwnerLabel($this->commentable->owner),
                 ],
             ],
-           
+
             'likeable' => [
                 'id' => $this->likeable->id,
                 'likesCachedCount' => $this->likeable->likes_cached_count,

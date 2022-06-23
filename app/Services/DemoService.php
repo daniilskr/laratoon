@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Comment;
+use App\Models\Likeable;
 use App\Models\User;
 use App\Scopes\DoesNotBelongToOtherDemoUsersScope;
 use Illuminate\Support\Facades\DB;
@@ -44,13 +45,23 @@ class DemoService
         $this->allowToIssueUsedDemoUsers();
     }
 
-    protected function cleanUpComments()
-    {
-        Comment::withoutGlobalScope(DoesNotBelongToOtherDemoUsersScope::class)
+    protected function belongsToDemoUsersScope($query) {
+        return $query->withoutGlobalScope(DoesNotBelongToOtherDemoUsersScope::class)
             ->whereHas(
                 'user',
                 fn ($qU) => $qU->whereBetween('id', $this->getDemoUserIdsRange())
-            )->delete();
+            );
+    }
+
+    protected function cleanUpComments()
+    {
+        Likeable::whereHasMorph(
+            'owner',
+            Comment::class,
+            fn ($qC) => $this->belongsToDemoUsersScope($qC) 
+        )->delete();
+        
+        $this->belongsToDemoUsersScope(Comment::query())->delete();
 
         // Update cache
         Comment::where('root_child_comments_cached_count', '>', 0)

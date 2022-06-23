@@ -21,7 +21,7 @@ class Episode extends Model implements HasCommentable, HasLikeable, HasViewable
 
     public function episodePoster()
     {
-        return $this->hasOne(EpisodePoster::class)->withDefault();
+        return $this->hasOne(EpisodePoster::class);
     }
 
     public function episodePages()

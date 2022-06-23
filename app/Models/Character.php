@@ -31,6 +31,6 @@ class Character extends Model implements HasCommentable, HasLikeable, HasViewabl
 
     public function characterPoster()
     {
-        return $this->hasOne(CharacterPoster::class)->withDefault();
+        return $this->hasOne(CharacterPoster::class);
     }
 }

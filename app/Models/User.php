@@ -57,6 +57,6 @@ class User extends Authenticatable
 
     public function userAvatar()
     {
-        return $this->hasOne(UserAvatar::class)->withDefault();
+        return $this->hasOne(UserAvatar::class);
     }
 }

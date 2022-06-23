@@ -2,8 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Image;
+use App\Models\UserAvatar;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -14,11 +16,16 @@ class UserFactory extends Factory
 {
     public function configure()
     {
-        return $this->afterCreating(function (User $user) {
-            $user->userAvatar->save();
-            $user->userAvatar->image->medium = 'images/character-poster-'.Arr::random([1, 2]).'.png';
-            $user->userAvatar->image->save();
-        });
+        return $this
+            ->has(
+                UserAvatar::factory()
+                    ->has(
+                        Image::factory()
+                            ->sequence(fn () => [
+                                'medium' => 'images/character-poster-'.Arr::random([1, 2]).'.png'
+                            ])
+                    )
+            );
     }
 
     /**

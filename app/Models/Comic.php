@@ -45,12 +45,12 @@ class Comic extends Model implements HasCommentable, HasLikeable
 
     public function comicPoster()
     {
-        return $this->hasOne(ComicPoster::class)->withDefault();
+        return $this->hasOne(ComicPoster::class);
     }
 
     public function comicHeaderBackground()
     {
-        return $this->hasOne(ComicHeaderBackground::class)->withDefault();
+        return $this->hasOne(ComicHeaderBackground::class);
     }
 
     public function comicTags()

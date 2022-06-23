@@ -6,12 +6,14 @@ use App\Enums\CharacterRoleType;
 use App\Models\Comic;
 use App\Models\Author;
 use App\Models\Character;
-use App\Models\CharacterRole as CharacterRole;
+use App\Models\CharacterRole;
 use App\Models\Episode;
 use App\Models\ComicTag;
 use App\Models\Comment;
 use App\Models\EpisodePage;
+use App\Models\EpisodePoster;
 use App\Models\Genre;
+use App\Models\Image;
 use App\Models\Like;
 use App\Models\Likeable;
 use App\Models\PublicationStatus;
@@ -22,7 +24,6 @@ use App\Services\DemoService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -44,8 +45,6 @@ class DatabaseSeeder extends Seeder
         $this->seedUsers();
         $this->seedComics();
         $this->seedViews();
-        // $this->seedComicDisplayableCollections();
-        // $this->seedComicUserLists();
         $this->seedComments();
         $this->seedLikes();
         // });
@@ -71,8 +70,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->command->line('Seeding authors');
 
-        Author::factory(20)
-                    ->create();
+        Author::factory(20)->create();
     }
 
     protected function seedComicTags()
@@ -91,7 +89,7 @@ class DatabaseSeeder extends Seeder
 
         ComicTag::factory()
                 ->count($tags->count())
-                ->state(new Sequence(...$tags))
+                ->sequence(...$tags->all())
                 ->create();
     }
 
@@ -111,7 +109,7 @@ class DatabaseSeeder extends Seeder
 
         Genre::factory()
                 ->count($genres->count())
-                ->state(new Sequence(...$genres))
+                ->sequence(...$genres)
                 ->create();
     }
 
@@ -119,20 +117,16 @@ class DatabaseSeeder extends Seeder
     {
         $this->command->line('Seeding publication statuses');
 
-        $publicationStatuses = [
+        $statuses = collect([
             'publishing',
             'finished',
             'on hiatus',
             'discounted',
-        ];
-
-        $publicationStatuses = collect($publicationStatuses)->map(function ($publicationStatus) {
-            return ['name' => $publicationStatus];
-        });
+        ])->map(fn ($status) => ['name' => $status]);
 
         PublicationStatus::factory()
-                ->count($publicationStatuses->count())
-                ->state(new Sequence(...$publicationStatuses))
+                ->count($statuses->count())
+                ->sequence(...$statuses)
                 ->create();
     }
 
@@ -166,10 +160,10 @@ class DatabaseSeeder extends Seeder
 
             foreach (genRange(random_int(2, 5)) as $i) {
                 $comic = Comic::factory()
-                    ->author($author)
-                    ->comicTags($tags->shuffle()->take(random_int(3, min(7, $tags->count()))))
-                    ->genres($genres->shuffle()->take(random_int(1, 3)))
-                    ->publicationStatus($publicationStatuses->random())
+                    ->for($author)
+                    ->hasAttached($tags->shuffle()->take(random_int(3, min(7, $tags->count()))))
+                    ->hasAttached($genres->shuffle()->take(random_int(1, 3)))
+                    ->for($publicationStatuses->random())
                     ->create();
 
                 $this->seedCharacters($comic, $otherComicsByAuthor);
@@ -188,8 +182,8 @@ class DatabaseSeeder extends Seeder
 
         foreach ($characters as $character) {
             CharacterRole::factory()
-                ->comic($comic)
-                ->character($character)
+                ->for($comic)
+                ->for($character)
                 ->create(['role_type' => CharacterRoleType::Main]);
 
             $this->seedOtherCharacterRoles($character, $otherComicsByAuthor);
@@ -211,8 +205,8 @@ class DatabaseSeeder extends Seeder
 
         $comics->unique()->each(function (Comic $comic) use ($character, $roleTypes) {
             CharacterRole::factory()
-                ->comic($comic)
-                ->character($character)
+                ->for($comic)
+                ->for($character)
                 ->create(['role_type' => $roleTypes->random()]);
         });
     }
@@ -228,9 +222,17 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach (genRange(1, $total) as $iteration) {
+            $episodePoster = EpisodePoster::factory()
+                                ->has(
+                                    Image::factory()
+                                        ->state([
+                                            'medium' => $posters[(($iteration - 1) % count($posters))]
+                                        ])
+                                );
+
             $episode = Episode::factory()
-                    ->comic($comic)
-                    ->poster($posters[(($iteration - 1) % count($posters))])
+                    ->for($comic)
+                    ->has($episodePoster)
                     ->create([
                         'number' => $iteration,
                     ]);
@@ -250,19 +252,21 @@ class DatabaseSeeder extends Seeder
             'images/E05P05.jpg',
         ];
 
-        $episodePages = EpisodePage::factory()
-                        ->episode($episode)
-                        ->count(count($images))
-                        ->state(new Sequence(...collect(range(1, count($images)))->map(fn ($n) => ['order' => $n])))
-                        ->create();
-
-        $episodePages->each(function (EpisodePage $episodePage) use (&$images) {
-            $image = array_shift($images);
-            array_push($images, $image);
-
-            $episodePage->image->medium = $image;
-            $episodePage->push();
-        });
+        EpisodePage::factory()
+                ->for($episode)
+                ->has(Image::factory()
+                    ->sequence(
+                        ...collect($images)->map(fn ($i) => [
+                            'medium' => $i
+                        ])
+                    )
+                )
+                ->sequence(
+                    ...collect(range(1, count($images)))
+                        ->map(fn ($n) => ['order' => $n])
+                )
+                ->count(count($images))
+                ->create();
     }
 
     /**

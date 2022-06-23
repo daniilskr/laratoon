@@ -2,19 +2,28 @@
 
 namespace Database\Factories;
 
-use App\Models\Character;
+use App\Models\CharacterPoster;
+use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Arr;
 
 class CharacterFactory extends Factory
 {
     public function configure()
     {
-        return $this->afterCreating(function (Character $character) {
-            $character->characterPoster->save();
-            $character->characterPoster->image->medium = Arr::random(['images/character-poster-1.png', 'images/character-poster-2.png']);
-            $character->characterPoster->image->save();
-        });
+        return $this->has(
+            CharacterPoster::factory()
+                ->has(
+                    Image::factory()
+                        ->sequence(fn () => [
+                            'medium' => Arr::random([
+                                'images/character-poster-1.png',
+                                'images/character-poster-2.png'
+                            ])
+                        ])
+                )
+        );
     }
 
     /**

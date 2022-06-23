@@ -2,22 +2,50 @@
 
 namespace Database\Factories;
 
-use App\Models\Comic;
-use App\Models\Author;
-use App\Models\PublicationStatus;
+use App\Models\ComicHeaderBackground;
+use App\Models\ComicPoster;
+use App\Models\Image;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class ComicFactory extends Factory
 {
     public function configure()
     {
-        return $this->afterCreating(function (Comic $comic) {
-            $this->attachRandomPoster($comic);
-            $this->attachRandomHeading($comic);
-        });
+        $posters = [
+            'images/comic-poster-1.png',
+            'images/comic-poster-2.png',
+            'images/comic-poster-3.png',
+        ];
+
+        $headings = [
+            'images/comic-heading-1.png',
+            'images/comic-heading-2.png',
+            'images/comic-heading-3.png',
+        ];
+
+        return $this
+            ->has(
+                ComicPoster::factory()
+                    ->has(
+                        Image::factory()
+                            ->sequence(fn () => [
+                                'medium' => Arr::random($posters)
+                            ])
+                    )
+            )
+            ->has(
+                ComicHeaderBackground::factory()
+                    ->has(
+                        Image::factory()
+                            ->sequence(fn () => [
+                                'medium' => Arr::random($headings)
+                            ])
+                    )
+            );
     }
 
     /**
@@ -46,65 +74,5 @@ class ComicFactory extends Factory
     protected function description()
     {
         return $this->faker->text(130);
-    }
-
-    /**
-     * Factory states.
-     */
-    public function author(Author $author)
-    {
-        return $this->afterMaking(function (Comic $comic) use ($author) {
-            $comic->author()->associate($author);
-        });
-    }
-
-    public function comicTags(Collection $tags)
-    {
-        return $this->afterCreating(function (Comic $comic) use ($tags) {
-            $comic->comicTags()->attach($tags->map(fn ($el) => $el->id));
-        });
-    }
-
-    public function genres(Collection $genres)
-    {
-        return $this->afterCreating(function (Comic $comic) use ($genres) {
-            $comic->genres()->attach($genres->map(fn ($el) => $el->id));
-        });
-    }
-
-    public function publicationStatus(PublicationStatus $publicationStatus)
-    {
-        return $this->afterMaking(function (Comic $comic) use ($publicationStatus) {
-            $comic->publicationStatus()->associate($publicationStatus);
-        });
-    }
-
-    /**
-     * Functions to attach relations.
-     */
-    protected function attachRandomPoster(Comic $comic)
-    {
-        $posters = collect([
-            'images/comic-poster-1.png',
-            'images/comic-poster-2.png',
-            'images/comic-poster-3.png',
-        ]);
-
-        $comic->comicPoster->save();
-        $comic->comicPoster->image->medium = $posters->random();
-        $comic->comicPoster->image->save();
-    }
-
-    protected function attachRandomHeading(Comic $comic)
-    {
-        $headings = collect([
-            'images/comic-heading-1.png',
-            'images/comic-heading-2.png',
-            'images/comic-heading-3.png',
-        ]);
-
-        $comic->comicHeaderBackground->save();
-        $comic->comicHeaderBackground->image->medium = $headings->random();
-        $comic->comicHeaderBackground->image->save();
     }
 }

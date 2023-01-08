@@ -34,7 +34,7 @@ class Comment extends Model implements BelongsToAUser, HasLikeable
         });
 
         static::deleted(function (self $comment) {
-            $comment->commentable()->increment('comments_cached_count');
+            $comment->commentable()->decrement('comments_cached_count');
         });
     }
 

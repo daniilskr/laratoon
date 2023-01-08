@@ -70,7 +70,7 @@ trait HasSlugColumn
                 throw new Exception("Failed to update the slug, property {$name} is null");
             }
 
-            if (is_scalar($value)) {
+            if (is_scalar($value) && ! is_bool($value)) {
                 return $value;
             }
 

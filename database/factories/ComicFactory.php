@@ -67,7 +67,7 @@ class ComicFactory extends Factory
      */
     protected function title()
     {
-        return Str::headline($this->faker->words(random_int(1, 5), true));
+        return Str::headline($this->faker->words(random_int(3, 5), true));
     }
 
     protected function description()

@@ -36,23 +36,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //Автокомит можно заменить обычной транзакцией
-        DB::statement('SET autocommit=0');
-        DB::statement('SET unique_checks=0');
-        DB::statement('SET foreign_key_checks=0');
-
-        // DB::transaction(function () {
-        $this->seedUsers();
-        $this->seedComics();
-        $this->seedViews();
-        $this->seedComments();
-        $this->seedLikes();
-        // });
-
-        DB::statement('COMMIT');
-        DB::statement('SET autocommit=1');
-        DB::statement('SET unique_checks=1');
-        DB::statement('SET foreign_key_checks=1');
+        DB::transaction(function () {
+            $this->seedUsers();
+            $this->seedComics();
+            $this->seedViews();
+            $this->seedComments();
+            $this->seedLikes();
+        });
     }
 
     protected function seedUsers()

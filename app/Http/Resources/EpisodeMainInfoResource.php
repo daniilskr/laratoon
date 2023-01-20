@@ -21,6 +21,8 @@ class EpisodeMainInfoResource extends JsonResource
      */
     public function toArray($request)
     {
+        $this->loadMissing(['episodePages.image']);
+
         return [
             'id' => $this->id,
             'title' => $this->title,

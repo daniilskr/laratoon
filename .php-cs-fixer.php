@@ -169,7 +169,7 @@ $finder = Finder::create()
 $config = new Config();
 return $config->setFinder($finder)
     ->setIndent(str_repeat(' ', 4))
-    ->setLineEnding("\n")
+    ->setLineEnding(PHP_EOL)
     ->setRules($rules)
     ->setRiskyAllowed(true)
     ->setUsingCache(true);

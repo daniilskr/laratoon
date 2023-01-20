@@ -319,7 +319,7 @@ class DatabaseSeeder extends Seeder
             View::insert($views->toArray());
 
             if (($seeded) % 100 === 0 || $seeded === $episodesTotal) {
-                $this->command->line("<comment>${seeded}/${episodesTotal} episodes are seeded with views</comment>");
+                $this->command->line("<comment>{$seeded}/{$episodesTotal} episodes are seeded with views</comment>");
             }
         });
 
@@ -358,7 +358,7 @@ class DatabaseSeeder extends Seeder
             });
 
             if (($seeded) % 10 === 0 || $seeded === $comicsTotal) {
-                $this->command->line("<comment>${seeded}/${comicsTotal} comics are seeded with comments</comment>");
+                $this->command->line("<comment>{$seeded}/{$comicsTotal} comics are seeded with comments</comment>");
             }
         });
     }
@@ -392,7 +392,7 @@ class DatabaseSeeder extends Seeder
             Like::insert($likes->toArray());
 
             if (($seeded) % 10 === 0 || $seeded === $comicsTotal) {
-                $this->command->line("<comment>${seeded}/${comicsTotal} comics are seeded with likes</comment>");
+                $this->command->line("<comment>{$seeded}/{$comicsTotal} comics are seeded with likes</comment>");
             }
         });
 

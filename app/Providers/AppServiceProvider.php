@@ -19,6 +19,8 @@ use App\Models\UserAvatar;
 use App\Models\View;
 use App\Services\ViewsService;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\Console\Input\ArgvInput;
+use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,10 +37,27 @@ class AppServiceProvider extends ServiceProvider
 
     protected function registerTelescope()
     {
-        if (isLocal()) {
-            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
-            $this->app->register(TelescopeServiceProvider::class);
+        if (! isLocal()) {
+            return;
         }
+
+        // Disable Telescope for "db:seed" and "migrate:* --seed" commands for performance reasons
+        if($this->app->runningInConsole()) {
+            $argv = new ArgvInput();
+            $command = $argv->getFirstArgument(); 
+
+            if('db:seed' === $command
+                || (
+                    'migrate' === Str::before($command, ':')
+                    && $argv->hasParameterOption('--seed')
+                )
+            ) {
+                return;
+            }
+        }
+        
+        $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+        $this->app->register(TelescopeServiceProvider::class);
     }
 
     protected function registerSingletons()

@@ -31,6 +31,9 @@ php -r "echo 'Hello world!';"
 - Откройте веб-браузер, и введите [http://127.0.0.1:8000/](http://127.0.0.1:8000/) в адресную строку - откроется поднявшийся сайт.
 
 ## Скриншоты
-
-![catalog](./public/images/screenshot1.png)
-![comic-page](./public/images/screenshot2.png)
+Каталог
+![catalog page](./public/images/screenshot1.png)
+Страница комикса
+![comic page](./public/images/screenshot2.png)
+Комментарии на странице комикса
+![comic page comments](./public/images/screenshot3.png)

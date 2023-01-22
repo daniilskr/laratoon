@@ -1,5 +1,8 @@
 ### Vue 3(+TypeScipt) + Laravel 9
-Это бэкэнд(Laravel) проекта, фронтэнд(Vue 3) [тут](https://github.com/IgorLockyh/laratoon_frontend)
+> Laratoon это вертикальный срез (он не является полнофункциональным приложением, лишь минимально реализует самые основные возможности) веб-сайта для чтения онлайн комиксов, который я написал в свободное время, чтобы опробовать возможности `Vue 3` и `TypeScript`.
+> Это Laravel-бэкэнд проекта, [Vue3-фронтэнд тут](https://github.com/IgorLockyh/laratoon_frontend)
+
+Иллюстрации взяты из open-source веб-комикса "Papper&Carrot" за авторством Дэвида Ревуа.
 
 ## Как поднять:
 
@@ -26,3 +29,8 @@ php -r "echo 'Hello world!';"
 ```
 
 - Откройте веб-браузер, и введите [http://127.0.0.1:8000/](http://127.0.0.1:8000/) в адресную строку - откроется поднявшийся сайт.
+
+## Скриншоты
+
+![catalog](./public/images/screenshot1.png)
+![comic-page](./public/images/screenshot2.png)

@@ -15,6 +15,8 @@ class DemoServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Comment::addGlobalScope(new DoesNotBelongToOtherDemoUsersScope);
+        if (! $this->app->runningInConsole()) {
+            Comment::addGlobalScope(new DoesNotBelongToOtherDemoUsersScope);
+        }
     }
 }

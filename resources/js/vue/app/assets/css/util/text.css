@@ -1,0 +1,88 @@
+.thick-uppercase-title {
+    font-weight: bold;
+    font-style: normal;
+    font-size: 21px;
+    letter-spacing: 0.135em;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.dramatic-uppercase-lot-letter-spacing-title {
+    font-weight: 500;
+    letter-spacing: 0.135em;
+    font-size: 16px;
+    font-style: normal;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.thick-uppercase-shrinked-title {
+    font-weight: 600;
+    font-size: 16px;
+    font-style: normal;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.small-bold-title {
+    font-weight: 700;
+    font-size: 16px;
+    font-style: normal;
+    margin: 0;
+    color: #3D3D3D;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;  
+}
+
+.text-left {
+    text-align: left;  
+}
+
+.navbar-page-title {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 25px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #51515B;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    transition: color .05s;
+    margin: 0;
+}
+
+.navbar-page-link {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 25px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #51515B;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    transition: color .05s;
+}
+
+.navbar-page-link:hover,
+.navbar-page-exact-active-link.router-link-active:hover {
+    color: #B1B1B1;  
+}
+
+.navbar-page-link.router-link-active {
+    color: #2DBCDC;
+}
+
+/* Fix for home '/' link that matches every path */
+.navbar-page-exact-active-link.router-link-active {
+    color: #51515B;
+}
+
+.navbar-page-exact-active-link.router-link-active.router-link-exact-active {
+    color: #2DBCDC;
+}

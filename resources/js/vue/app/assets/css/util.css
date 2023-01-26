@@ -1,0 +1,29 @@
+@import './util/colors.css';
+@import './util/skeleton.css';
+@import './util/text.css';
+@import './util/sizes.css';
+@import './util/buttons.css';
+@import './util/icons.css';
+@import './util/popup.css';
+@import './util/zindex.css';
+@import './util/other.css';
+@import './util/resets.css';
+
+#app {
+  font-family: hind, Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #F5F5F5;
+  overflow-y: scroll;
+}
+
+* {
+  box-sizing: border-box;
+}

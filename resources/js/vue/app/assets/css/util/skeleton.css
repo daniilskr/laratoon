@@ -1,0 +1,43 @@
+.bg-skeleton-color {
+    background: #f8f8f8;
+}
+
+.skeleton {
+    animation: skeleton-appearing-animation 2s cubic-bezier(0.4, 0.0, 0.2, 1);    
+}
+
+@keyframes skeleton-appearing-animation {
+    from {
+        opacity: 0;
+    }
+    to   {
+        opacity: 1;
+    }
+}
+
+@keyframes skeleton-gradient-animation {
+    from {
+        left: -150px;
+    }
+    to   {
+        /* limited to contend width(1200) + 150 */
+        left: 1350px;
+    }
+}
+
+.skeleton-has-loading-animation {
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton-has-loading-animation::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -150px;
+    top: 0;
+    height: 100%;
+    width: 150px;
+    background: linear-gradient(to right, transparent 0%, rgb(255, 255, 255) 50%, transparent 100%);
+    animation: skeleton-gradient-animation 2s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+}

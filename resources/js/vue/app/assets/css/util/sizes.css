@@ -1,0 +1,345 @@
+@media(max-width: 1279px) {
+  .limited-to-content-width {
+    width: 100%;
+  }
+}
+
+@media(min-width: 1280px) {
+  .limited-to-content-width {
+    width: 1200px;
+    margin: auto;
+  }
+}
+
+.limited-to-viewer-width {
+  width: 800px;
+  margin: auto;
+}
+
+.heading-section-height {
+  height: 322px;
+}
+
+/* margin */
+
+.no-margin {
+  margin: 0;
+}
+
+
+/* padding */
+
+@media(max-width: 1279px) {
+  .padding-x-25--media-less-1280 {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+}
+
+.padding-b-100 {
+  padding-bottom: 100px;
+}
+
+.padding-t-100 {
+  padding-top: 100px;
+}
+
+.padding-r-100 {
+  padding-right: 100px;
+}
+
+.padding-l-100 {
+  padding-left: 100px;
+}
+
+.padding-x-100 {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.padding-y-100 {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.padding-xy-100 {
+  padding: 100px;
+}
+
+
+.padding-b-75 {
+  padding-bottom: 75px;
+}
+
+.padding-t-75 {
+  padding-top: 75px;
+}
+
+.padding-r-75 {
+  padding-right: 75px;
+}
+
+.padding-l-75 {
+  padding-left: 75px;
+}
+
+.padding-x-75 {
+  padding-left: 75px;
+  padding-right: 75px;
+}
+
+.padding-y-75 {
+  padding-top: 75px;
+  padding-bottom: 75px;
+}
+
+.padding-xy-75 {
+  padding: 75px;
+}
+
+
+.padding-b-50 {
+  padding-bottom: 50px;
+}
+
+.padding-t-50 {
+  padding-top: 50px;
+}
+
+.padding-r-50 {
+  padding-right: 50px;
+}
+
+.padding-l-50 {
+  padding-left: 50px;
+}
+
+.padding-x-50 {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.padding-y-50 {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.padding-xy-50 {
+  padding: 50px;
+}
+
+.padding-b-25 {
+  padding-bottom: 25px;
+}
+
+.padding-t-25 {
+  padding-top: 25px;
+}
+
+.padding-r-25 {
+  padding-right: 25px;
+}
+
+.padding-l-25 {
+  padding-left: 25px;
+}
+
+.padding-x-25 {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.padding-y-25 {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.padding-xy-25 {
+  padding: 25px;
+}
+
+.padding-b-10 {
+  padding-bottom: 10px;
+}
+
+.padding-t-10 {
+  padding-top: 10px;
+}
+
+.padding-r-10 {
+  padding-right: 10px;
+}
+
+.padding-l-10 {
+  padding-left: 10px;
+}
+
+.padding-x-10 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.padding-y-10 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.padding-xy-10 {
+  padding: 10px;
+}
+
+.padding-b-15 {
+  padding-bottom: 15px;
+}
+
+.padding-t-15 {
+  padding-top: 15px;
+}
+
+.padding-r-15 {
+  padding-right: 15px;
+}
+
+.padding-l-15 {
+  padding-left: 15px;
+}
+
+.padding-x-15 {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.padding-y-15 {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.padding-xy-15 {
+  padding: 15px;
+}
+
+.padding-b-5 {
+  padding-bottom: 5px;
+}
+
+.padding-t-5 {
+  padding-top: 5px;
+}
+
+.padding-r-5 {
+  padding-right: 5px;
+}
+
+.padding-l-5 {
+  padding-left: 5px;
+}
+
+.padding-x-5 {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.padding-y-5 {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.padding-xy-5 {
+  padding: 5px;
+}
+
+
+.padding-b-0last:last-of-type {
+  padding-bottom: 0;
+}
+
+.padding-t-0last:last-of-type {
+  padding-top: 0;
+}
+
+.padding-r-0last:last-of-type {
+  padding-right: 0;
+}
+
+.padding-l-0last:last-of-type {
+  padding-left: 0;
+}
+
+.padding-x-0last:last-of-type {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.padding-y-0last:last-of-type {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.padding-xy-0last:last-of-type {
+  padding: 0;
+}
+
+
+.padding-b-0first:first-of-type {
+  padding-bottom: 0;
+}
+
+.padding-t-0first:first-of-type {
+  padding-top: 0;
+}
+
+.padding-r-0first:first-of-type {
+  padding-right: 0;
+}
+
+.padding-l-0first:first-of-type {
+  padding-left: 0;
+}
+
+.padding-x-0first:first-of-type {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.padding-y-0first:first-of-type {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.padding-xy-0first:first-of-type {
+  padding: 0;
+}
+
+
+/* Width in percents */
+.w-100 {
+  width: 100%;
+}
+
+.w-75 {
+  width: 75%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.w-25 {
+  width: 25%;
+}
+
+.w-20 {
+  width: 20%;
+}
+
+.w-15 {
+  width: 15%;
+}
+
+.w-10 {
+  width: 10%;
+}
+
+.w-5 {
+  width: 5%;
+}

@@ -1,0 +1,63 @@
+.btn {
+  height: 30px;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-reset-style {
+  border: none;
+  background: none;
+}
+
+.btn-good {
+  background: #2DBCDC;
+  color: white;
+}
+
+.btn-danger {
+  background: #dc2d2d;
+  color: white;
+}
+
+.btn-stylish {
+  background: #3D3D3D;
+  color: white;
+}
+
+.btn-neutral {
+  background: #bdbaba;
+  color: white;
+}
+
+.btn-outline-danger {
+  color: #dc2d2d;
+  border: solid 1px #dc2d2d;
+  background: none;
+}
+
+.btn-outline-stylish {
+  color: #3D3D3D;
+  border: solid 1px #3D3D3D;
+  background: none;
+}
+
+.btn-outline-stylish:hover {
+  color: white;
+  border: solid 1px #3D3D3D;
+  background: #3D3D3D;
+}
+
+.btn-outline-neutral {
+  color: #bdbaba;
+  border: solid 1px #bdbaba;
+  background: none;
+}
+
+.btn-outline-neutral:hover {
+  color: white;
+  border: solid 1px #bdbaba;
+  background: #bdbaba;
+}

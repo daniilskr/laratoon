@@ -3,7 +3,7 @@
     <div class="viewer-header-navbar__content limited-to-viewer-width">
       <div v-if="comicSlug && comicTitle" class="viewer-header-navbar__block viewer-header-navbar__block-left">
         <router-link
-          :to="{ name: 'comic.', params: { comicSlug } }"
+          :to="{ name: 'comic.', params: { comic: comicSlug } }"
           class="viewer-header-nabvar__comic navbar-page-exact-active-link navbar-page-link"
         >
           {{ comicTitle }} #{{ episodeNumber }}

@@ -7,7 +7,7 @@ export const getCookie = function (name: string) {
       "(^|; )" + _.escapeRegExp(name) + "=([^;]*)"
     )
   );
-  return matches ? decodeURIComponent(matches[1].replace(new RegExp('^; '), '')) : undefined;
+  return matches ? decodeURIComponent(matches[1].replace(new RegExp("^; "), "")) : undefined;
 };
 
 export const cookieIsPresent = function (name: string) {

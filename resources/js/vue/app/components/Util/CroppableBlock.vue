@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineProps } from "vue";
+import { ref, computed } from "vue";
 const refContentWrapper = ref<HTMLElement | null>(null);
 const props = defineProps<{ crop: number }>();
 const marginTop = computed(() => Math.max(Math.min(props.crop, refContentWrapper.value?.clientHeight ?? 0), 0));

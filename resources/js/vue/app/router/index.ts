@@ -11,7 +11,7 @@ import PageNotFound from "../views/PageNotFound.vue";
 
 const routes = [
   {
-    path: "/",
+    path: "/home",
     name: "home.",
     component: Home,
   },
@@ -69,7 +69,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

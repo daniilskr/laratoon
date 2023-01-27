@@ -17,7 +17,7 @@ GRANT ALL PRIVILEGES ON laratoon.* TO 'laravel'@'localhost';
 
 - Откройте терминал в папке, куда хотите поместить проект, выделите разом все следующие команды и вставьте их в терминал щелчком по правой кнопке мыши:
 ```bash
-git clone https://github.com/IgorLockyh/laratoon_backend.git
+git clone https://github.com/IgorLockyh/laratoon.git
 cd laratoon_backend
 copy .env.example .env
 composer install

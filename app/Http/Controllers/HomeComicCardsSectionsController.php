@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ComicCardResource;
+use App\Http\Resources\ImageResource;
 use App\Models\Comic;
+use App\Models\ComicHeaderBackground;
+use Illuminate\Database\Eloquent\Collection;
 
 class HomeComicCardsSectionsController extends Controller
 {
@@ -13,21 +16,27 @@ class HomeComicCardsSectionsController extends Controller
 
     public function __invoke()
     {
+        /** @var Collection */
+        $posters = ComicHeaderBackground::with('image')->limit(3)->get();
+
         return [
             [
                 'type' => self::TYPE_SMALL_WIDE_CARDS,
                 'title' => 'Recommended',
-                'comic_cards' => ComicCardResource::collection(Comic::limit(6)->get()),
+                'sectionPoster' => new ImageResource($posters->shift()->image),
+                'comicCards' => ComicCardResource::collection(Comic::limit(6)->get()),
             ],
             [
                 'type' => self::TYPE_GO_TO_MORE,
                 'title' => 'Fantasy',
-                'comic_cards' => ComicCardResource::collection(Comic::whereHas('genres', fn ($qG) => $qG->whereSlug('fantasy'))->limit(4)->get()),
+                'sectionPoster' => new ImageResource($posters->shift()->image),
+                'comicCards' => ComicCardResource::collection(Comic::whereHas('genres', fn ($qG) => $qG->whereSlug('fantasy'))->limit(4)->get()),
             ],
             [
                 'type' => self::TYPE_GO_TO_MORE,
                 'title' => 'Comedy',
-                'comic_cards' => ComicCardResource::collection(Comic::whereHas('genres', fn ($qG) => $qG->whereSlug('comedy'))->limit(4)->get()),
+                'sectionPoster' => new ImageResource($posters->shift()->image),
+                'comicCards' => ComicCardResource::collection(Comic::whereHas('genres', fn ($qG) => $qG->whereSlug('comedy'))->limit(4)->get()),
             ],
         ];
     }

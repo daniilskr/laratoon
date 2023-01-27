@@ -2,7 +2,7 @@
   <div class="comic-cards-section-heading heading-section-height">
     <div class="comic-cards-section-heading__background">
       <div
-        :style="`background: url(${urlBackground}) no-repeat center`"
+        :style="`background: url('${sectionPoster.medium}') no-repeat center`"
         class="comic-cards-section-heading__background__img"
       />
     </div>
@@ -11,16 +11,20 @@
         <h1 :class="['comic-cards-section-heading__title', titleClass]">{{ sectionTitle }}</h1>
         <div class="comic-cards-section-heading__cards-list">
           <div
-            v-for="i in 5"
-            :key="i"
+            v-for="comicCard in comicCards"
+            :key="comicCard.id"
             class="comic-cards-section-heading__cards-list__card-wrapper shadow-smooth-small round-angles-small"
           >
-            <router-link :to="{ name: 'comic.', params: { comic: `pepper-and-carrot-${i}` } }">
+            <router-link
+              class="comic-cards-section-small-wide-cards__link"
+              :to="{ name: 'comic.', params: { comic: comicCard.slug } }"
+            >
               <ComicCardSquare
-                author="David Revoy"
-                title="Pepper and Carrot"
-                description="Pepper, a young witch and her cat, Carrot, live in a fun fantasy universe made of potions, magic and creatures"
-                :likes="17000"
+                :author="comicCard.author.fullName"
+                :title="comicCard.title"
+                :description="comicCard.description"
+                :likes="comicCard.statistics.likes.total"
+                :img="comicCard.comicPoster.medium"
               />
             </router-link>
           </div>
@@ -31,9 +35,32 @@
 </template>
 
 <script setup lang="ts">
-import urlBackground from "@/assets/cards-heading-bg-pepper-and-carrot.png";
 import ComicCardSquare from "@/components/Comic/ComicCardSquare.vue";
-defineProps(["sectionTitle", "titleClass"]);
+defineProps<{
+  comicCards: {
+    id: number;
+    slug: string;
+    title: string;
+    description: string;
+    author: {
+      id: number;
+      fullName: string;
+    };
+    comicPoster: {
+      medium: string;
+    };
+    statistics: {
+      likes: {
+        total: number;
+      };
+    };
+  }[],
+  sectionTitle: string;
+  titleClass: string;
+  sectionPoster: {
+    medium: string,
+  },
+}>();
 </script>
 
 <style scoped>

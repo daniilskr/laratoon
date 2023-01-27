@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-// import Home from "../views/Home.vue";
+import Home from "../views/Home.vue";
 import Catalog from "../views/Catalog.vue";
 import Viewer from "../views/Viewer.vue";
 import Comic from "../views/Comic.vue";
@@ -10,11 +10,11 @@ import UserNotifications from "../views/User/UserNotifications.vue";
 import PageNotFound from "../views/PageNotFound.vue";
 
 const routes = [
-  // {
-  //   path: "/",
-  //   name: "home.",
-  //   component: Home,
-  // },
+  {
+    path: "/",
+    name: "home.",
+    component: Home,
+  },
   {
     path: "/read/:comic/:episode",
     name: "viewer.",

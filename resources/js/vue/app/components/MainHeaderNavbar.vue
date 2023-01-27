@@ -3,9 +3,9 @@
     <div class="main-header-nabvar header z-index-header-navbar" ref="refRealNavbar">
       <div class="main-header-nabvar__wrapper limited-to-content-width padding-x-25--media-less-1280">
         <div class="main-header-nabvar__group main-header-nabvar__page-links">
-          <!-- <router-link to="/" class="main-header-nabvar__page-link navbar-page-link navbar-page-exact-active-link">
+          <router-link to="/" class="main-header-nabvar__page-link navbar-page-link navbar-page-exact-active-link">
             Home
-          </router-link> -->
+          </router-link>
           <router-link class="main-header-nabvar__page-link navbar-page-link" to="/catalog">Catalog</router-link>
         </div>
         <div v-if="currentUser" class="main-header-nabvar__group main-header-nabvar__user-menu">

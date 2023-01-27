@@ -2,23 +2,27 @@
   <div class="comic-cards-section-gotomore heading-section-height">
     <div class="comic-cards-section-gotomore__cards-wrapper">
       <div class="comic-cards-section-gotomore__background">
-        <img src="@/assets/cards-heading-bg-pepper-and-carrot.png" />
+        <img :src="sectionPoster.medium" />
       </div>
       <div class="comic-cards-section-gotomore__front padding-xy-25">
         <div class="comic-cards-section-gotomore__front__content-wrapper">
           <h1 :class="['comic-cards-section-gotomore__title', titleClass]">{{ sectionTitle }}</h1>
           <div class="comic-cards-section-gotomore__cards-list">
             <div
-              v-for="i in 4"
-              :key="i"
+              v-for="comicCard in comicCards"
+              :key="comicCard.id"
               class="comic-cards-section-gotomore__cards-list__card-wrapper shadow-smooth-small round-angles-small"
             >
-              <router-link to="/comic/pepper-and-carrot" class="comic-cards-section-gotomore__card-link">
+              <router-link
+                class="comic-cards-section-gotomore__card-link"
+                :to="{ name: 'comic.', params: { comic: comicCard.slug } }"
+              >
                 <ComicCardSquare
-                  author="David Revoy"
-                  title="Pepper and Carrot"
-                  description="Pepper, a young witch and her cat, Carrot, live in a fun fantasy universe made of potions, magic and creatures"
-                  :likes="17000"
+                  :author="comicCard.author.fullName"
+                  :title="comicCard.title"
+                  :description="comicCard.description"
+                  :likes="comicCard.statistics.likes.total"
+                  :img="comicCard.comicPoster.medium"
                 />
               </router-link>
             </div>
@@ -35,7 +39,31 @@
 
 <script setup lang="ts">
 import ComicCardSquare from "@/components/Comic/ComicCardSquare.vue";
-defineProps(["sectionTitle", "titleClass"]);
+defineProps<{
+  comicCards: {
+    id: number;
+    slug: string;
+    title: string;
+    description: string;
+    author: {
+      id: number;
+      fullName: string;
+    };
+    comicPoster: {
+      medium: string;
+    };
+    statistics: {
+      likes: {
+        total: number;
+      };
+    };
+  }[],
+  sectionTitle: string;
+  titleClass: string;
+  sectionPoster: {
+    medium: string,
+  },
+}>();
 </script>
 
 <style scoped>

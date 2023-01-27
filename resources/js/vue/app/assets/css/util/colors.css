@@ -1,0 +1,72 @@
+/* from the most spacey to the least */
+.text-color-space-1 {
+  color: white;
+}
+.bg-color-space-1 {
+  background: white;
+}
+
+.text-color-space-3 {
+  color: #F5F5F5;
+}
+.bg-color-space-3 {
+  background: #F5F5F5;
+}
+
+.text-color-space-5 {
+  color: #B1B1B1;
+}
+.bg-color-space-5 {
+  background: #B1B1B1;
+}
+
+
+/* from the most accent to the least */
+.text-color-accent-1 {
+  color: black;
+}
+.bg-color-accent-1 {
+  background: black;
+}
+
+.text-color-accent-3 {
+  color: #3D3D3D;
+}
+.bg-color-accent-3 {
+  background: #3D3D3D;
+}
+
+.text-color-accent-5 {
+  color: #0F0F33;
+}
+.bg-color-accent-5 {
+  background: #0F0F33;
+}
+
+.text-color-accent-7 {
+  color: #2c3e50;
+}
+.bg-color-accent-7 {
+  background: #2c3e50;
+}
+
+
+.bg-yellow {
+  background: rgb(249, 231, 75);
+}
+
+.bg-green {
+  background: rgb(20, 223, 113);
+}
+
+.bg-red {
+  background: rgb(233, 57, 57);
+}
+
+.bg-blue {
+  background: rgb(116, 177, 235);
+}
+
+.bg-pink {
+  background: rgb(255, 196, 153);
+}

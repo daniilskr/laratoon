@@ -41,7 +41,7 @@ Route::get('users/{user}/comments', UserCommentsController::class);
 
 Route::get('comic-user-lists/{comicUserList}/entries', [ComicUserListEntriesController::class, 'index']);
 Route::get('catalog', CatalogEntriesController::class);
-Route::get('catalog-filters', CatalogFiltersController::class);
+Route::get('catalog-filters', CatalogFiltersController::class)->middleware('cache.headers:public;max_age=600;etag');
 
 Route::get('home-comic-cards-sections', HomeComicCardsSectionsController::class);
 

@@ -29,7 +29,7 @@ const props = defineProps<{
     additional: string;
     linkTo: {
       name: string;
-      params: Record<string, unknown>;
+      params: Record<string, string | number | null>;
     };
   }[];
 }>();

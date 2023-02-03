@@ -5,39 +5,39 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ComicCardResource;
 use App\Http\Resources\ImageResource;
 use App\Models\Comic;
-use App\Models\ComicHeaderBackground;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
 class HomeComicCardsSectionsController extends Controller
 {
-    private const TYPE_GO_TO_MORE = 'go_to_more';
+    protected function makeSection(Builder $query, int $limit, string $title)
+    {
+        return [
+            'title' => $title,
+            'comicCards' => ComicCardResource::collection($comics = $query->limit($limit)->get()),
+            'sectionPoster' => new ImageResource($comics->first()->comicHeaderBackground->image),
+        ];
+    }
 
-    private const TYPE_SMALL_WIDE_CARDS = 'small_wide_cards';
+    protected function makeSmallWideCardsSection(Builder $query, string $title)
+    {
+        return array_merge($this->makeSection($query, 6, $title), [
+            'type' => 'small_wide_cards',
+        ]);
+    }
+
+    protected function makeGoToMoreSection(Builder $query, string $title)
+    {
+        return array_merge($this->makeSection($query, 4, $title), [
+            'type' => 'go_to_more',
+        ]);
+    }
 
     public function __invoke()
     {
-        /** @var Collection */
-        $posters = ComicHeaderBackground::with('image')->limit(3)->get();
-
         return [
-            [
-                'type' => self::TYPE_SMALL_WIDE_CARDS,
-                'title' => 'Recommended',
-                'sectionPoster' => new ImageResource($posters->shift()->image),
-                'comicCards' => ComicCardResource::collection(Comic::limit(6)->get()),
-            ],
-            [
-                'type' => self::TYPE_GO_TO_MORE,
-                'title' => 'Fantasy',
-                'sectionPoster' => new ImageResource($posters->shift()->image),
-                'comicCards' => ComicCardResource::collection(Comic::whereHas('genres', fn ($qG) => $qG->whereSlug('fantasy'))->limit(4)->get()),
-            ],
-            [
-                'type' => self::TYPE_GO_TO_MORE,
-                'title' => 'Comedy',
-                'sectionPoster' => new ImageResource($posters->shift()->image),
-                'comicCards' => ComicCardResource::collection(Comic::whereHas('genres', fn ($qG) => $qG->whereSlug('comedy'))->limit(4)->get()),
-            ],
+            $this->makeSmallWideCardsSection(Comic::orderByDesc('id'), 'Recommended'),
+            $this->makeGoToMoreSection(Comic::whereHas('genres', fn ($qG) => $qG->whereSlug('fantasy')), 'Fantasy'),
+            $this->makeGoToMoreSection(Comic::whereHas('genres', fn ($qG) => $qG->whereSlug('comedy')), 'Comedy'),
         ];
     }
 }

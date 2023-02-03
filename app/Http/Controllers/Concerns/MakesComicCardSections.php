@@ -30,4 +30,11 @@ trait MakesComicCardSections
             'type' => 'go_to_more',
         ]);
     }
+
+    protected function makeHeadingSection(Builder $query, string $title)
+    {
+        return array_merge($this->makeSection($query, 5, $title), [
+            'type' => 'heading',
+        ]);
+    }
 }

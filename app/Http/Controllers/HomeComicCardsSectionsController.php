@@ -12,6 +12,7 @@ class HomeComicCardsSectionsController extends Controller
     public function __invoke()
     {
         return [
+            $this->makeHeadingSection(Comic::orderByDesc('id'), 'Latest updates'),
             $this->makeSmallWideCardsSection(Comic::orderByDesc('id'), 'Recommended'),
             $this->makeGoToMoreSection(Comic::whereHas('genres', fn ($qG) => $qG->whereSlug('fantasy')), 'Fantasy'),
             $this->makeGoToMoreSection(Comic::whereHas('genres', fn ($qG) => $qG->whereSlug('comedy')), 'Comedy'),

@@ -4,6 +4,7 @@ import { parseComicCard } from "@/api/Resources/Types/ComicCard";
 export enum ComicCardSectionType {
   SmallWideCards = "small_wide_cards",
   GoToMore = "go_to_more",
+  Heading = "heading",
 }
 
 export default interface ComicCardSection {

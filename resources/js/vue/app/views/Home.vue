@@ -5,24 +5,25 @@
     </div>
 
     <div class="home-page__wrapper">
-      <ComicCardsSectionHeading
-        v-if="sections.length > 0"
-        title-class="thick-uppercase-title text-left text-color-space-1 padding-b-25"
-        section-title="Latest updates"
-        :section-poster="sections[0].sectionPoster"
-        :comic-cards="sections[0].comicCards.slice(0, 5)"
-      />
-
-      <div class="home-page__content limited-to-content-width bg-color-space-1">
+      <div class="home-page__content">
         <template v-for="section in sections" :key="section.title">
-          <div v-if="section.type == ComicCardSectionType.SmallWideCards" class="padding-xy-25">
-            <h1 class="thick-uppercase-shrinked-title text-left text-color-accent-5 padding-b-25">Popular today</h1>
+          <div v-if="section.type == ComicCardSectionType.SmallWideCards" class="padding-xy-25 limited-to-content-width bg-color-space-1">
+            <h1 class="thick-uppercase-shrinked-title text-left text-color-accent-5 padding-b-25">{{ section.title }}</h1>
             <ComicCardsSectionSmallWideCards :comic-cards="section.comicCards" />
           </div>
+
+          <ComicCardsSectionHeading
+            v-if="section.type == ComicCardSectionType.Heading" 
+            title-class="thick-uppercase-title text-left text-color-space-1 padding-b-25"
+            :section-title="section.title"
+            :section-poster="section.sectionPoster"
+            :comic-cards="section.comicCards"
+          />
 
           <ComicCardsSectionGoToMore
             v-if="section.type == ComicCardSectionType.GoToMore"
             title-class="thick-uppercase-title text-left text-color-space-1 padding-b-25"
+            class = "limited-to-content-width bg-color-space-1"
             :section-title="section.title"
             :section-poster="section.sectionPoster"
             :comic-cards="section.comicCards"

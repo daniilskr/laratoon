@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Concerns\MakesComicCardSections;
 use App\Models\Comic;
+use App\Services\Http\ComicCardsSectionFactory;
 
 class HomeComicCardsSectionsController extends Controller
 {
-    use MakesComicCardSections;
-
-    public function __invoke()
+    public function __invoke(ComicCardsSectionFactory $comicCardsSectionFactory)
     {
         return [
-            $this->makeHeadingSection(Comic::orderByDesc('id'), 'Latest updates'),
-            $this->makeSmallWideCardsSection(Comic::orderByDesc('id'), 'Recommended'),
-            $this->makeGoToMoreSection(Comic::whereHas('genres', fn ($qG) => $qG->whereSlug('fantasy')), 'Fantasy'),
-            $this->makeGoToMoreSection(Comic::whereHas('genres', fn ($qG) => $qG->whereSlug('comedy')), 'Comedy'),
+            $comicCardsSectionFactory->makeHeadingSection(Comic::orderByDesc('id'), 'Latest updates'),
+            $comicCardsSectionFactory->makeSmallWideCardsSection(Comic::orderByDesc('id'), 'Recommended'),
+            $comicCardsSectionFactory->makeGoToMoreSection(Comic::whereHas('genres', fn ($qG) => $qG->whereSlug('fantasy')), 'Fantasy'),
+            $comicCardsSectionFactory->makeGoToMoreSection(Comic::whereHas('genres', fn ($qG) => $qG->whereSlug('comedy')), 'Comedy'),
         ];
     }
 }

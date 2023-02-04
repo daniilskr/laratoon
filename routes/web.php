@@ -15,6 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/demo-login', [DemoLoginController::class, 'login']);
-
 Route::fallback(VueApplicationController::class);

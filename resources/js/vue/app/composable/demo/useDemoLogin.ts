@@ -5,7 +5,7 @@ const { fetchCurrentUser } = useAuth();
 
 export const useDemoLogin = function () {
   const performDemoAuth = async function () {
-    await axios.post(`${BACKEND_URL}/demo-login`);
+    await axios.post(`${BACKEND_URL}/api/demo-login`);
   };
 
   const loginWithDemoCredentials = async function () {

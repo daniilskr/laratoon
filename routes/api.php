@@ -12,6 +12,7 @@ use App\Http\Controllers\LikesController;
 use App\Http\Controllers\CommentRepliesController;
 use App\Http\Controllers\CommentRepliesWithRootController;
 use App\Http\Controllers\CurrentUserController;
+use App\Http\Controllers\DemoLoginController;
 use App\Http\Controllers\HomeComicCardsSectionsController;
 use App\Http\Controllers\UserCommentsController;
 use App\Http\Controllers\UserProfileMainInfoController;
@@ -27,6 +28,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('/demo-login', [DemoLoginController::class, 'login']);
 
 Route::get('comic-by-slug/{comic:slug}/main-info', ComicMainInfoController::class);
 Route::get('comics/{comic}/main-info', ComicMainInfoController::class);
@@ -45,7 +48,7 @@ Route::get('catalog-filters', CatalogFiltersController::class)->middleware('cach
 
 Route::get('home-comic-cards-sections', HomeComicCardsSectionsController::class);
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('current-user', CurrentUserController::class);
 
     Route::post('comic-user-lists/not-in-a-list/put-comic/{comic}', [ComicUserListEntriesController::class, 'removeComic']);

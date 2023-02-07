@@ -22,6 +22,14 @@ class Like extends Model implements BelongsToAUser
         });
     }
 
+    public static function newForUser(User $user): static
+    {
+        $like = new static();
+        $like->user()->associate($user);
+        
+        return $like;
+    }
+
     public function likeable()
     {
         return $this->belongsTo(Likeable::class);

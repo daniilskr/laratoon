@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CacheLatestViewedEpisodeByUser extends Model
+class CachedLatestViewedEpisodeByUser extends Model
 {
     use HasFactory,
         Concerns\BelongsToAUser,

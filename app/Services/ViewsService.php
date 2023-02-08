@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\CacheLatestViewedEpisodeByUser;
+use App\Models\CachedLatestViewedEpisodeByUser;
 use App\Models\Comic;
 use App\Models\View;
 use App\Models\Viewable;
@@ -46,7 +46,7 @@ class ViewsService
             $latestView->touch();
         }
 
-        CacheLatestViewedEpisodeByUser::updateOrCreate([
+        CachedLatestViewedEpisodeByUser::updateOrCreate([
             'user_id' => $user->id,
             'comic_id' => $episode->comic_id,
         ], [

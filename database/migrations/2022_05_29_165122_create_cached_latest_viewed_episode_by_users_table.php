@@ -12,7 +12,7 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('cache_latest_viewed_episode_by_users', function (Blueprint $table) {
+        Schema::create('cached_latest_viewed_episode_by_users', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
 
@@ -31,6 +31,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('cache_latest_viewed_episode_by_users');
+        Schema::dropIfExists('cached_latest_viewed_episode_by_users');
     }
 };

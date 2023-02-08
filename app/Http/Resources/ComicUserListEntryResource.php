@@ -12,7 +12,7 @@ class ComicUserListEntryResource extends JsonResource
             'comic.author',
             'comic.comicPoster.image',
             'comic.latestEpisode',
-            'comic.cacheLatestViewedEpisodeByRequestUser.episode',
+            'comic.cachedLatestViewedEpisodeByRequestUser.episode',
         ]);
 
         return parent::collection($resource);
@@ -32,9 +32,9 @@ class ComicUserListEntryResource extends JsonResource
                 'id' => $this->comic->id,
                 'title' => $this->comic->title,
                 'slug' => $this->comic->slug,
-                'episodesLeft' => ($this->comic->latestEpisode?->number ?? 0) - ($this->comic->cacheLatestViewedEpisodeByRequestUser?->episode?->number ?? 0),
+                'episodesLeft' => ($this->comic->latestEpisode?->number ?? 0) - ($this->comic->cachedLatestViewedEpisodeByRequestUser?->episode?->number ?? 0),
 
-                'cachedLatestViewedEpisode' => new EpisodeResource($this->comic->cacheLatestViewedEpisodeByRequestUser?->episode),
+                'cachedLatestViewedEpisode' => new EpisodeResource($this->comic->cachedLatestViewedEpisodeByRequestUser?->episode),
                 'comicPoster' => new ImageResource($this->comic->comicPoster->image),
                 'author' => [
                     'id' => $this->comic->author->id,

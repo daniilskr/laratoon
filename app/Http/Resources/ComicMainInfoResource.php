@@ -47,7 +47,7 @@ class ComicMainInfoResource extends JsonResource
             $this->merge($this->when(
                 $request->user(),
                 fn () => ([
-                    'cachedLatestViewedEpisode' => new EpisodeResource($this->cacheLatestViewedEpisodeByRequestUser?->episode),
+                    'cachedLatestViewedEpisode' => new EpisodeResource($this->cachedLatestViewedEpisodeByRequestUser?->episode),
                     'comicUserListSlug' => $this->comicUserListEntries()->whereBelongsTo($request->user())->first()?->comicUserList?->slug,
                 ]),
                 [

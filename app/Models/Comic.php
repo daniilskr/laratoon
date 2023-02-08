@@ -68,9 +68,9 @@ class Comic extends Model implements HasCommentable, HasLikeable
         return $this->hasMany(Episode::class);
     }
 
-    public function cacheLatestViewedEpisodeByRequestUser()
+    public function cachedLatestViewedEpisodeByRequestUser()
     {
-        return $this->hasOne(CacheLatestViewedEpisodeByUser::class)->whereUser(request()->user() ?? -1);
+        return $this->hasOne(CachedLatestViewedEpisodeByUser::class)->whereUser(request()->user() ?? -1);
     }
 
     public function latestEpisode()

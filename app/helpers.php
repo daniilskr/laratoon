@@ -23,7 +23,7 @@ if (! function_exists('modelKeys')) {
      * @template TKey of array-key
      * @template TValue
      * 
-     * @param Model[]|int[]|Collection<TKey, TValue> $keys
+     * @param int[]|Collection<TKey, TValue> $keys
      * @return int[]|Collection<int, int>
      */
     function modelKeys($keys): Collection

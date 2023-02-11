@@ -31,7 +31,7 @@ if (! function_exists('modelKeys')) {
         $keys = collected($keys);
 
         if ($keys instanceof EloquentCollection) {
-            $keys = $keys->modelKeys();
+            $keys = collect($keys->modelKeys());
         }
 
         return $keys->map(fn (int $i) => $i);

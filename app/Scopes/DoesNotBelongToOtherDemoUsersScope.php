@@ -28,7 +28,7 @@ class DoesNotBelongToOtherDemoUsersScope implements Scope
                         fn ($q, $userId) => $q->where('id', '<>', $userId)
                     ),
             '=',
-            '0'
+            0
         );
     }
 }

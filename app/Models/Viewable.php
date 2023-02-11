@@ -47,6 +47,6 @@ class Viewable extends Model
 
     public function scopeWhereEpisode(Builder $query, int|Episode $episode)
     {
-        return $query->whereEpisodeIn($query, [$episode]);
+        return $query->whereEpisodeIn($episode);
     }
 }

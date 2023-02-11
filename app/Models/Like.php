@@ -22,9 +22,9 @@ class Like extends Model implements BelongsToAUser
         });
     }
 
-    public static function newForUser(User $user): static
+    public static function newForUser(User $user): self
     {
-        $like = new static();
+        $like = new self();
         $like->user()->associate($user);
         
         return $like;

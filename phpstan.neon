@@ -18,4 +18,5 @@ parameters:
 		- '#Call to an undefined static method App\\Models(\\[a-zA-Z]+)+::(orderByDesc|whereHas|where|whereHasMorph|updateOrCreate)\(\)\.#'
 		- '#Call to protected method increment\(\) of class Illuminate\\Database\\Eloquent\\Model\.#'
 		- '#Function [a-zA-Z]*\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.#'
-		- '#Parameter \#1 \$value of function collect expects Illuminate\\Contracts\\Support\\Arrayable<\(int\|string\), mixed>\|iterable<\(int\|string\), mixed>|null, (string|int|) given\.#'
+		- '#Parameter \#1 \$value of function collect expects Illuminate\\Contracts\\Support\\Arrayable<\(int\|string\), mixed>\|iterable<\(int\|string\), mixed>\|null, (string|int) given\.#'
+		- '#Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection<\(int\|string\),Illuminate\\Database\\Eloquent\\Model>::map\(\) expects callable\(Illuminate\\Database\\Eloquent\\Model, \(int\|string\)\): App\\Models(\\[a-zA-Z]+)+\|null, Closure\(App\\Models\\Contracts\\Has([a-zA-Z]+)+\): App\\Models(\\[a-zA-Z]+)+\|null given\.#'

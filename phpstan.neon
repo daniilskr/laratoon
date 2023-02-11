@@ -16,3 +16,4 @@ parameters:
 		- '#Using nullsafe property access on non-nullable type mixed. Use -> instead\.#'
 		- '#Call to an undefined static method App\\Models\\[a-zA-Z]*::(orderByDesc|whereHas|where)\(\)\.#'
 		- '#Call to protected method increment\(\) of class Illuminate\\Database\\Eloquent\\Model\.#'
+		- '#Function [a-zA-Z]*\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.#'

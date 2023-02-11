@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property ?Commentable $commentable
  * @property ?Comment $rootComment
  * @property ?Comment $parentComment
+ * @method static Builder whereRoot(int|Comment $viewables)
  */
 class Comment extends Model implements BelongsToAUser, HasLikeable
 {

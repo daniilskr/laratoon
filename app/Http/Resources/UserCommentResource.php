@@ -10,7 +10,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserCommentResource extends JsonResource
 {
-    protected function getCommentableOwnerLabel(HasCommentable $hasCommentable)
+    protected function getCommentableOwnerLabel(HasCommentable $hasCommentable): string
     {
         $label = match ($hasCommentable::class) {
             Comic::class => $hasCommentable->title,

@@ -11,7 +11,7 @@ use App\Models\User;
 
 class ViewsService
 {
-    public function getTotalForComic(int|Comic $comic)
+    public function getTotalForComic(int|Comic $comic): int
     {
         if (is_int($comic)) {
             $episodeIds = Episode::whereComic($comic)->pluck('id');
@@ -22,7 +22,7 @@ class ViewsService
         return (int) Viewable::whereEpisodeIn($episodeIds)->sum('views_cached_count');
     }
 
-    public function addUserViewIfNone(Viewable $viewable, User $user)
+    public function addUserViewIfNone(Viewable $viewable, User $user): View
     {
         return $viewable->views()->firstOrCreate(['user_id' => $user->id]);
     }
@@ -30,7 +30,7 @@ class ViewsService
     /**
      * What a mess... Maybe I should just denormalize 'views' table to optimize this...
      */
-    public function getLatestViewedEpisodeByUser(User $user, Comic $comic)
+    public function getLatestViewedEpisodeByUser(User $user, Comic $comic): int
     {
         return View::episodesOfComic($comic)
                     ->whereUser($user)
@@ -38,7 +38,7 @@ class ViewsService
                     ->first()?->viewable?->owner?->id;
     }
 
-    public function updateLatestViewedComicEpisode(Episode $episode, User $user)
+    public function updateLatestViewedComicEpisode(Episode $episode, User $user): void
     {
         $latestView = $this->addUserViewIfNone($episode->viewable, $user);
 

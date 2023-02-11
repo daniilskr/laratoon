@@ -13,6 +13,7 @@ use Illuminate\Support\Collection;
 /**
  * @property ?Viewable $viewable
  * @method static Builder whereViewableIn(int[]|Viewable[]|HasViewable[]|Collection|EloquentCollection $viewables)
+ * @method static Builder episodesOfComic(int|Comic $comic)
  */
 class View extends Model implements BelongsToAUser
 {

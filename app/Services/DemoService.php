@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Likeable;
 use App\Models\User;
 use App\Scopes\DoesNotBelongToOtherDemoUsersScope;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -15,7 +16,7 @@ class DemoService
 
     public const DEMO_USERS_MAX_ID = 2000;
 
-    public function getDemoUserIdsRange()
+    public function getDemoUserIdsRange(): array
     {
         return [static::DEMO_USERS_MIN_ID, static::DEMO_USERS_MAX_ID];
     }
@@ -38,14 +39,14 @@ class DemoService
         return $user;
     }
 
-    public function cleanUpDemoUserData()
+    public function cleanUpDemoUserData(): void
     {
         $this->cleanUpComments();
         $this->deleteAllSessions();
         $this->allowToIssueUsedDemoUsers();
     }
 
-    protected function belongsToDemoUsersScope($query)
+    protected function belongsToDemoUsersScope(EloquentBuilder $query): EloquentBuilder 
     {
         return $query->withoutGlobalScope(DoesNotBelongToOtherDemoUsersScope::class)
             ->whereHas(
@@ -54,7 +55,7 @@ class DemoService
             );
     }
 
-    protected function cleanUpComments()
+    protected function cleanUpComments(): void
     {
         Likeable::whereHasMorph(
             'owner',
@@ -73,12 +74,12 @@ class DemoService
             });
     }
 
-    protected function deleteAllSessions()
+    protected function deleteAllSessions(): void
     {
         DB::table('sessions')->delete();
     }
 
-    protected function allowToIssueUsedDemoUsers()
+    protected function allowToIssueUsedDemoUsers(): void
     {
         User::where('issued_for_demo', true)->update([
             'issued_for_demo' => false,

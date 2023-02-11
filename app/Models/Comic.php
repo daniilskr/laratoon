@@ -31,7 +31,7 @@ class Comic extends Model implements HasCommentable, HasLikeable
         'publishing_end' => 'datetime',
     ];
 
-    protected $slugSource = ['title', '-by-', 'author.full_name'];
+    protected array $slugSource = ['title', '-by-', 'author.full_name'];
 
     public function publicationStatus()
     {

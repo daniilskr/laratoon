@@ -11,5 +11,5 @@ class PublicationStatus extends Model
         Concerns\BelongsToManyComics,
         Concerns\HasSlugColumn;
 
-    protected $slugSource = 'name';
+    protected string $slugSource = 'name';
 }

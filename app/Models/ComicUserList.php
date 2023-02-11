@@ -15,7 +15,7 @@ class ComicUserList extends Model
         Concerns\BelongsToAUser,
         Concerns\HasSlugColumn;
 
-    protected $slugSource = ['name'];
+    protected array $slugSource = ['name'];
 
     public function comicUserListEntries()
     {

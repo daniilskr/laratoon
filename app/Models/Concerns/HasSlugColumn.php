@@ -10,7 +10,7 @@ use LogicException;
  * You have to define $slugSource property - a column name or an
  * array of column names which are used to compute the slug.
  *
- * protected $slugSource = ['title', 'number'];
+ * protected array|string $slugSource = ['title', 'number'];
  * => 'pepper-and-carrot-12'
  *
  *
@@ -24,7 +24,7 @@ use LogicException;
  * You can use string literals along with column names,
  * just put dashes around string literals to achieve this
  *
- * protected $slugSource = ['title', '-by-', 'author.full_name'];
+ * protected array|string $slugSource = ['title', '-by-', 'author.full_name'];
  * => 'pepper-and-carrot-by-david-revoy'
  */
 trait HasSlugColumn

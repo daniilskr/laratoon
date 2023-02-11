@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 
 if (! function_exists('modelKey')) {
@@ -18,10 +19,14 @@ if (! function_exists('modelKey')) {
 if (! function_exists('modelKeys')) {
     /**
      * Если это коллекция моделей, то достает из них значения primary key (оно должно быть интом), иначе мапит элементы коллекции в инты.
-     * @param Model[]|int[]|Collection $keys
-     * @return int[]|Collection
+     * 
+     * @template TKey of array-key
+     * @template TValue
+     * 
+     * @param Model[]|int[]|Collection<TKey, TValue> $keys
+     * @return int[]|Collection<int, int>
      */
-    function modelKeys($keys)
+    function modelKeys($keys): Collection
     {
         $keys = collected($keys);
 
@@ -37,7 +42,7 @@ if (! function_exists('whereHasIn')) {
     /**
      * Shorthand for whereHas('relationship', fn($q) => $q->whereIn('column', $values)).
      */
-    function whereHasIn(EloquentBuilder $query, string $relationship, string $column, Collection $values)
+    function whereHasIn(EloquentBuilder $query, string $relationship, string $column, Collection $values): EloquentBuilder
     {
         return $query->whereHas(
             $relationship,
@@ -50,7 +55,7 @@ if (! function_exists('whereHasNoneIn')) {
     /**
      * Shorthand for whereHas('relationship', fn($q) => $q->whereIn('column', $values), '=', 0).
      */
-    function whereHasNoneIn(EloquentBuilder $query, string $relationship, string $column, Collection $values)
+    function whereHasNoneIn(EloquentBuilder $query, string $relationship, string $column, Collection $values): EloquentBuilder
     {
         return $query->whereHas(
             $relationship,
@@ -66,7 +71,7 @@ if (! function_exists('whereHasAllUnique')) {
      * Where has all models of relationship with unique values
      * like  whereHasAllUnique($query, 'tags', 'slug', ['magic', 'fantasy']).
      */
-    function whereHasAllUnique(EloquentBuilder $query, string $relationship, string $column, Collection $values)
+    function whereHasAllUnique(EloquentBuilder $query, string $relationship, string $column, Collection $values): EloquentBuilder
     {
         $values = $values->unique();
 
@@ -84,7 +89,7 @@ if (! function_exists('whereKeyInRaw')) {
      * обертка whereIntegerInRaw(qualified-key-name, $keys).
      * @param Model[]|int[]|Collection $keys
      */
-    function whereKeyInRaw(EloquentBuilder $query, $keys)
+    function whereKeyInRaw(EloquentBuilder $query, $keys): EloquentBuilder
     {
         return $query->whereIntegerInRaw(
             $query->getModel()->getQualifiedKeyName(),
@@ -97,6 +102,12 @@ if (! function_exists('collected')) {
     /**
      * Если $collectable не наследует Illuminate\Support\Collection, то оборачивает его в коллекцию, иначе возвращает как есть
      * Нужно, потому что collect() меняет тип коллекции на Illuminate\Support\Collection, даже если она изначально была Eloquent коллекцией.
+     * 
+     * @template TKey of array-key
+     * @template TValue
+     * 
+     * @param  \Illuminate\Contracts\Support\Arrayable<TKey, TValue>|iterable<TKey, TValue>|null  $collectable
+     * @return \Illuminate\Support\Collection<TKey, TValue>
      */
     function collected($collectable)
     {
@@ -110,7 +121,7 @@ if (! function_exists('repeat')) {
     /**
      * Обертка над for($i=0,$i<$times,$i++){}.
      */
-    function repeat(int $times, callable $callback)
+    function repeat(int $times, callable $callback): void
     {
         if ($times < 0) {
             throw new LogicException('There is no way to repeat something a negative number of times');
@@ -126,7 +137,7 @@ if (! function_exists('isDebug')) {
     /**
      * Проверяет в конфиге, находится ли приложение в дебаг режиме.
      */
-    function isDebug()
+    function isDebug(): bool
     {
         return true === config('app.debug', false);
     }
@@ -136,7 +147,7 @@ if (! function_exists('isLocal')) {
     /**
      * Проверяет в конфиге, запущено ли приложение в локальном окружении(не прод).
      */
-    function isLocal()
+    function isLocal(): bool
     {
         return 'local' === config('app.env', 'production');
     }
@@ -148,7 +159,7 @@ if (! function_exists('genRange')) {
      * $start is treated as $limit when $limit is null
      * https://www.php.net/manual/en/language.generators.overview.php.
      */
-    function genRange($start, $limit = null, $step = 1)
+    function genRange(int $start, ?int $limit = null, int $step = 1): Generator
     {
         if (is_null($limit)) {
             $limit = $start;

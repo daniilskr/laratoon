@@ -31,7 +31,7 @@ class Likeable extends Model
         if (($like = $this->newLike($user))->save()) {
             return $like;
         }
-        
+
         return null;
     }
 

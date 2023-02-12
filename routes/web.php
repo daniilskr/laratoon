@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\DemoLoginController;
 use App\Http\Controllers\VueApplicationController;
 use Illuminate\Support\Facades\Route;
 

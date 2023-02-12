@@ -4,6 +4,7 @@ namespace App\Models\Concerns;
 
 use App\Models\Comic;
 use Illuminate\Database\Eloquent\Builder;
+
 /**
  * @method static Builder whereComic(int|Comic $comic)
  */

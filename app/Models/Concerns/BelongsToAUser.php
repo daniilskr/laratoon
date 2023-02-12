@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @method static Builder whereUser(User|int $user) 
+ * @method static Builder whereUser(User|int $user)
  */
 trait BelongsToAUser
 {

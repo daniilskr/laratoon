@@ -32,7 +32,7 @@ class Comment extends Model implements BelongsToAUser, HasLikeable
     {
         static::created(function (self $comment) {
             $comment->commentable()->increment('comments_cached_count');
-            
+
             if (! $comment->isRoot()) {
                 $comment->rootComment()->increment('root_child_comments_cached_count');
             }
@@ -47,11 +47,10 @@ class Comment extends Model implements BelongsToAUser, HasLikeable
         });
     }
 
-
     /**
-     * Makes new reply with all the associations
+     * Makes new reply with all the associations.
      */
-    public function newReply(User $user, array $attributes): Comment
+    public function newReply(User $user, array $attributes): self
     {
         $reply = $this->commentable->newComment($user, $attributes);
 
@@ -62,9 +61,9 @@ class Comment extends Model implements BelongsToAUser, HasLikeable
     }
 
     /**
-     * Makes new reply with all the associations and saves it into the database
+     * Makes new reply with all the associations and saves it into the database.
      */
-    public function createReply(User $user, array $attributes): ?Comment
+    public function createReply(User $user, array $attributes): ?self
     {
         if (($reply = $this->newReply($user, $attributes))->save()) {
             return $reply;

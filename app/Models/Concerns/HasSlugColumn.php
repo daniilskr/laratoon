@@ -32,7 +32,7 @@ trait HasSlugColumn
     /**
      * @throws Exception
      * @throws LogicException
-    */
+     */
     public function updateSlug()
     {
         if (! property_exists($this, 'slugSource')) {

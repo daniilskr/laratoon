@@ -46,7 +46,7 @@ class DemoService
         $this->allowToIssueUsedDemoUsers();
     }
 
-    protected function belongsToDemoUsersScope(EloquentBuilder $query): EloquentBuilder 
+    protected function belongsToDemoUsersScope(EloquentBuilder $query): EloquentBuilder
     {
         return $query->withoutGlobalScope(DoesNotBelongToOtherDemoUsersScope::class)
             ->whereHas(

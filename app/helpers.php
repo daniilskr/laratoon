@@ -3,7 +3,6 @@
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 
 if (! function_exists('modelKey')) {
@@ -19,10 +18,10 @@ if (! function_exists('modelKey')) {
 if (! function_exists('modelKeys')) {
     /**
      * Если это коллекция моделей, то достает из них значения primary key (оно должно быть интом), иначе мапит элементы коллекции в инты.
-     * 
+     *
      * @template TKey of array-key
      * @template TValue
-     * 
+     *
      * @param int[]|Collection<TKey, TValue> $keys
      * @return int[]|Collection<int, int>
      */
@@ -102,10 +101,10 @@ if (! function_exists('collected')) {
     /**
      * Если $collectable не наследует Illuminate\Support\Collection, то оборачивает его в коллекцию, иначе возвращает как есть
      * Нужно, потому что collect() меняет тип коллекции на Illuminate\Support\Collection, даже если она изначально была Eloquent коллекцией.
-     * 
+     *
      * @template TKey of array-key
      * @template TValue
-     * 
+     *
      * @param  \Illuminate\Contracts\Support\Arrayable<TKey, TValue>|iterable<TKey, TValue>|null  $collectable
      * @return \Illuminate\Support\Collection<TKey, TValue>
      */

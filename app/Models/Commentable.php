@@ -17,9 +17,8 @@ class Commentable extends Model
         'comments_cached_count' => 0,
     ];
 
-
     /**
-     * Makes new comment with all the associations
+     * Makes new comment with all the associations.
      */
     public function newComment(User $user, array $attributes): Comment
     {
@@ -31,7 +30,7 @@ class Commentable extends Model
     }
 
     /**
-     * Makes new comment with all the associations and saves it into the database
+     * Makes new comment with all the associations and saves it into the database.
      */
     public function createComment(User $user, array $attributes): ?Comment
     {

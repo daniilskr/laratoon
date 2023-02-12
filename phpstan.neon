@@ -5,6 +5,7 @@ parameters:
 	inferPrivatePropertyTypeFromConstructor: true
 	checkMissingIterableValueType: false
 	checkGenericClassInNonGenericObjectType: false
+	reportUnmatchedIgnoredErrors: false
 	excludePaths:
 		- %currentWorkingDirectory%/app/Providers/*
 	ignoreErrors:

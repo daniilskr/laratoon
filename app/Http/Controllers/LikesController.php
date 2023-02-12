@@ -11,8 +11,6 @@ class LikesController extends Controller
     public function store(Request $request, Likeable $likeable)
     {
         $likeable->likes()->save(Like::newForUser($request->user()));
-
-        return response('ok');
     }
 
     public function destroy(Request $request, Likeable $likeable)
@@ -20,7 +18,5 @@ class LikesController extends Controller
         /** @var Like */
         $like = $likeable->likes()->whereUser($request->user())->firstOrFail();
         $like->delete();
-
-        return response('ok');
     }
 }

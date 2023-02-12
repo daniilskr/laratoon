@@ -10,9 +10,8 @@ class CommentRepliesController extends Controller
 {
     public function store(StoreCommentRequest $request, Comment $comment)
     {
-        return new CommentResource(Comment::createReply(
+        return new CommentResource($comment->createReply(
             $request->user(),
-            $comment,
             $request->validated(),
         ));
     }

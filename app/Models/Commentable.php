@@ -17,6 +17,10 @@ class Commentable extends Model
         'comments_cached_count' => 0,
     ];
 
+
+    /**
+     * Makes new comment with all the associations
+     */
     public function newComment(User $user, array $attributes): Comment
     {
         $comment = new Comment($attributes);
@@ -26,6 +30,9 @@ class Commentable extends Model
         return $comment;
     }
 
+    /**
+     * Makes new comment with all the associations and saves it into the database
+     */
     public function createComment(User $user, array $attributes): ?Comment
     {
         if (($comment = $this->newComment($user, $attributes))->save()) {

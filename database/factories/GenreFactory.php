@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class GenreFactory extends Factory
 {
+    public const GENRES = [
+        'fantasy', 'sci-fi', 'sports', 'supernatural',
+        'comedy', 'adventure', 'action', 'drama',
+        'detective', 'romance', 'horror',
+    ];
+
     /**
      * Define the model's default state.
      *

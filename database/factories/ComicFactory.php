@@ -4,47 +4,17 @@ namespace Database\Factories;
 
 use App\Models\ComicHeaderBackground;
 use App\Models\ComicPoster;
-use App\Models\Image;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class ComicFactory extends Factory
 {
     public function configure()
     {
-        $posters = [
-            'images/comic-poster-1.png',
-            'images/comic-poster-2.png',
-            'images/comic-poster-3.png',
-        ];
-
-        $headings = [
-            'images/comic-heading-1.png',
-            'images/comic-heading-2.png',
-            'images/comic-heading-3.png',
-        ];
-
         return $this
-            ->has(
-                ComicPoster::factory()
-                    ->has(
-                        Image::factory()
-                            ->sequence(fn () => [
-                                'medium' => Arr::random($posters),
-                            ])
-                    )
-            )
-            ->has(
-                ComicHeaderBackground::factory()
-                    ->has(
-                        Image::factory()
-                            ->sequence(fn () => [
-                                'medium' => Arr::random($headings),
-                            ])
-                    )
-            );
+            ->has(ComicPoster::factory())
+            ->has(ComicHeaderBackground::factory());
     }
 
     /**

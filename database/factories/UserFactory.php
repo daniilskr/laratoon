@@ -2,10 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Image;
 use App\Models\UserAvatar;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 /**
@@ -16,15 +14,7 @@ class UserFactory extends Factory
     public function configure()
     {
         return $this
-            ->has(
-                UserAvatar::factory()
-                    ->has(
-                        Image::factory()
-                            ->sequence(fn () => [
-                                'medium' => 'images/character-poster-'.Arr::random([1, 2]).'.png',
-                            ])
-                    )
-            );
+            ->has(UserAvatar::factory());
     }
 
     /**

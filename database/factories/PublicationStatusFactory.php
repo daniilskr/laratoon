@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PublicationStatusFactory extends Factory
 {
+    public const STATUSES = [
+        'publishing',
+        'finished',
+        'on hiatus',
+        'discounted',
+    ];
+
     /**
      * Define the model's default state.
      *

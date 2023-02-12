@@ -47,19 +47,26 @@ class Comment extends Model implements BelongsToAUser, HasLikeable
         });
     }
 
+
+    /**
+     * Makes new reply with all the associations
+     */
+    public function newReply(User $user, array $attributes): Comment
+    {
+        $reply = $this->commentable->newComment($user, $attributes);
+
+        $reply->rootComment()->associate($this->isRoot() ? $this : $this->rootComment);
+        $reply->parentComment()->associate($this);
+
+        return $reply;
+    }
+
     /**
      * Makes new reply with all the associations and saves it into the database
      */
     public function createReply(User $user, array $attributes): ?Comment
     {
-        $reply = new Comment($attributes);
-
-        $reply->rootComment()->associate($this->isRoot() ? $this : $this->rootComment);
-        $reply->parentComment()->associate($this);
-        $reply->user()->associate($user);
-        $reply->commentable()->associate($this->commentable);
-
-        if ($reply->save()) {
+        if (($reply = $this->newReply($user, $attributes))->save()) {
             return $reply;
         }
 

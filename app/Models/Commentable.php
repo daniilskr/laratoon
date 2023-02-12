@@ -17,6 +17,24 @@ class Commentable extends Model
         'comments_cached_count' => 0,
     ];
 
+    public function newComment(User $user, array $attributes): Comment
+    {
+        $comment = new Comment($attributes);
+        $comment->user()->associate($user);
+        $comment->commentable()->associate($this);
+
+        return $comment;
+    }
+
+    public function createComment(User $user, array $attributes): ?Comment
+    {
+        if (($comment = $this->newComment($user, $attributes))->save()) {
+            return $comment;
+        }
+
+        return null;
+    }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);

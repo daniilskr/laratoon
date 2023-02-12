@@ -11,11 +11,10 @@ class CommentsController extends Controller
 {
     public function store(StoreCommentRequest $request, Commentable $commentable)
     {
-        $comment = new Comment($request->validated());
-        $comment->user()->associate($request->user());
-        $commentable->comments()->save($comment);
-
-        return new CommentResource($comment);
+        return new CommentResource($commentable->createComment(
+            $request->user(),
+            $request->validated(),
+        ));
     }
 
     public function show(Comment $comment)

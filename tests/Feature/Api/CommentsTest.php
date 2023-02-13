@@ -43,6 +43,8 @@ class CommentsTest extends TestCase
         $this->assertDatabaseHas(Comment::class, [
             'comment_text' => $commentText,
             'user_id' => $user->id,
+            'root_comment_id' => null,
+            'parent_comment_id' => null,
             'id' => $id,
         ]);
     }

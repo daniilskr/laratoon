@@ -13,14 +13,20 @@ use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
-class CommentsTest extends TestCase
+class CommentRepliesTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,
+        Helpers\TestsWithUser;
 
-    public function test_can_post_a_comment(): void
+    public function test_can_post_a_comment_reply(): void
     {
-        $response = $this->postComment(
-            $this->createCommentable(),
+        $comment = Comment::factory()
+                        ->for($this->createUser())
+                        ->for(Commentable::factory()->create())
+                        ->create();
+
+        $response = $this->postCommentReply(
+            $comment,
             $this->createUser(),
             $this->randomCommentText(),
         );
@@ -28,10 +34,15 @@ class CommentsTest extends TestCase
         $response->assertStatus(201);
     }
 
-    public function test_posted_comment_appears_in_the_database(): void
+    public function test_posted_reply_appears_in_the_database(): void
     {
-        $response = $this->postComment(
-            $this->createCommentable(),
+        $comment = Comment::factory()
+            ->for($this->createUser())
+            ->for(Commentable::factory()->create())
+            ->create();
+
+        $response = $this->postCommentReply(
+            $comment,
             $user        = $this->createUser(),
             $commentText = $this->randomCommentText(),
         );
@@ -43,21 +54,28 @@ class CommentsTest extends TestCase
         $this->assertDatabaseHas(Comment::class, [
             'comment_text' => $commentText,
             'user_id' => $user->id,
+            'root_comment_id' => $comment->id,
+            'parent_comment_id' => $comment->id,
             'id' => $id,
         ]);
     }
 
-    public function test_can_see_posted_comment_in_commentable_resource(): void
+    public function test_can_see_posted_reply_in_comment_replies_with_root_resource(): void
     {
-        $response = $this->postComment(
-            $commentable = $this->createCommentable(),
+        $comment = Comment::factory()
+            ->for($this->createUser())
+            ->for(Commentable::factory()->create())
+            ->create();
+
+        $response = $this->postCommentReply(
+            $comment,
             $this->createUser(),
             $this->randomCommentText(),
         );
 
         $id = $response->json('data.id');
 
-        $response = $this->get(route('root_comments_of_commentable', ['commentable' => $commentable->id]));
+        $response = $this->get(route('comment_replies_with_root', ['root' => $comment->id]));
 
         $response
             ->assertJson(
@@ -71,12 +89,15 @@ class CommentsTest extends TestCase
             );
     }
 
-    public function test_can_see_posted_comment_in_user_profile(): void
+    public function test_can_see_posted_reply_in_user_profile(): void
     {
-        $commentable = $this->createComic()->commentable;
+        $comment = Comment::factory()
+            ->for($this->createUser())
+            ->for(Comic::factory()->create()->commentable)
+            ->create();
 
-        $response = $this->postComment(
-            $commentable,
+        $response = $this->postCommentReply(
+            $comment,
             $user = $this->createUser(),
             $this->randomCommentText(),
         );
@@ -97,26 +118,29 @@ class CommentsTest extends TestCase
             );
     }
 
-    public function test_posted_comment_increments_commentable_comments_cached_count(): void
+    public function test_posted_reply_increments_commentable_comments_cached_count(): void
     {
-        $commentable = $this->createCommentable();
+        $comment = Comment::factory()
+                        ->for($this->createUser())
+                        ->for($commentable = Commentable::factory()->create())
+                        ->create();
 
-        $this->assertEquals(0, $commentable->comments_cached_count);
+        $this->assertEquals(1, $commentable->refresh()->comments_cached_count);
 
-        $this->postComment(
-            $commentable,
+        $this->postCommentReply(
+            $comment,
             $this->createUser(),
             $this->randomCommentText(),
         );
 
-        $this->assertEquals(1, $commentable->refresh()->comments_cached_count);
+        $this->assertEquals(2, $commentable->refresh()->comments_cached_count);
     }
 
-    protected function postComment(Commentable $commentable, User $user, string $commentText): TestResponse
+    protected function postCommentReply(Comment $comment, User $user, string $commentText): TestResponse
     {
         $response = $this->actingAs($user)->post(
-            route('commentables.comments.store', [
-                'commentable' => $commentable->id,
+            route('comments.replies.store', [
+                'comment' => $comment->id,
             ]),
             [
                 'comment_text' => $commentText,
@@ -129,20 +153,5 @@ class CommentsTest extends TestCase
     protected function randomCommentText(): string
     {
         return Arr::random(CommentFactory::TEXTS);
-    }
-
-    protected function createComic(): Comic
-    {
-        return Comic::factory()->create();
-    }
-
-    protected function createCommentable(): Commentable
-    {
-        return Commentable::factory()->create();
-    }
-
-    protected function createUser(): User
-    {
-        return User::factory()->create();
     }
 }

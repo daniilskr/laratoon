@@ -37,7 +37,7 @@ Route::get('comic-by-slug/{comicSlug}/episodes/{episodeNumber}/main-info', Episo
 Route::get('comic-by-slug/{comic:slug}/episodes', [ComicEpisodesController::class, 'index']);
 
 Route::get('root-comments-of-commentable/{commentable}', CommentableRootCommentsController::class)->name('root_comments_of_commentable');
-Route::get('comment-replies-with-root/{root}', CommentRepliesWithRootController::class);
+Route::get('comment-replies-with-root/{root}', CommentRepliesWithRootController::class)->name('comment_replies_with_root');
 
 Route::get('users/{user}/profile-main-info', UserProfileMainInfoController::class);
 Route::get('users/{user}/comments', UserCommentsController::class)->name('users.comments.show');

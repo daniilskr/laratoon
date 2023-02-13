@@ -2,8 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Author;
 use App\Models\ComicHeaderBackground;
 use App\Models\ComicPoster;
+use App\Models\PublicationStatus;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -14,7 +16,9 @@ class ComicFactory extends Factory
     {
         return $this
             ->has(ComicPoster::factory())
-            ->has(ComicHeaderBackground::factory());
+            ->has(ComicHeaderBackground::factory())
+            ->for(Author::factory())
+            ->for(PublicationStatus::factory());
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PublicationStatus>
@@ -24,7 +25,7 @@ class PublicationStatusFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => Arr::random(self::STATUSES),
         ];
     }
 }

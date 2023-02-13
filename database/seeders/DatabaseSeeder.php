@@ -10,10 +10,7 @@ use App\Models\CharacterRole;
 use App\Models\Episode;
 use App\Models\ComicTag;
 use App\Models\Comment;
-use App\Models\EpisodePage;
-use App\Models\EpisodePoster;
 use App\Models\Genre;
-use App\Models\Image;
 use App\Models\Like;
 use App\Models\Likeable;
 use App\Models\PublicationStatus;
@@ -22,16 +19,12 @@ use App\Models\View;
 use App\Models\Viewable;
 use App\Services\DemoService;
 use Carbon\Carbon;
-use Database\Factories\CharacterRoleFactory;
 use Database\Factories\ComicTagFactory;
-use Database\Factories\EpisodePageFactory;
-use Database\Factories\EpisodePosterFactory;
 use Database\Factories\GenreFactory;
 use Database\Factories\PublicationStatusFactory;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
@@ -181,53 +174,15 @@ class DatabaseSeeder extends Seeder
             CharacterRole::factory()
                 ->for($comic)
                 ->for($character)
-                ->create(['role_type' => Arr::random(CharacterRoleFactory::ROLE_TYPES)]);
+                ->create();
         });
     }
 
     protected function seedEpisodes(Comic $comic)
     {
-        $total = random_int(10, 30);
-
-        $posters = EpisodePosterFactory::POSTERS;
-
-        foreach (genRange(1, $total) as $iteration) {
-            $episodePoster = EpisodePoster::factory()
-                                ->has(
-                                    Image::factory()
-                                        ->state([
-                                            'medium' => $posters[(($iteration - 1) % count($posters))],
-                                        ])
-                                );
-
-            $episode = Episode::factory()
-                    ->for($comic)
-                    ->has($episodePoster)
-                    ->create([
-                        'number' => $iteration,
-                    ]);
-
-            $this->seedEpisodePages($episode);
-        }
-    }
-
-    protected function seedEpisodePages(Episode $episode)
-    {
-        EpisodePage::factory()
-                ->for($episode)
-                ->has(
-                    Image::factory()
-                    ->sequence(
-                        ...collect(EpisodePageFactory::IMAGES)->map(fn ($i) => [
-                            'medium' => $i,
-                        ])
-                    )
-                )
-                ->sequence(
-                    ...collect(range(1, count(EpisodePageFactory::IMAGES)))
-                        ->map(fn ($n) => ['order' => $n])
-                )
-                ->count(count(EpisodePageFactory::IMAGES))
+        Episode::factory()
+                ->for($comic)
+                ->count(random_int(10, 30))
                 ->create();
     }
 

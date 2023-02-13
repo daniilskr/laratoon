@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 
 class CommentFactory extends Factory
 {
@@ -41,6 +42,6 @@ class CommentFactory extends Factory
             'IM NOT CRYING YOU ARE',
         ];
 
-        return $comments[random_int(0, (count($comments) - 1))];
+        return Arr::random($comments);
     }
 }

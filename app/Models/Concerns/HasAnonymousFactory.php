@@ -20,7 +20,7 @@ trait HasAnonymousFactory
                 return [];
             }
         };
-        
+
         $factory->guessModelNamesUsing(fn () => static::class);
 
         return $factory;

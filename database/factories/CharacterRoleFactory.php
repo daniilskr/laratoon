@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\CharacterRoleType;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 
 class CharacterRoleFactory extends Factory
 {
@@ -22,6 +23,7 @@ class CharacterRoleFactory extends Factory
     {
         return [
             'description' => $this->faker->text(64),
+            'role_type' => Arr::random(self::ROLE_TYPES),
         ];
     }
 }

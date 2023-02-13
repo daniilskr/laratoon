@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,6 +15,17 @@ class EpisodePosterFactory extends Factory
         'images/ep-poster-2.png',
         'images/ep-poster-3.png',
     ];
+
+    public function configure()
+    {
+        return $this
+            ->has(
+                Image::factory()
+                    ->sequence(fn ($sequence) => [
+                        'medium' => self::POSTERS[$sequence->index % count(self::POSTERS)],
+                    ])
+            );
+    }
 
     /**
      * Define the model's default state.

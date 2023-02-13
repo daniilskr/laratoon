@@ -17,7 +17,7 @@ class EpisodeFactory extends Factory
                 EpisodePage::factory()
                     ->count(count(EpisodePageFactory::IMAGES))
             )->sequence(fn ($sequence) => [
-                'number' => $sequence->index,
+                'number' => $sequence->index + 1,
             ]);
     }
 

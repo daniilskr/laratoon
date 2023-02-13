@@ -45,7 +45,7 @@ class CommentRepliesTest extends TestCase
     public function test_posted_reply_appears_in_the_database(): void
     {
         $response = $this->postCommentReply(
-            $comment = $this->createRootComment(),
+            $comment     = $this->createRootComment(),
             $user        = $this->createUser(),
             $commentText = $this->randomCommentText(),
         );

@@ -17,6 +17,11 @@ class ComicUserList extends Model
 
     protected array $slugSource = ['name'];
 
+    protected $fillable = [
+        'name',
+        'color',
+    ];
+
     public function comicUserListEntries()
     {
         return $this->hasMany(ComicUserListEntry::class);

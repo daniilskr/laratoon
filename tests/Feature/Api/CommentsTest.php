@@ -39,7 +39,7 @@ class CommentsTest extends TestCase
         $response->assertStatus(201);
     }
 
-    public function test_can_post_a_reply_to_a_reply()
+    public function test_can_post_a_reply_to_a_reply(): void
     {
         $response = $this->postCommentReply(
             $this->postParentReply(),
@@ -94,7 +94,7 @@ class CommentsTest extends TestCase
         ]);
     }
 
-    public function test_posted_reply_to_a_reply_appears_in_the_database()
+    public function test_posted_reply_to_a_reply_appears_in_the_database(): void
     {
         $parentReply = $this->postParentReply(
             $rootComment = $this->createRootComment()

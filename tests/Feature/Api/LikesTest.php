@@ -77,7 +77,7 @@ class LikesTest extends TestCase
         $this->assertEquals(0, $likeable->refresh()->likes_cached_count);
     }
 
-    public function test_can_get_request_user_like_from_model(): void
+    public function test_can_get_request_user_like_from_likeable_model(): void
     {
         $this->actingAs($user = $this->createUser());
         $this->postLike($likeable = $this->createLikeable());

@@ -75,7 +75,7 @@ const like = () => {
 const unlike = () => {
   isLiked.value = false;
   emit("unliked");
-  return axios.delete(`${BACKEND_URL}/api/likeables/${props.likeableId}/unlike`);
+  return axios.delete(`${BACKEND_URL}/api/likeables/${props.likeableId}/like`);
 };
 </script>
 

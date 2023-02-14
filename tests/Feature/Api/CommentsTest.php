@@ -39,7 +39,7 @@ class CommentsTest extends TestCase
         $response->assertStatus(201);
     }
 
-    public function test_can_post_reply_to_a_reply()
+    public function test_can_post_a_reply_to_a_reply()
     {
         $response = $this->postCommentReply(
             $this->postParentReply(),
@@ -94,7 +94,7 @@ class CommentsTest extends TestCase
         ]);
     }
 
-    public function test_posted_reply_to_a_reply_appears_in_database()
+    public function test_posted_reply_to_a_reply_appears_in_the_database()
     {
         $parentReply = $this->postParentReply(
             $rootComment = $this->createRootComment()
@@ -293,6 +293,38 @@ class CommentsTest extends TestCase
         );
 
         $this->assertEquals(3, $rootComment->commentable->refresh()->comments_cached_count);
+    }
+
+    public function test_posted_reply_increments_root_child_comments_cached_count(): void
+    {
+        $comment = $this->createRootComment();
+
+        $this->assertEquals(0, $comment->refresh()->root_child_comments_cached_count);
+
+        $this->postCommentReply(
+            $comment,
+            $this->createUser(),
+            $this->randomCommentText(),
+        );
+
+        $this->assertEquals(1, $comment->refresh()->root_child_comments_cached_count);
+    }
+
+    public function test_posted_reply_to_a_reply_increments_root_child_comments_cached_count(): void
+    {
+        $parentReply = $this->postParentReply(
+            $rootComment = $this->createRootComment()
+        );
+
+        $this->assertEquals(1, $rootComment->refresh()->root_child_comments_cached_count);
+
+        $this->postCommentReply(
+            $parentReply,
+            $this->createUser(),
+            $this->randomCommentText(),
+        );
+
+        $this->assertEquals(2, $rootComment->refresh()->root_child_comments_cached_count);
     }
 
     protected function postComment(Commentable $commentable, User $user, string $commentText): TestResponse

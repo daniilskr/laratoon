@@ -221,9 +221,10 @@ class CommentsTest extends TestCase
 
     public function test_can_see_posted_reply_in_user_profile_resource(): void
     {
+        /** @var Comment */
         $comment = Comment::factory()
                         ->for($this->createUser())
-                        ->for(Comic::factory()->create()->commentable)
+                        ->for($this->createComic()->commentable)
                         ->create();
 
         $response = $this->postCommentReply(
@@ -345,7 +346,7 @@ class CommentsTest extends TestCase
     {
         return Comment::factory()
             ->for($this->createUser())
-            ->for(Commentable::factory()->create())
+            ->for($this->createCommentable())
             ->create();
     }
 

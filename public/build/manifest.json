@@ -1,14 +1,14 @@
 {
   "resources/js/vue/app/main.css": {
-    "file": "assets/main-48655fad.css",
+    "file": "assets/main-c6c8eb3e.css",
     "src": "resources/js/vue/app/main.css"
   },
   "resources/js/vue/app/main.ts": {
-    "file": "assets/main-84107b0e.js",
+    "file": "assets/main-d4919240.js",
     "src": "resources/js/vue/app/main.ts",
     "isEntry": true,
     "css": [
-      "assets/main-48655fad.css"
+      "assets/main-c6c8eb3e.css"
     ]
   }
 }

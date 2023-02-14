@@ -79,10 +79,11 @@ class LikesTest extends TestCase
 
     public function test_can_get_request_user_like_from_model(): void
     {
-        $this->actingAs($this->createUser());
+        $this->actingAs($user = $this->createUser());
         $this->postLike($likeable = $this->createLikeable());
 
         $this->assertNotNull($likeable->refresh()->requestUserLike);
+        $this->assertEquals($user->id, $likeable->refresh()->requestUserLike->user->id);
     }
 
     protected function postLike(?Likeable $likeable = null): TestResponse

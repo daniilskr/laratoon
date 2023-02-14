@@ -193,7 +193,7 @@ class CommentsTest extends TestCase
             );
     }
 
-    public function test_can_see_posted_comment_in_user_profile(): void
+    public function test_can_see_posted_comment_in_user_profile_resource(): void
     {
         $commentable = $this->createComic()->commentable;
 
@@ -219,7 +219,7 @@ class CommentsTest extends TestCase
             );
     }
 
-    public function test_can_see_posted_reply_in_user_profile(): void
+    public function test_can_see_posted_reply_in_user_profile_resource(): void
     {
         $comment = Comment::factory()
                         ->for($this->createUser())

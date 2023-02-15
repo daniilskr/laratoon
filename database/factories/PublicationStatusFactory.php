@@ -17,6 +17,17 @@ class PublicationStatusFactory extends Factory
         'discounted',
     ];
 
+    public function configure()
+    {
+        return $this
+                ->sequence(
+                    ...Arr::map(
+                        self::STATUSES,
+                        fn ($status) => ['name' => $status],
+                    ),
+                );
+    }
+
     /**
      * Define the model's default state.
      *
@@ -25,7 +36,7 @@ class PublicationStatusFactory extends Factory
     public function definition()
     {
         return [
-            'name' => Arr::random(self::STATUSES),
+            //
         ];
     }
 }

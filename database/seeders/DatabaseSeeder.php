@@ -67,40 +67,21 @@ class DatabaseSeeder extends Seeder
     {
         $this->command->line('Seeding tags');
 
-        $tags = collect(ComicTagFactory::TAGS)->map(function ($tag) {
-            return ['name' => $tag];
-        });
-
-        ComicTag::factory()
-                ->count($tags->count())
-                ->sequence(...$tags->all())
-                ->create();
+        ComicTag::factory(count(ComicTagFactory::TAGS))->create();
     }
 
     protected function seedGenres()
     {
         $this->command->line('Seeding genres');
 
-        $genres = collect(GenreFactory::GENRES)->map(function ($genre) {
-            return ['name' => $genre];
-        });
-
-        Genre::factory()
-                ->count($genres->count())
-                ->sequence(...$genres)
-                ->create();
+        Genre::factory(count(GenreFactory::GENRES))->create();
     }
 
     protected function seedPublicationStatuses()
     {
         $this->command->line('Seeding publication statuses');
 
-        $statuses = collect(PublicationStatusFactory::STATUSES)->map(fn ($status) => ['name' => $status]);
-
-        PublicationStatus::factory()
-                ->count($statuses->count())
-                ->sequence(...$statuses)
-                ->create();
+        PublicationStatus::factory(count(PublicationStatusFactory::STATUSES))->create();
     }
 
     protected function seedComics()

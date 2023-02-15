@@ -25,7 +25,9 @@ class CommentsTest extends TestCase
             $this->randomCommentText(),
         );
 
-        $response->assertStatus(201);
+        $response
+            ->assertStatus(201)
+            ->assertJsonPath('data.id', fn ($id) => is_int($id));
     }
 
     public function test_can_post_a_comment_reply(): void
@@ -36,7 +38,9 @@ class CommentsTest extends TestCase
             $this->randomCommentText(),
         );
 
-        $response->assertStatus(201);
+        $response
+            ->assertStatus(201)
+            ->assertJsonPath('data.id', fn ($id) => is_int($id));
     }
 
     public function test_can_post_a_reply_to_a_reply(): void

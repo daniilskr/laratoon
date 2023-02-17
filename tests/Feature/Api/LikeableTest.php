@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
-class LikesTest extends TestCase
+class LikeableTest extends TestCase
 {
     use RefreshDatabase;
 

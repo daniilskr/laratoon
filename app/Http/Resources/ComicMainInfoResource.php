@@ -4,7 +4,6 @@ namespace App\Http\Resources;
 
 use App\Enums\CharacterRoleType;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Services\ViewsService;
 
 class ComicMainInfoResource extends JsonResource
 {
@@ -16,9 +15,6 @@ class ComicMainInfoResource extends JsonResource
      */
     public function toArray($request)
     {
-        /** @var ViewsService */
-        $viewsService = resolve(ViewsService::class);
-
         return [
             'id' => $this->id,
             'slug' => $this->slug,
@@ -33,7 +29,7 @@ class ComicMainInfoResource extends JsonResource
                     'total' => $this->likeable->likes_cached_count,
                 ],
                 'views' => [
-                    'total' => $viewsService->getTotalForComic($this->id),
+                    'total' => $this->getTotalViews($this->id),
                 ],
                 'comments' => [
                     'total' => $this->commentable->comments_cached_count,

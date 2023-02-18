@@ -87,4 +87,33 @@ class Comic extends Model implements HasCommentable, HasLikeable
     {
         return $this->hasMany(ComicUserListEntry::class);
     }
+
+    public static function getLatestViewedEpisodeByUserForComic(User $user, self $comic): int
+    {
+        return View::episodesOfComic($comic)
+                    ->whereUser($user)
+                    ->latest('updated_at')
+                    ->first()?->viewable?->owner?->id;
+    }
+
+    public function getLatestViewedEpisodeByUser(User $user): int
+    {
+        return self::getLatestViewedEpisodeByUserForComic($user, $this);
+    }
+
+    public static function getTotalViewsForComic(int|self $comic): int
+    {
+        if (is_int($comic)) {
+            $episodeIds = Episode::whereComic($comic)->pluck('id');
+        } else {
+            $episodeIds = $comic->episodes()->pluck('id');
+        }
+
+        return (int) Viewable::whereEpisodeIn($episodeIds)->sum('views_cached_count');
+    }
+
+    public function getTotalViews(): int
+    {
+        return self::getTotalViewsForComic($this);
+    }
 }

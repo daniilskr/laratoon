@@ -40,6 +40,11 @@ class Viewable extends Model
         return $this->viewOfUser(request()->user());
     }
 
+    public function addUserViewIfNone(User $user): View
+    {
+        return $this->views()->firstOrCreate(['user_id' => $user->id]);
+    }
+
     public function scopeWhereEpisodeIn(Builder $query, $episodes)
     {
         return $query->whereHasMorph('owner', Episode::class, fn ($qE) => whereKeyInRaw($qE, $episodes));

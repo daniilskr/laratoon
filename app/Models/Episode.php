@@ -28,4 +28,20 @@ class Episode extends Model implements HasCommentable, HasLikeable, HasViewable
     {
         return $this->hasMany(EpisodePage::class);
     }
+
+    public function makeLatestViewedComicEpisodeByUser(User $user): void
+    {
+        $latestView = $this->viewable->addUserViewIfNone($user);
+
+        if (! $latestView->wasRecentlyCreated) {
+            $latestView->touch();
+        }
+
+        CachedLatestViewedEpisodeByUser::updateOrCreate([
+            'user_id' => $user->id,
+            'comic_id' => $this->comic_id,
+        ], [
+            'episode_id' => $this->id,
+        ]);
+    }
 }

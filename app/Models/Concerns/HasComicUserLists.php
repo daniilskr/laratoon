@@ -7,11 +7,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 trait HasComicUserLists
 {
-    use Helpers\TypehintProxyThis;
-
     public function comicUserLists(): HasMany
     {
-        return $this->prxThis()->hasMany(ComicUserList::class);
+        return $this->hasMany(ComicUserList::class);
     }
 
     protected function attachDefaultComicUserLists(self $owner)

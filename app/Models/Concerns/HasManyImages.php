@@ -6,10 +6,8 @@ use App\Models\Image;
 
 trait HasManyImages
 {
-    use Helpers\TypehintProxyThis;
-
     public function images()
     {
-        return $this->prxThis()->morphMany(Image::class, 'imageable');
+        return $this->morphMany(Image::class, 'imageable');
     }
 }

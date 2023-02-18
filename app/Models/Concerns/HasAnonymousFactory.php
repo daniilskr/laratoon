@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 trait HasAnonymousFactory
 {
-    use HasFactory,
-        Helpers\TypehintProxyThis;
+    use HasFactory;
 
     protected static function newFactory()
     {

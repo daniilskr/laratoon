@@ -7,11 +7,9 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 trait HasCommentable
 {
-    use Helpers\TypehintProxyThis;
-
     public function commentable(): MorphOne
     {
-        return $this->prxThis()->morphOne(Commentable::class, 'owner');
+        return $this->morphOne(Commentable::class, 'owner');
     }
 
     protected static function bootHasCommentable()

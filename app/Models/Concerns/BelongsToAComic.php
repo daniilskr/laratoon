@@ -10,15 +10,13 @@ use Illuminate\Database\Eloquent\Builder;
  */
 trait BelongsToAComic
 {
-    use Helpers\TypehintProxyThis;
-
     public function comic()
     {
-        return $this->prxThis()->belongsTo(Comic::class);
+        return $this->belongsTo(Comic::class);
     }
 
     public function scopeWhereComic(Builder $query, int|Comic $comic)
     {
-        return $query->where($this->prxThis()->qualifyColumn('comic_id'), ($comic instanceof Comic) ? $comic->id : $comic);
+        return $query->where($this->qualifyColumn('comic_id'), ($comic instanceof Comic) ? $comic->id : $comic);
     }
 }

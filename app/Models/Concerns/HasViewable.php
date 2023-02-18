@@ -8,11 +8,9 @@ use App\Models\Contracts\HasViewable as HasViewableContract;
 
 trait HasViewable
 {
-    use Helpers\TypehintProxyThis;
-
     public function viewable(): MorphOne
     {
-        return $this->prxThis()->morphOne(Viewable::class, 'owner');
+        return $this->morphOne(Viewable::class, 'owner');
     }
 
     protected static function bootHasViewable()

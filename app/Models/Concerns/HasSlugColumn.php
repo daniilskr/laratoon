@@ -83,10 +83,7 @@ trait HasSlugColumn
     protected static function bootHasSlugColumn()
     {
         static::creating(function (self $instance) {
-            if (
-                isset($instance->doNotUpdateSlugWhenCreating)
-                && true === $instance->doNotUpdateSlugWhenCreating
-            ) {
+            if (true === $instance->doNotUpdateSlugWhenCreating) {
                 return;
             }
 

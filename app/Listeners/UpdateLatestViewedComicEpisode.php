@@ -8,6 +8,6 @@ class UpdateLatestViewedComicEpisode
 {
     public function handle(EpisodeViewedByUser $event): void
     {
-        $event->episode->makeLatestViewedComicEpisodeByUser($event->user);
+        $event->episode->markAsLatestViewedComicEpisodeByUser($event->user);
     }
 }

@@ -88,6 +88,9 @@ class Comic extends Model implements HasCommentable, HasLikeable
         return $this->hasMany(ComicUserListEntry::class);
     }
 
+    /**
+     * Is using complex queries, use $this->cachedLatestViewedEpisodeByRequestUser instead
+     */
     public static function getLatestViewedEpisodeByUserForComic(int|User $user, int|self $comic): ?int
     {
         return View::episodesOfComic($comic)
@@ -96,6 +99,9 @@ class Comic extends Model implements HasCommentable, HasLikeable
                     ->first()?->viewable?->owner?->id;
     }
 
+    /**
+     * Is using complex queries, use $this->cachedLatestViewedEpisodeByRequestUser instead
+     */
     public function getLatestViewedEpisodeByUser(int|User $user): ?int
     {
         return self::getLatestViewedEpisodeByUserForComic($user, $this);

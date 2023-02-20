@@ -21,4 +21,14 @@ class CachedLatestViewedEpisodeByUser extends Model
     {
         return $this->belongsTo(Episode::class);
     }
+
+    public static function updateCache(User|int $user, Comic|int $comic, Episode|int $episode): static
+    {
+        return static::updateOrCreate([
+            'user_id' => modelKey($user),
+            'comic_id' => modelKey($comic),
+        ], [
+            'episode_id' => modelKey($episode),
+        ]);
+    }
 }

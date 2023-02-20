@@ -4,13 +4,14 @@ namespace App\Models\Concerns;
 
 use App\Models\Comic;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @method static Builder whereComic(int|Comic $comic)
  */
 trait BelongsToAComic
 {
-    public function comic()
+    public function comic(): BelongsTo
     {
         return $this->belongsTo(Comic::class);
     }

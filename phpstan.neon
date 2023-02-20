@@ -17,7 +17,7 @@ parameters:
 		- '#Call to an undefined (static )?method Illuminate\\.*#'
 		- '#Unable to resolve the template type (TKey|TValue) in call to function collect.*#'
 		- '#Using nullsafe property access on non-nullable type mixed. Use -> instead\.#'
-		- '#Call to an undefined static method App\\Models(\\[a-zA-Z]+)+::(orderByDesc|whereHas|where|whereHasMorph|updateOrCreate|(find(|OrFail)))\(\)\.#'
+		- '#Call to an undefined static method App\\Models(\\[a-zA-Z]+)+::(orderBy(Desc)?|where(Has(Morph)?)?|update(OrCreate)?|(find(OrFail)?))\(\)\.#'
 		- '#Call to protected method increment\(\) of class Illuminate\\Database\\Eloquent\\Model\.#'
 		- '#Function [a-zA-Z]*\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.#'
 		- '#Parameter \#1 \$value of function collect expects Illuminate\\Contracts\\Support\\Arrayable<\(int\|string\), mixed>\|iterable<\(int\|string\), mixed>\|null, (string|int) given\.#'

@@ -4,10 +4,10 @@ namespace App\Listeners;
 
 use App\Events\EpisodeViewedByUser;
 
-class UpdateLatestViewedComicEpisodeByUser
+class UpdateLatestViewedEpisodeByUser
 {
     public function handle(EpisodeViewedByUser $event): void
     {
-        $event->episode->markAsLatestViewedComicEpisodeByUser($event->user);
+        $event->episode->markAsLatestViewedEpisodeByUser($event->user);
     }
 }

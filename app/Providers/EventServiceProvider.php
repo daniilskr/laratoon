@@ -7,8 +7,8 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use App\Events\EpisodeViewedByUser;
-use App\Listeners\UpdateLatestViewedComicEpisodeByUser;
-use App\Listeners\UpdateCachedLatestViewedComicEpisodeByUser;
+use App\Listeners\UpdateLatestViewedEpisodeByUser;
+use App\Listeners\UpdateCachedLatestViewedEpisodeByUser;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -23,8 +23,8 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         EpisodeViewedByUser::class => [
-            UpdateLatestViewedComicEpisodeByUser::class,
-            UpdateCachedLatestViewedComicEpisodeByUser::class,
+            UpdateLatestViewedEpisodeByUser::class,
+            UpdateCachedLatestViewedEpisodeByUser::class,
         ],
     ];
 

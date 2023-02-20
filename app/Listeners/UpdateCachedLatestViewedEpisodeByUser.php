@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Events\EpisodeViewedByUser;
 use App\Models\CachedLatestViewedEpisodeByUser;
 
-class UpdateCachedLatestViewedComicEpisodeByUser
+class UpdateCachedLatestViewedEpisodeByUser
 {
     public function handle(EpisodeViewedByUser $event): void
     {

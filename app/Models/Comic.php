@@ -89,7 +89,7 @@ class Comic extends Model implements HasCommentable, HasLikeable
     }
 
     /**
-     * Is using complex queries, use $this->cachedLatestViewedEpisodeByRequestUser instead
+     * Is using complex queries, use $this->cachedLatestViewedEpisodeByRequestUser instead.
      */
     public static function getLatestViewedEpisodeByUserForComic(int|User $user, int|self $comic): ?int
     {
@@ -100,7 +100,7 @@ class Comic extends Model implements HasCommentable, HasLikeable
     }
 
     /**
-     * Is using complex queries, use $this->cachedLatestViewedEpisodeByRequestUser instead
+     * Is using complex queries, use $this->cachedLatestViewedEpisodeByRequestUser instead.
      */
     public function getLatestViewedEpisodeByUser(int|User $user): ?int
     {

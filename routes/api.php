@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/demo-login', [DemoLoginController::class, 'login']);
 
 Route::get('comic-by-slug/{comic:slug}/main-info', ComicMainInfoController::class);
-Route::get('comics/{comic}/main-info', ComicMainInfoController::class);
+Route::get('comics/{comic}/main-info', ComicMainInfoController::class)->name('comics.main_info');
 Route::get('comic-by-slug/{comicSlug}/episodes/{episodeNumber}/main-info', EpisodeMainInfoController::class);
 Route::get('comic-by-slug/{comic:slug}/episodes', [ComicEpisodesController::class, 'index']);
 

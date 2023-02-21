@@ -8,20 +8,15 @@ use App\Models\Author;
 use App\Models\Character;
 use App\Models\CharacterRole;
 use App\Models\Episode;
-use App\Models\ComicTag;
 use App\Models\Comment;
-use App\Models\Genre;
 use App\Models\Like;
 use App\Models\Likeable;
-use App\Models\PublicationStatus;
 use App\Models\User;
 use App\Models\View;
 use App\Models\Viewable;
 use App\Services\DemoService;
 use Carbon\Carbon;
 use Database\Factories\ComicTagFactory;
-use Database\Factories\GenreFactory;
-use Database\Factories\PublicationStatusFactory;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Seeder;
@@ -63,61 +58,24 @@ class DatabaseSeeder extends Seeder
         Author::factory(20)->create();
     }
 
-    protected function seedComicTags()
-    {
-        $this->command->line('Seeding tags');
-
-        ComicTag::factory(count(ComicTagFactory::TAGS))->create();
-    }
-
-    protected function seedGenres()
-    {
-        $this->command->line('Seeding genres');
-
-        Genre::factory(count(GenreFactory::GENRES))->create();
-    }
-
-    protected function seedPublicationStatuses()
-    {
-        $this->command->line('Seeding publication statuses');
-
-        PublicationStatus::factory(count(PublicationStatusFactory::STATUSES))->create();
-    }
-
     protected function seedComics()
     {
         $this->command->line('Seeding comics');
-
-        if (0 === Genre::count()) {
-            $this->seedGenres();
-        }
-        $genres = Genre::all();
-
-        if (0 === ComicTag::count()) {
-            $this->seedComicTags();
-        }
-        $tags = ComicTag::all();
 
         if (0 === Author::count()) {
             $this->seedAuthors();
         }
         $authors = Author::all();
 
-        if (0 === PublicationStatus::count()) {
-            $this->seedPublicationStatuses();
-        }
-        $publicationStatuses = PublicationStatus::all();
-
-        $authors->each(function ($author) use ($tags, $genres, $publicationStatuses) {
+        $authors->each(function ($author) {
             $otherComicsByAuthor = collect();
             $this->command->line("<comment>Seeding comics for author {$author->id}</comment>");
 
             foreach (genRange(random_int(2, 5)) as $i) {
                 $comic = Comic::factory()
                     ->for($author)
-                    ->hasAttached($tags->shuffle()->take(random_int(3, min(7, $tags->count()))))
-                    ->hasAttached($genres->shuffle()->take(random_int(1, 3)))
-                    ->for($publicationStatuses->random())
+                    ->hasTagsAttached(random_int(2, count(ComicTagFactory::TAGS)))
+                    ->hasGenresAttached(random_int(1, 2))
                     ->create();
 
                 $this->seedCharacters($comic, $otherComicsByAuthor);

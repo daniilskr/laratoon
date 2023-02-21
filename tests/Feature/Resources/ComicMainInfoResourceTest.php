@@ -27,6 +27,7 @@ class ComicMainInfoResourceTest extends TestCase
                     ->hasMainCharacters()
                     ->hasOtherComicsByAuthor()
                     ->hasTagsAttached(3)
+                    ->hasComicUserListEntryAttached($user->comicUserLists->first())
                     ->create();
 
         $response = $this->get(route(
@@ -64,6 +65,7 @@ class ComicMainInfoResourceTest extends TestCase
                 'commentable' => [
                     'id' => 'integer',
                 ],
+                'comicUserListSlug' => 'string',
                 'cachedLatestViewedEpisode' => [
                     'id' => 'integer',
                     'number' => 'integer',

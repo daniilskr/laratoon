@@ -11,6 +11,7 @@ use App\Models\Comic;
 use App\Models\ComicHeaderBackground;
 use App\Models\ComicPoster;
 use App\Models\ComicTag;
+use App\Models\ComicUserList;
 use App\Models\Episode;
 use App\Models\Genre;
 use App\Models\PublicationStatus;
@@ -119,6 +120,17 @@ class ComicFactory extends Factory
             Comic::factory($count)
                 ->for($comic->author)
                 ->create();
+        });
+    }
+
+    public function hasComicUserListEntryAttached(ComicUserList $comicUserList)
+    {
+        return $this->afterCreating(function (Comic $comic) use ($comicUserList) {
+            $comic->comicUserListEntries()->updateOrCreate([
+                'user_id' => modelKey($comicUserList->user),
+            ], [
+                'comic_user_list_id' => modelKey($comicUserList),
+            ]);
         });
     }
 

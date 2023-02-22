@@ -15,15 +15,19 @@ class EpisodeMainInfoControllerTest extends TestCase
 
     public function test_json_structure_of_the_resource_response_matches_the_specification(): void
     {
+        /** @var Comic */
         $comic = Comic::factory()
-                    ->has(Episode::factory(1))
-                    ->create();
+            ->has(Episode::factory(1))
+            ->create();
+
+        /** @var Episode */
+        $episode = $comic->episodes->first();
 
         $response = $this->get(route(
             'comic_by_slug.episode_by_number.main_info',
             [
                 'comicSlug' => $comic->slug,
-                'episodeNumber' => ($episode = $comic->episodes->first())->number,
+                'episodeNumber' => $episode->number,
             ],
         ));
 

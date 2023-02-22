@@ -7,6 +7,8 @@ use App\Models\Contracts\HasLikeable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Events\CommentCreated;
+use App\Events\CommentDeleted;
 
 /**
  * @property ?Commentable $commentable
@@ -20,6 +22,11 @@ class Comment extends Model implements BelongsToAUser, HasLikeable
         Concerns\BelongsToAUser,
         Concerns\HasLikeable;
 
+    protected $dispatchesEvents = [
+        'created' => CommentCreated::class,
+        'deleted' => CommentDeleted::class,
+    ];
+
     protected $attributes = [
         'root_child_comments_cached_count' => 0,
     ];
@@ -27,25 +34,6 @@ class Comment extends Model implements BelongsToAUser, HasLikeable
     protected $fillable = [
         'comment_text',
     ];
-
-    protected static function booted()
-    {
-        static::created(function (self $comment) {
-            $comment->commentable()->increment('comments_cached_count');
-
-            if (! $comment->isRoot()) {
-                $comment->rootComment()->increment('root_child_comments_cached_count');
-            }
-        });
-
-        static::deleted(function (self $comment) {
-            $comment->commentable()->decrement('comments_cached_count');
-
-            if (! $comment->isRoot()) {
-                $comment->rootComment()->decrement('root_child_comments_cached_count');
-            }
-        });
-    }
 
     /**
      * Makes new reply with all the associations.

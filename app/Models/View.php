@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
+use App\Events\ViewCreated;
 
 /**
  * @property ?Viewable $viewable
@@ -20,17 +21,14 @@ class View extends Model implements BelongsToAUser
     use HasFactory,
         Concerns\BelongsToAUser;
 
+    protected $dispatchesEvents = [
+        'created' => ViewCreated::class,
+    ];
+
     protected $fillable = [
         'user_id',
         'viewable_id',
     ];
-
-    protected static function booted()
-    {
-        static::created(function (self $view) {
-            $view->viewable->increment('views_cached_count');
-        });
-    }
 
     public function viewable()
     {

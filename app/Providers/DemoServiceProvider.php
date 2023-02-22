@@ -18,7 +18,7 @@ class DemoServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (! App::runningInConsole()) {
+        if (! App::runningInConsole() && config('demo.scope_hide_other_demo_users_comments')) {
             Comment::addGlobalScope(new DoesNotBelongToOtherDemoUsersScope);
         }
 

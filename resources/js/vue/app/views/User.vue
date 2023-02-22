@@ -35,7 +35,7 @@
                   <StatisticsLikesCount :likes="(userProfileMainInfo && userProfileMainInfo.statistics.likes) || 0" />
                   <StatisticsViewsCount :views="(userProfileMainInfo && userProfileMainInfo.statistics.views) || 0" />
                   <StatisticsCommentsCount :comments="(userProfileMainInfo && userProfileMainInfo.statistics.comments) || 0" />
-                  <!-- <StatisticsLikesCount :likes="user.statistics.stars" /> -->
+                  <StatisticsStarsCount :stars="(userProfileMainInfo && userProfileMainInfo.statistics.stars) || 0" />
                 </div>
               </div>
               <div class="user-page__content__sidebar__block user-page__content__sidebar__block__filler">
@@ -91,6 +91,7 @@ import SkeletonLine from "@/components/Skeleton/SkeletonLine.vue";
 import StatisticsLikesCount from "@/components/Statistics/StatisticsLikesCount.vue";
 import StatisticsCommentsCount from "@/components/Statistics/StatisticsCommentsCount.vue";
 import StatisticsViewsCount from "@/components/Statistics/StatisticsViewsCount.vue";
+import StatisticsStarsCount from "@/components/Statistics/StatisticsStarsCount.vue";
 
 const route = useRoute();
 const router = useRouter();

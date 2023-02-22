@@ -14,6 +14,13 @@ class User extends Authenticatable
         Notifiable,
         Concerns\HasComicUserLists;
 
+    protected $attributes = [
+        'views_cached_count' => 0,
+        'likes_cached_count' => 0,
+        'stars_cached_count' => 0,
+        'comments_cached_count' => 0,
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

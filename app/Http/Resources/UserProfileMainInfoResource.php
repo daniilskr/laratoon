@@ -23,10 +23,10 @@ class UserProfileMainInfoResource extends JsonResource
             'comicUserLists' => ComicUserListResource::collection($this->comicUserLists),
             'avatar' => new ImageResource($this->userAvatar->image),
             'statistics' => [
-                'likes' => Like::whereUser($this->id)->count(),
-                'comments' => Comment::whereUser($this->id)->count(),
-                'views' => View::whereUser($this->id)->count(),
-                'stars' => 0,
+                'likes' => $this->likes_cached_count,
+                'comments' => $this->comments_cached_count,
+                'views' => $this->views_cached_count,
+                'stars' => $this->stars_cached_count,
             ],
         ];
     }

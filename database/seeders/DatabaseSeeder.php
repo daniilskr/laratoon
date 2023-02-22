@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
 
         $chunk = 20;
 
-        repeat(DemoService::DEMO_USERS_MAX_ID / $chunk, function () use ($chunk) {
+        repeat(app(DemoService::class)->maxDemoUserId / $chunk, function () use ($chunk) {
             User::factory($chunk)->create();
         });
     }
@@ -189,8 +189,7 @@ class DatabaseSeeder extends Seeder
         $this->command->line('Seeding comments');
 
         $comicsTotal = $this->ensureComicsSeeded();
-        $demoService = resolve(DemoService::class);
-        $users       = collect()->range(1, min($demoService::DEMO_USERS_MIN_ID, User::count()));
+        $users       = collect()->range(1, min(app(DemoService::class)->minDemoUserId, User::count()));
         $seeded      = 0;
 
         Comic::with('commentable')->chunk(10, function ($comicsChunk) use (

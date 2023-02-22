@@ -12,13 +12,16 @@ use Illuminate\Support\Facades\Log;
 
 class DemoService
 {
-    public const DEMO_USERS_MIN_ID = 1000;
+    public function __construct(
+        public readonly int $minDemoUserId,
+        public readonly int $maxDemoUserId,
+    ) {
 
-    public const DEMO_USERS_MAX_ID = 2000;
+    }
 
     public function getDemoUserIdsRange(): array
     {
-        return [static::DEMO_USERS_MIN_ID, static::DEMO_USERS_MAX_ID];
+        return [$this->minDemoUserId, $this->maxDemoUserId];
     }
 
     public function getDemoUserToAuth(): ?User

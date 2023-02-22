@@ -14,10 +14,7 @@ class ComicMainInfoResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * A basic feature test example.
-     */
-    public function test_resource_response_json_structure_matches_specification(): void
+    public function test_json_structure_of_the_resource_response_matches_the_specification(): void
     {
         $this->actingAs($user = $this->createUser());
 

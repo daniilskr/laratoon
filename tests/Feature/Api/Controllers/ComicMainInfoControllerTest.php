@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Resources;
+namespace Tests\Feature\Api\Controllers;
 
 use App\Models\Comic;
 use App\Models\Episode;
@@ -10,7 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class ComicMainInfoResourceTest extends TestCase
+class ComicMainInfoControllerTest extends TestCase
 {
     use RefreshDatabase;
 

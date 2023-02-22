@@ -36,9 +36,9 @@ export const parseUserProfileMainInfo = (info: any) => ({
   },
 
   statistics: {
-    comments: info.comments,
-    likes: info.likes,
-    views: info.views,
-    stars: info.stars,
+    comments: info.statistics.comments,
+    likes: info.statistics.likes,
+    views: info.statistics.views,
+    stars: info.statistics.stars,
   },
 });

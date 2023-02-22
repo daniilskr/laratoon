@@ -2,6 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Comment;
+use App\Models\Like;
+use App\Models\View;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserProfileMainInfoResource extends JsonResource
@@ -19,12 +22,10 @@ class UserProfileMainInfoResource extends JsonResource
             'name' => $this->name,
             'comicUserLists' => ComicUserListResource::collection($this->comicUserLists),
             'avatar' => new ImageResource($this->userAvatar->image),
-            // TODO: this part is unused right now, but if it will
-            // be used we have to gather actual stats there
             'statistics' => [
-                'likes' => 0,
-                'comments' => 0,
-                'views' => 0,
+                'likes' => Like::whereUser($this->id)->count(),
+                'comments' => Comment::whereUser($this->id)->count(),
+                'views' => View::whereUser($this->id)->count(),
                 'stars' => 0,
             ],
         ];

@@ -33,7 +33,7 @@ Route::post('/demo-login', [DemoLoginController::class, 'login']);
 
 Route::get('comic-by-slug/{comic:slug}/main-info', ComicMainInfoController::class);
 Route::get('comics/{comic}/main-info', ComicMainInfoController::class)->name('comics.main_info');
-Route::get('comic-by-slug/{comicSlug}/episodes/{episodeNumber}/main-info', EpisodeMainInfoController::class);
+Route::get('comic-by-slug/{comicSlug}/episodes/{episodeNumber}/main-info', EpisodeMainInfoController::class)->name('comic_by_slug.episode_by_number.main_info');
 Route::get('comic-by-slug/{comic:slug}/episodes', [ComicEpisodesController::class, 'index']);
 
 Route::get('root-comments-of-commentable/{commentable}', CommentableRootCommentsController::class)->name('root_comments_of_commentable');

@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\Comment;
 use App\Scopes\DoesNotBelongToOtherDemoUsersScope;
 use App\Services\DemoService;
+use Exception;
+use Illuminate\Support\Facades\App;
 
 class DemoServiceProvider extends ServiceProvider
 {
@@ -16,8 +18,15 @@ class DemoServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (! $this->app->runningInConsole()) {
+        if (! App::runningInConsole()) {
             Comment::addGlobalScope(new DoesNotBelongToOtherDemoUsersScope);
+        }
+
+        if (
+            ! App::runningUnitTests()
+            && 'database' !== config('session.driver')
+        ) {
+            throw new Exception("Demo service requires the 'database' session driver to function properly");
         }
     }
 

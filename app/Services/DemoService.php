@@ -16,7 +16,6 @@ class DemoService
         public readonly int $minDemoUserId,
         public readonly int $maxDemoUserId,
     ) {
-
     }
 
     public function getDemoUserIdsRange(): array

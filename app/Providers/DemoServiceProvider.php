@@ -20,6 +20,7 @@ class DemoServiceProvider extends ServiceProvider
             Comment::addGlobalScope(new DoesNotBelongToOtherDemoUsersScope);
         }
     }
+
     /**
      * Register any application services.
      *
@@ -31,7 +32,7 @@ class DemoServiceProvider extends ServiceProvider
             ->when(DemoService::class)
             ->needs('$minDemoUserId')
             ->giveConfig('demo.min_demo_user_id');
-        
+
         $this->app
             ->when(DemoService::class)
             ->needs('$maxDemoUserId')

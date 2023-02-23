@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Builder;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -65,5 +66,34 @@ class User extends Authenticatable
     public function userAvatar()
     {
         return $this->hasOne(UserAvatar::class);
+    }
+
+    /**
+     * User statistics
+     */
+    public function countViews(): int
+    {
+        return View::whereUser($this)->count();
+    }
+
+    public function countLikes(): int
+    {
+        return Like::whereUser($this)->count();
+    }
+
+    public function countStars(): int
+    {
+        $likesOnUserComments = Like::whereHas('likeable', function (Builder $qL)  {
+            $qL->whereHasMorph('owner', [Comment::class], function (Builder $qC) {
+                $qC->whereUser($this);
+            });
+        })->count(); 
+
+        return $likesOnUserComments;
+    }
+
+    public function countComments(): int
+    {
+        return Comment::whereUser($this)->count();
     }
 }

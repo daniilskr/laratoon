@@ -2,9 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Comment;
-use App\Models\Like;
-use App\Models\View;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserProfileMainInfoResource extends JsonResource

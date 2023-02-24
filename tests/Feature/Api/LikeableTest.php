@@ -18,7 +18,7 @@ class LikeableTest extends TestCase
     {
         $this->actingAs($this->createUser());
 
-        $response = $this->postLike();
+        $response = $this->postLike($this->createComment()->likeable);
 
         $response->assertStatus(201);
     }
@@ -26,7 +26,7 @@ class LikeableTest extends TestCase
     public function test_can_delete_like(): void
     {
         $this->actingAs($this->createUser());
-        $this->postLike($likeable = $this->createLikeable());
+        $this->postLike($likeable = $this->createComment()->likeable);
 
         $response = $this->deleteLike($likeable);
         $response->assertStatus(200);
@@ -59,7 +59,7 @@ class LikeableTest extends TestCase
     {
         $this->actingAs($this->createUser());
 
-        $this->assertEquals(0, ($likeable = $this->createLikeable())->likes_cached_count);
+        $this->assertEquals(0, ($likeable = $this->createComment()->likeable)->likes_cached_count);
 
         $this->postLike($likeable);
 
@@ -69,13 +69,62 @@ class LikeableTest extends TestCase
     public function test_deleted_like_decrements_likeable_likes_cached_count(): void
     {
         $this->actingAs($this->createUser());
-        $this->postLike($likeable = $this->createLikeable());
+        $this->postLike($likeable = $this->createComment()->likeable);
 
         $this->assertEquals(1, $likeable->refresh()->likes_cached_count);
 
         $this->deleteLike($likeable);
 
         $this->assertEquals(0, $likeable->refresh()->likes_cached_count);
+    }
+
+    public function test_posted_like_increments_user_likes_cached_count(): void
+    {
+        $this->actingAs($user = $this->createUser());
+
+        $this->assertEquals(0, $user->likes_cached_count);
+
+        $this->postLike();
+
+        $this->assertEquals(1, $user->refresh()->likes_cached_count);
+    }
+
+    public function test_deleted_like_decrements_user_likes_cached_count(): void
+    {
+        $this->actingAs($user = $this->createUser());
+        $this->postLike($likeable = $this->createLikeable());
+
+        $this->assertEquals(1, $user->refresh()->likes_cached_count);
+
+        $this->deleteLike($likeable);
+
+        $this->assertEquals(0, $user->refresh()->likes_cached_count);
+    }
+
+    public function test_posted_like_increments_user_stars_cached_count(): void
+    {
+        $userGiftsStars = $this->createUser();
+        $userGetsStars  = $this->createUser();
+
+        $this->assertEquals(0, $userGetsStars->stars_cached_count);
+
+        $this->actingAs($userGiftsStars);
+        $this->postLike($this->createComment($userGetsStars)->likeable);
+
+        $this->assertEquals(1, $userGetsStars->refresh()->stars_cached_count);
+    }
+
+    public function test_deleted_like_decrements_user_stars_cached_count(): void
+    {
+        $userGiftsStars = $this->createUser();
+        $userGetsStars  = $this->createUser();
+
+        $this->actingAs($userGiftsStars);
+        $this->postLike($likeable = $this->createComment($userGetsStars)->likeable);
+        $this->assertEquals(1, $userGetsStars->refresh()->stars_cached_count);
+
+        $this->deleteLike($likeable);
+        $this->assertEquals(0, $userGetsStars->refresh()->stars_cached_count);
     }
 
     public function test_can_get_request_user_like_from_likeable_model(): void
@@ -103,17 +152,19 @@ class LikeableTest extends TestCase
         ]));
     }
 
-    protected function createLikeable(): Likeable
+    protected function createComment(?User $user = null): Comment
     {
-        /** @var Comment */
-        $comment = Comment::factory()
+        return Comment::factory()
                 ->state([
                     'commentable_id' => 0,
                 ])
-                ->for(User::factory())
+                ->for($user ?? $this->createUser())
                 ->create();
+    }
 
-        return $comment->likeable;
+    protected function createLikeable(): Likeable
+    {
+        return Likeable::factory()->create();
     }
 
     protected function createUser(): User

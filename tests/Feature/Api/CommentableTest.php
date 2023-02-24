@@ -253,6 +253,21 @@ class CommentableTest extends TestCase
             );
     }
 
+    public function test_posted_comment_increments_user_comments_cached_count(): void
+    {
+        $user = $this->createUser();
+
+        $this->assertEquals(0, $user->comments_cached_count);
+
+        $this->postComment(
+            $this->createCommentable(),
+            $user,
+            $this->randomCommentText(),
+        );
+
+        $this->assertEquals(1, $user->refresh()->comments_cached_count);
+    }
+
     public function test_posted_comment_increments_commentable_comments_cached_count(): void
     {
         $commentable = $this->createCommentable();

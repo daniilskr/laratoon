@@ -69,7 +69,7 @@ class User extends Authenticatable
     }
 
     /**
-     * User statistics
+     * User statistics.
      */
     public function countViews(): int
     {
@@ -83,11 +83,11 @@ class User extends Authenticatable
 
     public function countStars(): int
     {
-        $likesOnUserComments = Like::whereHas('likeable', function (Builder $qL)  {
+        $likesOnUserComments = Like::whereHas('likeable', function (Builder $qL) {
             $qL->whereHasMorph('owner', [Comment::class], function (Builder $qC) {
                 $qC->whereUser($this);
             });
-        })->count(); 
+        })->count();
 
         return $likesOnUserComments;
     }

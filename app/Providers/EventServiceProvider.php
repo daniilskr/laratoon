@@ -8,26 +8,10 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use App\Events\EpisodeViewedByUser;
 use App\Events\ViewCreated;
-use App\Events\CommentCreated;
-use App\Events\LikeCreated;
-use App\Events\CommentDeleted;
-use App\Events\LikeDeleted;
+use App\Listeners\CommentableCacheSubscriber;
 use App\Listeners\IncrementViewableViewCachedCount;
-use App\Listeners\IncrementUserViewsCachedCount;
-use App\Listeners\IncrementCommentableCommentsCachedCount;
-use App\Listeners\DecrementCommentableCommentsCachedCount;
-use App\Listeners\IncrementRootChildCommentsCachedCount;
-use App\Listeners\DecrementRootChildCommentsCachedCount;
-use App\Listeners\IncrementUserCommentsCachedCount;
-use App\Listeners\DecrementUserCommentsCachedCount;
-use App\Listeners\IncrementLikeableLikesCachedCount;
-use App\Listeners\DecrementLikeableLikesCachedCount;
-use App\Listeners\IncrementUserLikesCachedCount;
-use App\Listeners\DecrementUserLikesCachedCount;
-use App\Listeners\UpdateLatestViewedEpisodeByUser;
-use App\Listeners\UpdateCachedLatestViewedEpisodeByUser;
-use App\Listeners\IncrementUserStarsCachedCount;
-use App\Listeners\DecrementUserStarsCachedCount;
+use App\Listeners\LikeableCacheSubscriber;
+use App\Listeners\UserCacheStatsSubscriber;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -41,35 +25,25 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
 
+        ViewCreated::class => [
+            IncrementViewableViewCachedCount::class,
+        ],
+
         EpisodeViewedByUser::class => [
             UpdateLatestViewedEpisodeByUser::class,
             UpdateCachedLatestViewedEpisodeByUser::class,
         ],
+    ];
 
-        ViewCreated::class => [
-            IncrementViewableViewCachedCount::class,
-            IncrementUserViewsCachedCount::class,
-        ],
-        CommentCreated::class => [
-            IncrementCommentableCommentsCachedCount::class,
-            IncrementRootChildCommentsCachedCount::class,
-            IncrementUserCommentsCachedCount::class,
-        ],
-        CommentDeleted::class => [
-            DecrementCommentableCommentsCachedCount::class,
-            DecrementRootChildCommentsCachedCount::class,
-            DecrementUserCommentsCachedCount::class,
-        ],
-        LikeCreated::class => [
-            IncrementLikeableLikesCachedCount::class,
-            IncrementUserLikesCachedCount::class,
-            IncrementUserStarsCachedCount::class,
-        ],
-        LikeDeleted::class => [
-            DecrementLikeableLikesCachedCount::class,
-            DecrementUserLikesCachedCount::class,
-            DecrementUserStarsCachedCount::class,
-        ],
+    /**
+     * The subscriber classes to register.
+     *
+     * @var array
+     */
+    protected $subscribe = [
+        UserCacheStatsSubscriber::class,
+        LikeableCacheSubscriber::class,
+        CommentableCacheSubscriber::class,
     ];
 
     /**

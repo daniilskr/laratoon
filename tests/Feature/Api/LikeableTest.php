@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Api;
 
+use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Likeable;
 use App\Models\User;
@@ -104,7 +105,12 @@ class LikeableTest extends TestCase
 
     protected function createLikeable(): Likeable
     {
-        return Likeable::factory()->create();
+        return Comment::factory()
+                ->state([
+                    'commentable_id' => 0,
+                ])
+                ->for(User::factory())
+                ->create()->likeable;
     }
 
     protected function createUser(): User

@@ -105,12 +105,15 @@ class LikeableTest extends TestCase
 
     protected function createLikeable(): Likeable
     {
-        return Comment::factory()
+        /** @var Comment */
+        $comment = Comment::factory()
                 ->state([
                     'commentable_id' => 0,
                 ])
                 ->for(User::factory())
-                ->create()->likeable;
+                ->create();
+        
+        return $comment->likeable;
     }
 
     protected function createUser(): User

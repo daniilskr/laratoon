@@ -22,7 +22,7 @@ class UserCacheStatsSubscriber
         $event->comment->user->$action('comments_cached_count');
     }
 
-    public function incrementUserViewsCachedCount(ViewCreated $event)
+    public function incrementUserViewsCachedCount(ViewCreated $event): void
     {
         $event->view->user->increment('views_cached_count');
     }
@@ -53,7 +53,7 @@ class UserCacheStatsSubscriber
         }
     }
 
-    public function handleLikeCreatedOrDeleted(LikeCreated|LikeDeleted $event)
+    public function handleLikeCreatedOrDeleted(LikeCreated|LikeDeleted $event): void
     {
         $this->decrementOrIncrementUserLikesCachedCount($event);
         $this->decrementOrIncrementUserStarsCachedCount($event);

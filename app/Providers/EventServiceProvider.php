@@ -11,6 +11,8 @@ use App\Events\ViewCreated;
 use App\Listeners\CommentableCacheSubscriber;
 use App\Listeners\IncrementViewableViewCachedCount;
 use App\Listeners\LikeableCacheSubscriber;
+use App\Listeners\UpdateLatestViewedEpisodeByUser;
+use App\Listeners\UpdateCachedLatestViewedEpisodeByUser;
 use App\Listeners\UserCacheStatsSubscriber;
 
 class EventServiceProvider extends ServiceProvider

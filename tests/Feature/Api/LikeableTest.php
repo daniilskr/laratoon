@@ -127,6 +127,26 @@ class LikeableTest extends TestCase
         $this->assertEquals(0, $userGetsStars->refresh()->stars_cached_count);
     }
 
+    public function test_posted_like_on_own_comment_does_not_increment_user_stars_cached_count(): void
+    {
+        $this->actingAs($user = $this->createUser());
+        $this->assertEquals(0, $user->stars_cached_count);
+
+        $this->postLike($this->createComment($user)->likeable);
+        $this->assertEquals(0, $user->refresh()->stars_cached_count);
+    }
+
+    public function test_deleted_like_on_own_comment_does_not_decrement_user_stars_cached_count(): void
+    {
+        $this->actingAs($user = $this->createUser());
+
+        $this->postLike($likeable = $this->createComment($user)->likeable);
+        $this->assertEquals(0, $user->refresh()->stars_cached_count);
+
+        $this->deleteLike($likeable);
+        $this->assertEquals(0, $user->refresh()->stars_cached_count);
+    }
+
     public function test_can_get_request_user_like_from_likeable_model(): void
     {
         $this->actingAs($user = $this->createUser());

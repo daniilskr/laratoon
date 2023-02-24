@@ -20,4 +20,9 @@ trait BelongsToAUser
     {
         return $query->where($this->qualifyColumn('user_id'), ($user instanceof User) ? $user->id : $user);
     }
+
+    public function scopeWhereUserNot(Builder $query, User|int $user)
+    {
+        return $query->where($this->qualifyColumn('user_id'), '<>', ($user instanceof User) ? $user->id : $user);
+    }
 }

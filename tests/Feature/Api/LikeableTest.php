@@ -112,7 +112,7 @@ class LikeableTest extends TestCase
                 ])
                 ->for(User::factory())
                 ->create();
-        
+
         return $comment->likeable;
     }
 

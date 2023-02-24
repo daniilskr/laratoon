@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @method static Builder whereUser(User|int $user)
+ * @method static Builder whereUserNot(User|int $user)
  */
 trait BelongsToAUser
 {

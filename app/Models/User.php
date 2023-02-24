@@ -83,13 +83,9 @@ class User extends Authenticatable
 
     public function countStars(): int
     {
-        $likesOnUserComments = Like::whereUserNot($this)->whereHas('likeable', function (Builder $qL) {
-            $qL->whereHasMorph('owner', [Comment::class], function (Builder $qC) {
-                $qC->whereUser($this);
-            });
-        })->count();
-
-        return $likesOnUserComments;
+        return Like::whereUserNot($this)
+                ->whereCommentOfUser($this)
+                ->count();
     }
 
     public function countComments(): int

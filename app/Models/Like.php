@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Contracts\BelongsToAUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Events\LikeCreated;
 use App\Events\LikeDeleted;
@@ -21,5 +22,14 @@ class Like extends Model implements BelongsToAUser
     public function likeable()
     {
         return $this->belongsTo(Likeable::class);
+    }
+
+    public function scopeWhereCommentOfUser(Builder $query, User|int $user)
+    {
+        return $query->whereHas('likeable', function (Builder $qL) use ($user) {
+            $qL->whereHasMorph('owner', [Comment::class], function (Builder $qC) use ($user) {
+                $qC->whereUser(modelKey($user));
+            });
+        });
     }
 }

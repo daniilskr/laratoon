@@ -4,36 +4,32 @@ namespace App\Listeners;
 
 use App\Events\CommentCreated;
 use App\Events\CommentDeleted;
+use App\Models\Comment;
 use Illuminate\Events\Dispatcher;
 
 class CommentableCacheSubscriber
 {
-    protected function decrementOrIncrementCommentableCommentsCachedCount(CommentCreated|CommentDeleted $event): void
+    protected function decrementOrIncrementCommentableCommentsCachedCount(Comment $comment, string $action): void
     {
-        $action = match ($event::class) {
-            CommentDeleted::class => 'decrement',
-            CommentCreated::class => 'increment',
-        };
-
-        $event->comment->commentable()->$action('comments_cached_count');
+        $comment->commentable()->$action('comments_cached_count');
     }
 
-    protected function decrementOrIncrementRootChildCommentsCachedCount(CommentCreated|CommentDeleted $event): void
+    protected function decrementOrIncrementRootChildCommentsCachedCount(Comment $comment, string $action): void
     {
-        if (! ($comment = $event->comment)->isRoot()) {
-            $action = match ($event::class) {
-                CommentDeleted::class => 'decrement',
-                CommentCreated::class => 'increment',
-            };
-
+        if (! $comment->isRoot()) {
             $comment->rootComment()->$action('root_child_comments_cached_count');
         }
     }
 
     public function handleCommentCreatedOrDeleted(CommentCreated|CommentDeleted $event): void
     {
-        $this->decrementOrIncrementCommentableCommentsCachedCount($event);
-        $this->decrementOrIncrementRootChildCommentsCachedCount($event);
+        $action = match ($event::class) {
+            CommentDeleted::class => 'decrement',
+            CommentCreated::class => 'increment',
+        };
+
+        $this->decrementOrIncrementCommentableCommentsCachedCount($event->comment, $action);
+        $this->decrementOrIncrementRootChildCommentsCachedCount($event->comment, $action);
     }
 
     /**

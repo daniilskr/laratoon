@@ -31,7 +31,7 @@ class Episode extends Model implements HasCommentable, HasLikeable, HasViewable
 
     public function markAsLatestViewedEpisodeByUser(User $user): void
     {
-        $latestView = $this->viewable->addUserViewIfNone($user);
+        $latestView = $this->viewable->firstOrCreateViewForUser($user);
 
         if (! $latestView->wasRecentlyCreated) {
             $latestView->touch();

@@ -40,7 +40,7 @@ class Viewable extends Model
         return $this->viewOfUser(request()->user());
     }
 
-    public function addUserViewIfNone(User $user): View
+    public function firstOrCreateViewForUser(User $user): View
     {
         return $this->views()->firstOrCreate(['user_id' => $user->id]);
     }

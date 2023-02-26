@@ -15,8 +15,8 @@ class EpisodeViewedByUser
      * Create a new event instance.
      */
     public function __construct(
-        public Episode $episode,
-        public User $user,
+        public readonly Episode $episode,
+        public readonly User $user,
     ) {
     }
 }

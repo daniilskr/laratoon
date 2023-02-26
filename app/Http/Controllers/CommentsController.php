@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Resources\CommentResource;
-use App\Models\Comment;
 use App\Models\Commentable;
 
 class CommentsController extends Controller

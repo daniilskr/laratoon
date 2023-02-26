@@ -27,6 +27,15 @@ class ViewsTest extends TestCase
         $this->assertEquals(1, $viewable->refresh()->views_cached_count);
     }
 
+    public function test_creating_user_view_updates_user_views_cached_count(): void
+    {
+        $viewable = $this->createEpisode()->viewable;
+        $this->assertEquals(0, ($user = $this->createUser())->views_cached_count);
+
+        $viewable->firstOrCreateViewForUser($user);
+        $this->assertEquals(1, $user->refresh()->views_cached_count);
+    }
+
     public function test_getting_episode_main_info_dispatches_the_episode_viewed_by_user_event_when_authenticated(): void
     {
         Event::fake(EpisodeViewedByUser::class);

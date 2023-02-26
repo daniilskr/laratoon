@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\DemoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class DemoLoginController extends Controller
 {
@@ -13,7 +14,7 @@ class DemoLoginController extends Controller
         if (Auth::hasUser()) {
             return response()->json([
                 'message' => 'already logged in',
-            ], /* Conflict */ 409);
+            ], SymfonyResponse::HTTP_CONFLICT);
         }
 
         $demoUser = $demoService->getDemoUserToAuth();
@@ -21,7 +22,7 @@ class DemoLoginController extends Controller
         if (is_null($demoUser)) {
             return response()->json([
                 'message' => 'no demo accounts left...',
-            ], 500);
+            ], SymfonyResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         Auth::login($demoUser);
@@ -29,6 +30,6 @@ class DemoLoginController extends Controller
 
         return response()->json([
             'message' => 'successfully logged in',
-        ], 200);
+        ], SymfonyResponse::HTTP_OK);
     }
 }

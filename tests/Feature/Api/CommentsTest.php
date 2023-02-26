@@ -13,7 +13,7 @@ use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
-class CommentableTest extends TestCase
+class CommentsTest extends TestCase
 {
     use RefreshDatabase;
 

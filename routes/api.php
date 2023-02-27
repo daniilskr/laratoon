@@ -49,7 +49,7 @@ Route::get('catalog-filters', CatalogFiltersController::class)->middleware('cach
 Route::get('home-comic-cards-sections', HomeComicCardsSectionsController::class);
 
 Route::middleware('auth')->group(function () {
-    Route::get('current-user', CurrentUserController::class);
+    Route::get('current-user', CurrentUserController::class)->name('current_user');
 
     Route::post('comic-user-lists/not-in-a-list/put-comic/{comic}', [ComicUserListEntriesController::class, 'removeComic']);
     Route::post('comic-user-lists/{comicUserListSlug}/put-comic/{comic}', [ComicUserListEntriesController::class, 'moveComic']);

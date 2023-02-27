@@ -17,7 +17,7 @@ class CurrentUserResource extends JsonResource
         return [
             'id' => $this->id,
             'email' => $this->email,
-            'fullName' => $this->full_name,
+            'fullName' => $this->name,
             'comicUserLists' => ComicUserListResource::collection($this->comicUserLists),
             'avatar' => new ImageResource($this->userAvatar->image),
         ];

@@ -14,10 +14,7 @@ class UserCacheStatsSubscriber
 {
     public function decrementOrIncrementUserCommentsCachedCount(CommentCreated|CommentDeleted $event): void
     {
-        $action = match ($event::class) {
-            CommentDeleted::class => 'decrement',
-            CommentCreated::class => 'increment',
-        };
+        $action = $this->getActionForEvent($event);
 
         $event->comment->user->$action('comments_cached_count');
     }
@@ -29,10 +26,7 @@ class UserCacheStatsSubscriber
 
     protected function decrementOrIncrementUserLikesCachedCount(LikeCreated|LikeDeleted $event): void
     {
-        $action = match ($event::class) {
-            LikeDeleted::class => 'decrement',
-            LikeCreated::class => 'increment',
-        };
+        $action = $this->getActionForEvent($event);
 
         $event->like->user->$action('likes_cached_count');
     }
@@ -44,10 +38,7 @@ class UserCacheStatsSubscriber
         $isByTheSameUser = ($comment = $owner)->user_id === $event->like->user_id;
 
         if ($isComment && ! $isByTheSameUser) {
-            $action = match ($event::class) {
-                LikeDeleted::class => 'decrement',
-                LikeCreated::class => 'increment',
-            };
+            $action = $this->getActionForEvent($event);
 
             $comment->user->$action('stars_cached_count');
         }
@@ -57,6 +48,17 @@ class UserCacheStatsSubscriber
     {
         $this->decrementOrIncrementUserLikesCachedCount($event);
         $this->decrementOrIncrementUserStarsCachedCount($event);
+    }
+
+    /**
+     * @return 'decrement'|'increment'
+     */
+    protected function getActionForEvent(LikeCreated|LikeDeleted|CommentCreated|CommentDeleted $event): string
+    {
+        return match ($event::class) {
+            LikeDeleted::class, CommentDeleted::class => 'decrement',
+            LikeCreated::class, CommentCreated::class => 'increment',
+        };
     }
 
     /**

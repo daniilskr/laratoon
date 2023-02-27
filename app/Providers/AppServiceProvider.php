@@ -53,6 +53,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->bootEloquentRelationships();
+        $this->enforceStrictEloquentModelBehaviour();
+    }
+
+    protected function enforceStrictEloquentModelBehaviour()
+    {
+        Model::preventAccessingMissingAttributes();
+        Model::preventSilentlyDiscardingAttributes();
     }
 
     protected function bootEloquentRelationships()

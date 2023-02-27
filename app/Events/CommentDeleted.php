@@ -6,7 +6,7 @@ use App\Models\Comment;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class CommentDeleted
+final class CommentDeleted
 {
     use Dispatchable, SerializesModels;
 

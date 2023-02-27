@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class EpisodeViewedByUser
+final class EpisodeViewedByUser
 {
     use Dispatchable, SerializesModels;
 

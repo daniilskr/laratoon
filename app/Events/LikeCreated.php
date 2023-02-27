@@ -7,7 +7,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class LikeCreated
+final class LikeCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

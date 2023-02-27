@@ -6,7 +6,7 @@ use App\Models\Like;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class LikeDeleted
+final class LikeDeleted
 {
     use Dispatchable, SerializesModels;
 

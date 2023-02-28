@@ -101,6 +101,40 @@ class LikesTest extends TestCase
         $this->assertEquals(0, $user->refresh()->likes_cached_count);
     }
 
+    public function test_counts_likes_of_user_correctly(): void
+    {
+        $this->actingAs($user = $this->createUser());
+        $this->assertEquals(0, $user->countLikes());
+
+        // Should count
+        $this->postLike();
+        $this->assertEquals(1, $user->countLikes(1));
+        
+        // Should not count
+        $this->actingAs($this->createUser());
+        $this->postLike();
+        $this->assertEquals(1, $user->countLikes(1));
+    }
+
+    public function test_counts_stars_of_user_correctly(): void
+    {
+        $ourUser    = $this->createUser();
+        $ourComment = $this->createComment($ourUser);
+        $otherUser  = $this->createUser();
+
+        $this->assertEquals(0, $ourUser->countStars());
+        
+        // Should not count like on own comment as a star
+        $this->actingAs($ourUser);
+        $this->postLike($ourComment->likeable);
+        $this->assertEquals(0, $ourUser->countStars());
+
+        // Should count other's user like on our comment as a star
+        $this->actingAs($otherUser);
+        $this->postLike($ourComment->likeable);
+        $this->assertEquals(1, $ourUser->countStars());
+    }
+
     public function test_posted_like_increments_user_stars_cached_count(): void
     {
         $userGiftsStars = $this->createUser();
@@ -184,7 +218,7 @@ class LikesTest extends TestCase
 
     protected function createLikeable(): Likeable
     {
-        return Likeable::factory()->create();
+        return $this->createComment()->likeable;
     }
 
     protected function createUser(): User

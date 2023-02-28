@@ -77,7 +77,7 @@ class User extends Authenticatable
 
     public function countLikes(): int
     {
-        return Like::whereUser($this)->count();
+        return $this->likes()->count();
     }
 
     public function countStars(): int
@@ -89,6 +89,6 @@ class User extends Authenticatable
 
     public function countComments(): int
     {
-        return Comment::whereUser($this)->count();
+        return $this->comments()->count();
     }
 }

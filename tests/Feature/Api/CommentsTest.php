@@ -318,7 +318,7 @@ class CommentsTest extends TestCase
         $this->assertEquals(2, $rootComment->refresh()->root_child_comments_cached_count);
     }
 
-    public function test_counts_comments_of_user_correctly()
+    public function test_counts_comments_of_user_correctly(): void
     {
         $user = $this->createUser();
 
@@ -332,7 +332,7 @@ class CommentsTest extends TestCase
         // Comment of another user - should not affect the count
         $this->postComment();
 
-        $this->assertEquals(1, $user->countComments());        
+        $this->assertEquals(1, $user->countComments());
     }
 
     protected function postComment(?Commentable $commentable = null, ?User $user = null, ?string $commentText = null): TestResponse
@@ -390,7 +390,7 @@ class CommentsTest extends TestCase
 
     protected function createCommentable(): Commentable
     {
-        return Commentable::factory()->create();
+        return $this->createComic()->commentable;
     }
 
     protected function createUser(): User

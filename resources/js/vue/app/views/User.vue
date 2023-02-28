@@ -34,7 +34,9 @@
                 >
                   <StatisticsLikesCount :likes="(userProfileMainInfo && userProfileMainInfo.statistics.likes) || 0" />
                   <StatisticsViewsCount :views="(userProfileMainInfo && userProfileMainInfo.statistics.views) || 0" />
-                  <StatisticsCommentsCount :comments="(userProfileMainInfo && userProfileMainInfo.statistics.comments) || 0" />
+                  <StatisticsCommentsCount
+                    :comments="(userProfileMainInfo && userProfileMainInfo.statistics.comments) || 0"
+                  />
                   <StatisticsStarsCount :stars="(userProfileMainInfo && userProfileMainInfo.statistics.stars) || 0" />
                 </div>
               </div>

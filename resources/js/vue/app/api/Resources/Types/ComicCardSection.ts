@@ -11,11 +11,10 @@ export default interface ComicCardSection {
   title: string;
   type: ComicCardSectionType;
   sectionPoster: {
-    medium: string,
-  },
+    medium: string;
+  };
   comicCards: ComicCard[];
 }
-
 
 export const parseComicCardSection = (comicSection: any): ComicCardSection => ({
   title: comicSection.title,
@@ -24,4 +23,4 @@ export const parseComicCardSection = (comicSection: any): ComicCardSection => ({
     medium: comicSection.sectionPoster.medium,
   },
   comicCards: (comicSection.comicCards as any[]).map((comicCard) => parseComicCard(comicCard as any)),
-})
+});

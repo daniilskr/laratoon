@@ -7,13 +7,18 @@
     <div class="home-page__wrapper">
       <div class="home-page__content">
         <template v-for="section in sections" :key="section.title">
-          <div v-if="section.type == ComicCardSectionType.SmallWideCards" class="padding-xy-25 limited-to-content-width bg-color-space-1">
-            <h1 class="thick-uppercase-shrinked-title text-left text-color-accent-5 padding-b-25">{{ section.title }}</h1>
+          <div
+            v-if="section.type == ComicCardSectionType.SmallWideCards"
+            class="padding-xy-25 limited-to-content-width bg-color-space-1"
+          >
+            <h1 class="thick-uppercase-shrinked-title text-left text-color-accent-5 padding-b-25">
+              {{ section.title }}
+            </h1>
             <ComicCardsSectionSmallWideCards :comic-cards="section.comicCards" />
           </div>
 
           <ComicCardsSectionHeading
-            v-if="section.type == ComicCardSectionType.Heading" 
+            v-if="section.type == ComicCardSectionType.Heading"
             title-class="thick-uppercase-title text-left text-color-space-1 padding-b-25"
             :section-title="section.title"
             :section-poster="section.sectionPoster"
@@ -23,7 +28,7 @@
           <ComicCardsSectionGoToMore
             v-if="section.type == ComicCardSectionType.GoToMore"
             title-class="thick-uppercase-title text-left text-color-space-1 padding-b-25"
-            class = "limited-to-content-width bg-color-space-1"
+            class="limited-to-content-width bg-color-space-1"
             :section-title="section.title"
             :section-poster="section.sectionPoster"
             :comic-cards="section.comicCards"

@@ -57,12 +57,12 @@ defineProps<{
         total: number;
       };
     };
-  }[],
+  }[];
   sectionTitle: string;
   titleClass: string;
   sectionPoster: {
-    medium: string,
-  },
+    medium: string;
+  };
 }>();
 </script>
 

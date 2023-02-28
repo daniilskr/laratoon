@@ -19,11 +19,7 @@ class CommentsTest extends TestCase
 
     public function test_can_post_a_comment(): void
     {
-        $response = $this->postComment(
-            $this->createCommentable(),
-            $this->createUser(),
-            $this->randomCommentText(),
-        );
+        $response = $this->postComment();
 
         $response
             ->assertStatus(201)
@@ -34,8 +30,6 @@ class CommentsTest extends TestCase
     {
         $response = $this->postCommentReply(
             $this->createRootComment(),
-            $this->createUser(),
-            $this->randomCommentText(),
         );
 
         $response
@@ -47,8 +41,6 @@ class CommentsTest extends TestCase
     {
         $response = $this->postCommentReply(
             $this->postParentReply(),
-            $this->createUser(),
-            $this->randomCommentText(),
         );
 
         $response
@@ -59,9 +51,8 @@ class CommentsTest extends TestCase
     public function test_posted_comment_appears_in_the_database(): void
     {
         $response = $this->postComment(
-            $this->createCommentable(),
-            $user        = $this->createUser(),
-            $commentText = $this->randomCommentText(),
+            user:        ($user = $this->createUser()),
+            commentText: ($commentText = $this->randomCommentText()),
         );
 
         $response->assertJsonPath('data.id', fn ($id) => is_int($id));
@@ -123,8 +114,6 @@ class CommentsTest extends TestCase
     {
         $response = $this->postComment(
             $commentable = $this->createCommentable(),
-            $this->createUser(),
-            $this->randomCommentText(),
         );
 
         $id = $response->json('data.id');
@@ -147,8 +136,6 @@ class CommentsTest extends TestCase
     {
         $response = $this->postCommentReply(
             $comment = $this->createRootComment(),
-            $this->createUser(),
-            $this->randomCommentText(),
         );
 
         $id = $response->json('data.id');
@@ -175,8 +162,6 @@ class CommentsTest extends TestCase
 
         $replyToReplyId = $this->postCommentReply(
             $parentReply,
-            $this->createUser(),
-            $this->randomCommentText(),
         )->json('data.id');
 
         $response = $this->get(route('comment_replies_with_root', ['root' => $rootComment->id]));
@@ -204,7 +189,6 @@ class CommentsTest extends TestCase
         $response = $this->postComment(
             $commentable,
             $user = $this->createUser(),
-            $this->randomCommentText(),
         );
 
         $id = $response->json('data.id');
@@ -234,7 +218,6 @@ class CommentsTest extends TestCase
         $response = $this->postCommentReply(
             $comment,
             $user = $this->createUser(),
-            $this->randomCommentText(),
         );
 
         $id = $response->json('data.id');
@@ -260,9 +243,7 @@ class CommentsTest extends TestCase
         $this->assertEquals(0, $user->comments_cached_count);
 
         $this->postComment(
-            $this->createCommentable(),
-            $user,
-            $this->randomCommentText(),
+            user: $user,
         );
 
         $this->assertEquals(1, $user->refresh()->comments_cached_count);
@@ -276,8 +257,6 @@ class CommentsTest extends TestCase
 
         $this->postComment(
             $commentable,
-            $this->createUser(),
-            $this->randomCommentText(),
         );
 
         $this->assertEquals(1, $commentable->refresh()->comments_cached_count);
@@ -291,8 +270,6 @@ class CommentsTest extends TestCase
 
         $this->postCommentReply(
             $comment,
-            $this->createUser(),
-            $this->randomCommentText(),
         );
 
         $this->assertEquals(2, $comment->commentable->refresh()->comments_cached_count);
@@ -308,8 +285,6 @@ class CommentsTest extends TestCase
 
         $this->postCommentReply(
             $parentReply,
-            $this->createUser(),
-            $this->randomCommentText(),
         );
 
         $this->assertEquals(3, $rootComment->commentable->refresh()->comments_cached_count);
@@ -323,8 +298,6 @@ class CommentsTest extends TestCase
 
         $this->postCommentReply(
             $comment,
-            $this->createUser(),
-            $this->randomCommentText(),
         );
 
         $this->assertEquals(1, $comment->refresh()->root_child_comments_cached_count);
@@ -340,8 +313,6 @@ class CommentsTest extends TestCase
 
         $this->postCommentReply(
             $parentReply,
-            $this->createUser(),
-            $this->randomCommentText(),
         );
 
         $this->assertEquals(2, $rootComment->refresh()->root_child_comments_cached_count);
@@ -354,32 +325,24 @@ class CommentsTest extends TestCase
         $this->assertEquals(0, $user->countComments());
 
         // Comment of our user - should be counted
-        $this->postComment(
-            $this->createCommentable(),
-            $user,
-            $this->randomCommentText(),
-        );
+        $this->postComment(user: $user);
 
         $this->assertEquals(1, $user->countComments());
 
         // Comment of another user - should not affect the count
-        $this->postComment(
-            $this->createCommentable(),
-            $this->createUser(),
-            $this->randomCommentText(),
-        );
+        $this->postComment();
 
         $this->assertEquals(1, $user->countComments());        
     }
 
-    protected function postComment(Commentable $commentable, User $user, string $commentText): TestResponse
+    protected function postComment(?Commentable $commentable = null, ?User $user = null, ?string $commentText = null): TestResponse
     {
-        $response = $this->actingAs($user)->post(
+        $response = $this->actingAs($user ?? $this->createUser())->post(
             route('commentables.comments.store', [
-                'commentable' => $commentable->id,
+                'commentable' => ($commentable ?? $this->createCommentable())->id,
             ]),
             [
-                'comment_text' => $commentText,
+                'comment_text' => $commentText ?? $this->randomCommentText(),
             ],
         );
 
@@ -397,20 +360,18 @@ class CommentsTest extends TestCase
     protected function postParentReply(?Comment $rootComment = null): Comment
     {
         return Comment::find($this->postCommentReply(
-            $rootComment ?? $this->createRootComment(),
-            $this->createUser(),
-            $this->randomCommentText(),
+            comment: ($rootComment ?? $this->createRootComment()),
         )->json('data.id'));
     }
 
-    protected function postCommentReply(Comment $comment, User $user, string $commentText): TestResponse
+    protected function postCommentReply(Comment $comment, ?User $user = null, ?string $commentText = null): TestResponse
     {
-        $response = $this->actingAs($user)->post(
+        $response = $this->actingAs($user ?? $this->createUser())->post(
             route('comments.replies.store', [
                 'comment' => $comment->id,
             ]),
             [
-                'comment_text' => $commentText,
+                'comment_text' => $commentText ?? $this->randomCommentText(),
             ],
         );
 

@@ -108,12 +108,12 @@ class LikesTest extends TestCase
 
         // Should count
         $this->postLike();
-        $this->assertEquals(1, $user->countLikes(1));
-        
+        $this->assertEquals(1, $user->countLikes());
+
         // Should not count
         $this->actingAs($this->createUser());
         $this->postLike();
-        $this->assertEquals(1, $user->countLikes(1));
+        $this->assertEquals(1, $user->countLikes());
     }
 
     public function test_counts_stars_of_user_correctly(): void
@@ -123,7 +123,7 @@ class LikesTest extends TestCase
         $otherUser  = $this->createUser();
 
         $this->assertEquals(0, $ourUser->countStars());
-        
+
         // Should not count like on own comment as a star
         $this->actingAs($ourUser);
         $this->postLike($ourComment->likeable);

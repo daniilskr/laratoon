@@ -141,6 +141,22 @@ class ViewsTest extends TestCase
         );
     }
 
+    public function test_counts_user_views_correctly(): void
+    {
+        $viewable  = $this->createEpisode()->viewable;
+        $ourUser   = $this->createUser();
+        $otherUser = $this->createUser();
+
+        $this->assertEquals(0, $ourUser->countViews());
+
+        // Should not count other user views
+        $viewable->firstOrCreateViewForUser($otherUser);
+        $this->assertEquals(0, $ourUser->countViews());
+
+        $viewable->firstOrCreateViewForUser($ourUser);
+        $this->assertEquals(1, $ourUser->countViews());
+    }
+
     protected function getEpisodeMainInfo(Episode $episode): TestResponse
     {
         return $this->get(route(

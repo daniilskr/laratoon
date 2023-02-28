@@ -324,12 +324,12 @@ class CommentsTest extends TestCase
 
         $this->assertEquals(0, $user->countComments());
 
-        // Comment of our user - should be counted
+        // The comment of our user - should be counted
         $this->postComment(user: $user);
 
         $this->assertEquals(1, $user->countComments());
 
-        // Comment of another user - should not affect the count
+        // A comment of another user - should not affect the count
         $this->postComment();
 
         $this->assertEquals(1, $user->countComments());

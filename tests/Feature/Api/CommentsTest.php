@@ -347,6 +347,31 @@ class CommentsTest extends TestCase
         $this->assertEquals(2, $rootComment->refresh()->root_child_comments_cached_count);
     }
 
+    public function test_counts_comments_of_user_correctly()
+    {
+        $user = $this->createUser();
+
+        $this->assertEquals(0, $user->countComments());
+
+        // Comment of our user - should be counted
+        $this->postComment(
+            $this->createCommentable(),
+            $user,
+            $this->randomCommentText(),
+        );
+
+        $this->assertEquals(1, $user->countComments());
+
+        // Comment of another user - should not affect the count
+        $this->postComment(
+            $this->createCommentable(),
+            $this->createUser(),
+            $this->randomCommentText(),
+        );
+
+        $this->assertEquals(1, $user->countComments());        
+    }
+
     protected function postComment(Commentable $commentable, User $user, string $commentText): TestResponse
     {
         $response = $this->actingAs($user)->post(

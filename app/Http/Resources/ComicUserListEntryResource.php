@@ -34,7 +34,10 @@ class ComicUserListEntryResource extends JsonResource
                 'slug' => $this->comic->slug,
                 'episodesLeft' => ($this->comic->latestEpisode?->number ?? 0) - ($this->comic->cachedLatestViewedEpisodeByRequestUser?->episode?->number ?? 0),
 
-                'cachedLatestViewedEpisode' => new EpisodeResource($this->comic->cachedLatestViewedEpisodeByRequestUser?->episode),
+                'cachedLatestViewedEpisode' => new EpisodeResource(
+                    // TODO: Maybe it is better to show for owner of the comicUserList instead of current user?
+                    $this->comic->cachedLatestViewedEpisodeByRequestUser?->episode,
+                ),
                 'comicPoster' => new ImageResource($this->comic->comicPoster->image),
                 'author' => [
                     'id' => $this->comic->author->id,

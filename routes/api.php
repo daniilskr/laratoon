@@ -42,7 +42,7 @@ Route::get('comment-replies-with-root/{root}', CommentRepliesWithRootController:
 Route::get('users/{user}/profile-main-info', UserProfileMainInfoController::class)->name('users.profile_main_info');
 Route::get('users/{user}/comments', UserCommentsController::class)->name('users.comments.show');
 
-Route::get('comic-user-lists/{comicUserList}/entries', [ComicUserListEntriesController::class, 'index']);
+Route::get('comic-user-lists/{comicUserList}/entries', [ComicUserListEntriesController::class, 'index'])->name('comic_user_lists.entries');
 Route::get('catalog', CatalogEntriesController::class)->name('catalog');
 Route::get('catalog-filters', CatalogFiltersController::class)->middleware('cache.headers:public;max_age=600;etag');
 
@@ -51,8 +51,8 @@ Route::get('home-comic-cards-sections', HomeComicCardsSectionsController::class)
 Route::middleware('auth')->group(function () {
     Route::get('current-user', CurrentUserController::class)->name('current_user');
 
-    Route::post('comic-user-lists/not-in-a-list/put-comic/{comic}', [ComicUserListEntriesController::class, 'removeComic']);
-    Route::post('comic-user-lists/{comicUserListSlug}/put-comic/{comic}', [ComicUserListEntriesController::class, 'moveComic']);
+    Route::post('comic-user-lists/not-in-a-list/put-comic/{comic}', [ComicUserListEntriesController::class, 'removeComic'])->name('comic_user_lists.remove_comic');
+    Route::post('comic-user-lists/{comicUserListSlug}/put-comic/{comic}', [ComicUserListEntriesController::class, 'moveComic'])->name('comic_user_lists.by_slug.put_comic');
 
     Route::apiResource('commentables.comments', CommentsController::class)->shallow()->only(['store']);
     Route::apiResource('comments.replies', CommentRepliesController::class)->only('store');

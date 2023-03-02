@@ -26,6 +26,8 @@ use LogicException;
  *
  * protected array|string $slugSource = ['title', '-by-', 'author.full_name'];
  * => 'pepper-and-carrot-by-david-revoy'
+ * 
+ * @property-read string $slug
  */
 trait HasSlugColumn
 {

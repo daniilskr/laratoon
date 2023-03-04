@@ -57,14 +57,15 @@ class ComicUserListsTest extends TestCase
             ->assertJsonPath('data.0.comic.id', fn ($id) => $comic->id === $id);
     }
 
-    public function test_json_structure_of_the_comic_user_list_entries_resource_response_matches_the_specification()
+    public function test_json_structure_of_the_comic_user_list_entries_resource_response_matches_the_specification(): void
     {
+        /** @var ComicUserListEntry $comicUserListEntry */
         $comicUserListEntry = ComicUserListEntry::factory()
                                         ->for($user = $this->createUser())
                                         ->for($user->comicUserLists()->first())
-                                        ->for(Comic::factory()
-                                            ->has(Episode::factory())
-                                            ->create()
+                                        ->for(
+                                            Comic::factory()
+                                                ->has(Episode::factory())
                                         )
                                         ->create();
 

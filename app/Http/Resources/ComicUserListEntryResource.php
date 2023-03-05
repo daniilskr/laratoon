@@ -36,6 +36,7 @@ class ComicUserListEntryResource extends JsonResource
         /** @var CachedLatestViewedEpisodesRepository */
         $repository = app(CachedLatestViewedEpisodesRepository::class);
 
+        // TODO: Maybe it is better to show for owner of the comicUserList instead of current user?
         $cachedLatestViewedEpisode = ($user = $request->user())
                                         ? $repository->getForUserAndComic($user, $this->comic)
                                         : null;
@@ -49,7 +50,6 @@ class ComicUserListEntryResource extends JsonResource
                 'episodesLeft' => ($this->comic->latestEpisode->number ?? 0) - ($cachedLatestViewedEpisode?->episode->number ?? 0),
 
                 'cachedLatestViewedEpisode' => new EpisodeResource(
-                    // TODO: Maybe it is better to show for owner of the comicUserList instead of current user?
                     $cachedLatestViewedEpisode?->episode,
                 ),
                 'comicPoster' => new ImageResource($this->comic->comicPoster->image),

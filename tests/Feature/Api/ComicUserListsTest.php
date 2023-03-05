@@ -3,14 +3,12 @@
 namespace Tests\Feature\Api;
 
 use App\Events\EpisodeViewedByUser;
-use App\Models\CachedLatestViewedEpisodeByUser;
 use App\Models\Comic;
 use App\Models\ComicUserList;
 use App\Models\ComicUserListEntry;
 use App\Models\Episode;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Testing\TestResponse;
@@ -30,7 +28,7 @@ class ComicUserListsTest extends TestCase
 
         $this->actingAs($user);
         $response = $this->putComic($comicUserList, $comic);
-        
+
         $response->assertStatus(200);
         $comicUserList->refresh();
         $this->assertCount(1, $comicUserList->comicUserListEntries);
@@ -73,7 +71,7 @@ class ComicUserListsTest extends TestCase
             $comicUserListEntry->comic->episodes->first(),
             $user,
         ));
-                                        
+
         $response = $this->actingAs($user)->get(route(
             'comic_user_lists.entries',
             ['comicUserList' => modelKey($comicUserListEntry->comicUserList)],

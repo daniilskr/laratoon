@@ -28,7 +28,7 @@ class CachedLatestViewedEpisodesRepository
     {
         $key = $this->getKeyFromUserAndComic($user, $comic);
 
-        if(! isset($this->collection[$key]) && $this->lazyLoad) {
+        if (! isset($this->collection[$key]) && $this->lazyLoad) {
             $this->loadForUserAndComics($user, collect([$comic]));
         }
 
@@ -64,6 +64,6 @@ class CachedLatestViewedEpisodesRepository
 
     protected function getKeyFromUserAndComic(int|User $user, int|Comic $comic): string
     {
-        return modelKey($user)."_".modelKey($comic);
+        return modelKey($user).'_'.modelKey($comic);
     }
 }

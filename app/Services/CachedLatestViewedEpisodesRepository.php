@@ -19,7 +19,7 @@ class CachedLatestViewedEpisodesRepository
     ];
 
     public function __construct(
-        public bool $lazyLoad = false,
+        public bool $lazyLoad = true,
     ) {
         $this->collection = new Collection();
     }
@@ -40,9 +40,16 @@ class CachedLatestViewedEpisodesRepository
      */
     public function loadForUserAndComics(User $user, $comics): void
     {
-        $comics = collected($comics)->filter(fn (Comic $comic) => false === isset(
-            $this->collection[$this->getKeyFromUserAndComic($user, $comic)],
-        ));
+        $comics = collected($comics)
+                    // Filter out previously queried
+                    ->filter(fn (Comic $comic) => false === $this->collection->has(
+                        $this->getKeyFromUserAndComic($user, $comic),
+                    ))
+                    // Set default value (null) for all the entities,
+                    // to not query for them again next time
+                    ->each(function (Comic $comic) use ($user) {
+                        $this->collection[$this->getKeyFromUserAndComic($user, $comic)] = null;
+                    });
 
         if ($comics->isEmpty()) {
             return;

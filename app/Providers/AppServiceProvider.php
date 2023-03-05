@@ -17,6 +17,7 @@ use App\Models\EpisodePage;
 use App\Models\Like;
 use App\Models\UserAvatar;
 use App\Models\View;
+use App\Services\CachedLatestViewedEpisodesRepository;
 use Illuminate\Database\Eloquent\Model;
 
 class AppServiceProvider extends ServiceProvider
@@ -42,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
 
     protected function registerSingletons()
     {
-        //
+        $this->app->singleton(CachedLatestViewedEpisodesRepository::class);
     }
 
     /**

@@ -68,9 +68,14 @@ class Comic extends Model implements HasCommentable, HasLikeable
         return $this->hasMany(Episode::class);
     }
 
-    public function cachedLatestViewedEpisodeByRequestUser()
+    public function cachedLatestViewedEpisodeByUsers()
     {
-        return $this->hasOne(CachedLatestViewedEpisodeByUser::class)->whereUser(request()->user() ?? -1);
+        return $this->hasMany(CachedLatestViewedEpisodeByUser::class);
+    }
+
+    public function getCachedLatestViewedEpisodeByRequestUser()
+    {
+        return $this->cachedLatestViewedEpisodeByUsers()->whereUser(request()->user() ?? -1)->first();
     }
 
     public function latestEpisode()
@@ -89,7 +94,7 @@ class Comic extends Model implements HasCommentable, HasLikeable
     }
 
     /**
-     * Is using complex queries, use $this->cachedLatestViewedEpisodeByRequestUser instead.
+     * Is using complex queries, use $this->getCachedLatestViewedEpisodeByRequestUser() instead.
      */
     public static function getLatestViewedEpisodeByUserForComic(int|User $user, int|self $comic): ?int
     {
@@ -100,7 +105,7 @@ class Comic extends Model implements HasCommentable, HasLikeable
     }
 
     /**
-     * Is using complex queries, use $this->cachedLatestViewedEpisodeByRequestUser instead.
+     * Is using complex queries, use $this->getCachedLatestViewedEpisodeByRequestUser() instead.
      */
     public function getLatestViewedEpisodeByUser(int|User $user): ?int
     {

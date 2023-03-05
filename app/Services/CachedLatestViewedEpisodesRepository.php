@@ -32,7 +32,7 @@ class CachedLatestViewedEpisodesRepository
             $this->loadForUserAndComics($user, collect([$comic]));
         }
 
-        return $this->collection[$key] ?? null;
+        return $this->collection[$key];
     }
 
     /**

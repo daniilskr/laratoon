@@ -91,14 +91,14 @@ class AppServiceProvider extends ServiceProvider
                     throw new \LogicException("{$class} does not extend the Eloquent Model class. Probably you forgot to import the class");
                 }
             });
-        }
 
-        if (count($morphMap) !== collect($morphMap)->map(fn ($val) => $val[0])->unique()->count()) {
-            throw new \LogicException('Number keys must be unique in the morph map');
-        }
-
-        if (count($morphMap) !== collect($morphMap)->map(fn ($val) => $val[1])->unique()->count()) {
-            throw new \LogicException('Some class is accuring more than one time in the morph map');
+            if (count($morphMap) !== collect($morphMap)->map(fn ($val) => $val[0])->unique()->count()) {
+                throw new \LogicException('Number keys must be unique in the morph map');
+            }
+    
+            if (count($morphMap) !== collect($morphMap)->map(fn ($val) => $val[1])->unique()->count()) {
+                throw new \LogicException('Some class is accuring more than one time in the morph map');
+            }
         }
 
         Relation::enforceMorphMap(collect($morphMap)->mapWithKeys(fn ($pair) => [$pair[0] => $pair[1]])->toArray());

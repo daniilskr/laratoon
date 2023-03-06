@@ -72,7 +72,7 @@ class ComicUserListsTest extends TestCase
             $user,
         ));
 
-        $response = $this->actingAs($user)->get(route(
+        $response = $this->get(route(
             'comic_user_lists.entries',
             ['comicUserList' => modelKey($comicUserListEntry->comicUserList)],
         ));

@@ -29,7 +29,7 @@ class ComicUserListsTest extends TestCase
         $this->actingAs($user);
         $response = $this->putComic($comicUserList, $comic);
 
-        $response->assertStatus(200);
+        $response->assertOk();
         $comicUserList->refresh();
         $this->assertCount(1, $comicUserList->comicUserListEntries);
         $this->assertEquals($comic->id, $comicUserList->comicUserListEntries->first()->comic->id);
@@ -130,7 +130,7 @@ class ComicUserListsTest extends TestCase
             ['comic' => $comic],
         ));
 
-        $response->assertStatus(200);
+        $response->assertOk();
         $this->assertCount(0, $comicUserList->refresh()->comicUserListEntries);
     }
 

@@ -29,7 +29,7 @@ class LikesTest extends TestCase
         $this->postLike($likeable = $this->createComment()->likeable);
 
         $response = $this->deleteLike($likeable);
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     public function test_posted_like_appears_in_the_database(): void

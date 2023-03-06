@@ -47,7 +47,7 @@ class UserProfileMainInfoControllerTest extends TestCase
         ];
 
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJson(
                 fn (AssertableJson $json) => $json
                 ->whereAllType(Arr::dot($specification))

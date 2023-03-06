@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\Services\LazyLoadDisabled;
 use App\Models\CachedLatestViewedEpisodeByUser;
 use App\Models\Comic;
 use App\Models\User;
@@ -28,8 +29,12 @@ class CachedLatestViewedEpisodesRepository
     {
         $key = $this->getKeyFromUserAndComic($user, $comic);
 
-        if (false === $this->collection->has($key) && $this->lazyLoad) {
-            $this->loadForUserAndComics($user, collect([$comic]));
+        if (! $this->collection->has($key)) {
+            if (! $this->lazyLoad) {
+                throw new LazyLoadDisabled('Lazy loading of entities is disabled, load them eagerly with loadForUserAndComics()');
+            }
+
+            $this->loadForUserAndComics($user, collect([$comic]));    
         }
 
         return $this->collection[$key];

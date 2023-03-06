@@ -35,7 +35,7 @@ class UserCacheStatsSubscriber
     {
         $owner           = $event->like->likeable->owner;
         $isComment       = Comment::class === $owner::class;
-        $isByTheSameUser = ($comment = $owner)->user_id === $event->like->user_id;
+        $isByTheSameUser = ($comment = $owner)->getUserId() === $event->like->getUserId();
 
         if ($isComment && ! $isByTheSameUser) {
             $action = $this->getActionForEvent($event);

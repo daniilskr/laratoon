@@ -66,7 +66,7 @@ class CachedLatestViewedEpisodesRepository
 
     protected function getKeyForEntity(CachedLatestViewedEpisodeByUser $ep): string
     {
-        return $this->getKeyFromUserAndComic($ep->user_id, $ep->comic_id);
+        return $this->getKeyFromUserAndComic($ep->getUserId(), $ep->getComicId());
     }
 
     protected function getKeyFromUserAndComic(int|User $user, int|Comic $comic): string

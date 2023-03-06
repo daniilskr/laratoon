@@ -11,7 +11,7 @@ class UpdateCachedLatestViewedEpisodeByUser
     {
         CachedLatestViewedEpisodeByUser::updateCache(
             $event->user,
-            $event->episode->comic_id,
+            $event->episode->getComicId(),
             $event->episode,
         );
     }

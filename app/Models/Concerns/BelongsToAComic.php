@@ -16,6 +16,11 @@ trait BelongsToAComic
         return $this->belongsTo(Comic::class);
     }
 
+    public function getComicId(): int
+    {
+        return $this->comic()->getParentKey();
+    }
+
     public function scopeWhereComic(Builder $query, int|Comic $comic)
     {
         return $query->where($this->qualifyColumn('comic_id'), ($comic instanceof Comic) ? $comic->id : $comic);

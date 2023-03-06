@@ -16,10 +16,10 @@ class ComicUserListEntryResource extends JsonResource
             'comic.latestEpisode',
         ]);
 
-        if ($user = request()->user()) {
+        if ($resource->isNotEmpty()) {
             /** @var CachedLatestViewedEpisodesRepository */
             $repository = app(CachedLatestViewedEpisodesRepository::class);
-            $repository->loadForUserAndComics($user, $resource->pluck('comic'));
+            $repository->loadForUserAndComics($resource->first()->getUserId(), $resource->pluck('comic'));
         }
 
         return parent::collection($resource);
@@ -36,10 +36,10 @@ class ComicUserListEntryResource extends JsonResource
         /** @var CachedLatestViewedEpisodesRepository */
         $repository = app(CachedLatestViewedEpisodesRepository::class);
 
-        // TODO: Maybe it is better to show for owner of the comicUserList instead of current user?
-        $cachedLatestViewedEpisode = ($user = $request->user())
-                                        ? $repository->getForUserAndComic($user, $this->comic)
-                                        : null;
+        $cachedLatestViewedEpisode = $repository->getForUserAndComic(
+            $this->getUserId(),
+            $this->comic,
+        );
 
         return [
             'id' => $this->id,

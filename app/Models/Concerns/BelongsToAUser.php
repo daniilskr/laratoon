@@ -17,6 +17,11 @@ trait BelongsToAUser
         return $this->belongsTo(User::class);
     }
 
+    public function getUserId(): int
+    {
+        return $this->user()->getParentKey();
+    }
+
     public function scopeWhereUser(Builder $query, User|int $user)
     {
         return $query->where($this->qualifyColumn('user_id'), ($user instanceof User) ? $user->id : $user);

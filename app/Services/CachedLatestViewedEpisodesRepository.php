@@ -24,7 +24,7 @@ class CachedLatestViewedEpisodesRepository
         $this->collection = new Collection();
     }
 
-    public function getForUserAndComic(User $user, Comic $comic): ?CachedLatestViewedEpisodeByUser
+    public function getForUserAndComic(int|User $user, Comic $comic): ?CachedLatestViewedEpisodeByUser
     {
         $key = $this->getKeyFromUserAndComic($user, $comic);
 
@@ -36,18 +36,18 @@ class CachedLatestViewedEpisodesRepository
     }
 
     /**
-     * @param Collection<int,Comic> $comics
+     * @param Collection<int,int|Comic> $comics
      */
-    public function loadForUserAndComics(User $user, $comics): void
+    public function loadForUserAndComics(int|User $user, $comics): void
     {
         $comics = collected($comics)
                     // Filter out previously queried
-                    ->filter(fn (Comic $comic) => false === $this->collection->has(
+                    ->filter(fn (int|Comic $comic) => false === $this->collection->has(
                         $this->getKeyFromUserAndComic($user, $comic),
                     ))
                     // Set default value (null) for all the entities,
                     // to not query for them again next time
-                    ->each(function (Comic $comic) use ($user) {
+                    ->each(function (int|Comic $comic) use ($user) {
                         $this->collection[$this->getKeyFromUserAndComic($user, $comic)] = null;
                     });
 

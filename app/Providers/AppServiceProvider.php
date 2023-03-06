@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->registerTelescope();
         $this->registerSingletons();
+        $this->registerScoped();
     }
 
     protected function registerTelescope()
@@ -43,7 +44,12 @@ class AppServiceProvider extends ServiceProvider
 
     protected function registerSingletons()
     {
-        $this->app->singleton(CachedLatestViewedEpisodesRepository::class);
+        //
+    }
+
+    protected function registerScoped()
+    {
+        $this->app->scoped(CachedLatestViewedEpisodesRepository::class);
     }
 
     /**

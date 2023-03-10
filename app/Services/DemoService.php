@@ -48,7 +48,7 @@ class DemoService
         $this->allowToIssueUsedDemoUsers();
     }
 
-    protected function belongsToDemoUsersScope(EloquentBuilder $query): EloquentBuilder
+    protected function applyBelongsToDemoUsersScope(EloquentBuilder $query): EloquentBuilder
     {
         return $query->withoutGlobalScope(DoesNotBelongToOtherDemoUsersScope::class)
             ->whereHas(
@@ -62,10 +62,10 @@ class DemoService
         Likeable::whereHasMorph(
             'owner',
             Comment::class,
-            fn ($qC) => $this->belongsToDemoUsersScope($qC)
+            fn ($qC) => $this->applyBelongsToDemoUsersScope($qC)
         )->delete();
 
-        $this->belongsToDemoUsersScope(Comment::query())->delete();
+        $this->applyBelongsToDemoUsersScope(Comment::query())->delete();
 
         // Update cache
         Comment::where('root_child_comments_cached_count', '>', 0)

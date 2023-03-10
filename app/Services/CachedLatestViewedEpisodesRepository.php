@@ -25,7 +25,7 @@ class CachedLatestViewedEpisodesRepository
         $this->collection = new Collection();
     }
 
-    public function getForUserAndComic(int|User $user, Comic $comic): ?CachedLatestViewedEpisodeByUser
+    public function getForUserAndComic(int|User $user, int|Comic $comic): ?CachedLatestViewedEpisodeByUser
     {
         $key = $this->getKeyFromUserAndComic($user, $comic);
 

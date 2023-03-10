@@ -34,7 +34,7 @@ class CachedLatestViewedEpisodesRepository
                 throw new LazyLoadDisabled('Lazy loading of entities is disabled, load them eagerly with loadForUserAndComics()');
             }
 
-            $this->loadForUserAndComics($user, collect([$comic]));    
+            $this->loadForUserAndComics($user, collect([$comic]));
         }
 
         return $this->collection[$key];

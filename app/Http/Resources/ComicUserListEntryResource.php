@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\User;
 use App\Services\CachedLatestViewedEpisodesRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 

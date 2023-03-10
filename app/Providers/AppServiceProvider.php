@@ -101,7 +101,7 @@ class AppServiceProvider extends ServiceProvider
             if (count($morphMap) !== collect($morphMap)->map(fn ($val) => $val[0])->unique()->count()) {
                 throw new \LogicException('Number keys must be unique in the morph map');
             }
-    
+
             if (count($morphMap) !== collect($morphMap)->map(fn ($val) => $val[1])->unique()->count()) {
                 throw new \LogicException('Some class is accuring more than one time in the morph map');
             }

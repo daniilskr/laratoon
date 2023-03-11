@@ -21,22 +21,22 @@ class ComicUserListEntriesController extends Controller
 
     public function moveComic(Request $request, string $comicUserListSlug, Comic $comic)
     {
+        /** @var ComicUserList */
         $comicUserList = ComicUserList::whereUser($request->user())
                                 ->whereSlug($comicUserListSlug)
                                 ->firstOrFail();
 
-        $comic->comicUserListEntries()->updateOrCreate([
-            'user_id' => $request->user()->id,
-        ], [
-            'comic_user_list_id' => $comicUserList->id,
-        ]);
+        $comicUserList->moveEntry(
+            $request->user(),
+            $comic,
+        );
     }
 
     public function removeComic(Request $request, Comic $comic)
     {
-        $comic->comicUserListEntries()
-            ->whereBelongsTo($request->user())
-            ->firstOrFail()
-            ->delete();
+        ComicUserList::removeEntry(
+            $request->user(),
+            $comic,
+        );
     }
 }

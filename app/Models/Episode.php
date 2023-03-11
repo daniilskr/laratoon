@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\EpisodeViewedByUser;
 use App\Models\Contracts\HasCommentable;
 use App\Models\Contracts\HasLikeable;
 use App\Models\Contracts\HasViewable;
@@ -36,5 +37,13 @@ class Episode extends Model implements HasCommentable, HasLikeable, HasViewable
         if (! $latestView->wasRecentlyCreated) {
             $latestView->touch();
         }
+    }
+
+    /**
+     * Dispatch EpisodeViewedByUser event
+     */
+    public function dispatchViewedByUser(User $user)
+    {
+        event(new EpisodeViewedByUser($this, $user));
     }
 }

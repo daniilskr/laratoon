@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Services\DemoService;
+use App\Services\Demo\DemoDataCleaner;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -18,8 +18,8 @@ class CleanUpDemoUsers implements ShouldQueue
      *
      * @return void
      */
-    public function handle(DemoService $demoService)
+    public function handle(DemoDataCleaner $cleaner)
     {
-        $demoService->cleanUpDemoUserData();
+        $cleaner->cleanUpDemoUserData();
     }
 }

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\DemoService;
+use App\Services\Demo\DemoUserPool;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class DemoLoginController extends Controller
 {
-    public function login(Request $request, DemoService $demoService)
+    public function login(Request $request, DemoUserPool $pool)
     {
         if (Auth::hasUser()) {
             return response()->json([
@@ -17,7 +17,7 @@ class DemoLoginController extends Controller
             ], SymfonyResponse::HTTP_CONFLICT);
         }
 
-        $demoUser = $demoService->getDemoUserToAuth();
+        $demoUser = $pool->take();
 
         if (is_null($demoUser)) {
             return response()->json([

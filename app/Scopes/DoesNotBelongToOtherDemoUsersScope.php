@@ -2,7 +2,7 @@
 
 namespace App\Scopes;
 
-use App\Services\DemoService;
+use App\Services\Demo\DemoUserPool;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
@@ -18,11 +18,12 @@ class DoesNotBelongToOtherDemoUsersScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $demoService = resolve(DemoService::class);
+        /** @var DemoUserPool */
+        $pool = resolve(DemoUserPool::class);
 
         $builder->whereHas(
             'user',
-            fn ($qU) => $qU->whereBetween('id', $demoService->getDemoUserIdsRange())
+            fn ($qU) => $qU->whereBetween('id', $pool->getDemoUserIdsRange())
                     ->when(
                         request()?->user()?->id,
                         fn ($q, $userId) => $q->where('id', '<>', $userId)

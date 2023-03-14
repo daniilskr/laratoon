@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Demo;
 
 use App\Models\Comment;
 use App\Models\Likeable;
@@ -8,37 +8,12 @@ use App\Models\User;
 use App\Scopes\DoesNotBelongToOtherDemoUsersScope;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
-class DemoService
+class DemoDataCleaner
 {
     public function __construct(
-        public readonly int $minDemoUserId,
-        public readonly int $maxDemoUserId,
+        public DemoUserPool $pool,
     ) {
-    }
-
-    public function getDemoUserIdsRange(): array
-    {
-        return [$this->minDemoUserId, $this->maxDemoUserId];
-    }
-
-    public function getDemoUserToAuth(): ?User
-    {
-        $user = User::where('issued_for_demo', false)
-                ->whereBetween('id', $this->getDemoUserIdsRange())
-                ->first();
-
-        if (is_null($user)) {
-            Log::emergency('out of available demo accounts');
-
-            return null;
-        }
-
-        $user->issued_for_demo = true;
-        $user->save();
-
-        return $user;
     }
 
     public function cleanUpDemoUserData(): void
@@ -53,7 +28,7 @@ class DemoService
         return $query->withoutGlobalScope(DoesNotBelongToOtherDemoUsersScope::class)
             ->whereHas(
                 'user',
-                fn ($qU) => $qU->whereBetween('id', $this->getDemoUserIdsRange())
+                fn ($qU) => $qU->whereBetween('id', $this->pool->getDemoUserIdsRange())
             );
     }
 
@@ -86,5 +61,5 @@ class DemoService
         User::where('issued_for_demo', true)->update([
             'issued_for_demo' => false,
         ]);
-    }
+    }    
 }

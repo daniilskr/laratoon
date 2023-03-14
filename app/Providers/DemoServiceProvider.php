@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Comment;
 use App\Scopes\DoesNotBelongToOtherDemoUsersScope;
-use App\Services\DemoService;
+use App\Services\Demo\DemoUserPool;
 use Exception;
 use Illuminate\Support\Facades\App;
 
@@ -38,12 +38,12 @@ class DemoServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app
-            ->when(DemoService::class)
+            ->when(DemoUserPool::class)
             ->needs('$minDemoUserId')
             ->giveConfig('demo.min_demo_user_id');
 
         $this->app
-            ->when(DemoService::class)
+            ->when(DemoUserPool::class)
             ->needs('$maxDemoUserId')
             ->giveConfig('demo.max_demo_user_id');
     }

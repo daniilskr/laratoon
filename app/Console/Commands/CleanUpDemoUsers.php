@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Services\Demo\DemoDataCleaner;
 use Illuminate\Console\Command;
-use App\Services\DemoService;
 
 class CleanUpDemoUsers extends Command
 {
@@ -26,8 +26,8 @@ class CleanUpDemoUsers extends Command
      *
      * @return void
      */
-    public function handle(DemoService $demoService)
+    public function handle(DemoDataCleaner $cleaner)
     {
-        $demoService->cleanUpDemoUserData();
+        $cleaner->cleanUpDemoUserData();
     }
 }

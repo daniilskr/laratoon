@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 if (! function_exists('modelKey')) {
     /**
-     * Если модель, то достает из неё значение primary key (оно должно быть интом), иначе мапит элементы коллекции в инты.
+     * Если модель, то достает из неё значение primary key (оно должно быть интом), иначе возвращает int.
      */
     function modelKey(Model|int $model): int
     {

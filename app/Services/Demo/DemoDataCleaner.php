@@ -58,8 +58,6 @@ class DemoDataCleaner
 
     protected function allowToIssueUsedDemoUsers(): void
     {
-        User::where('issued_for_demo', true)->update([
-            'issued_for_demo' => false,
-        ]);
+        $this->pool->returnAll();
     }
 }

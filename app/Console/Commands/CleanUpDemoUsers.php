@@ -28,6 +28,6 @@ class CleanUpDemoUsers extends Command
      */
     public function handle(DemoDataCleaner $cleaner)
     {
-        $cleaner->cleanUpDemoUserData();
+        $cleaner->cleanUp();
     }
 }

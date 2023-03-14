@@ -12,7 +12,7 @@ class DemoUserPool
         public readonly int $maxDemoUserId,
     ) {
     }
-    
+
     public function getDemoUserIdsRange(): array
     {
         return [$this->minDemoUserId, $this->maxDemoUserId];
@@ -23,16 +23,16 @@ class DemoUserPool
         $user = User::where('issued_for_demo', false)
                 ->whereBetween('id', $this->getDemoUserIdsRange())
                 ->first();
-    
+
         if (is_null($user)) {
             Log::emergency('out of available demo accounts');
-    
+
             return null;
         }
-    
+
         $user->issued_for_demo = true;
         $user->save();
-    
+
         return $user;
     }
 }

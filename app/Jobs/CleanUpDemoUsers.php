@@ -20,6 +20,6 @@ class CleanUpDemoUsers implements ShouldQueue
      */
     public function handle(DemoDataCleaner $cleaner)
     {
-        $cleaner->cleanUpDemoUserData();
+        $cleaner->cleanUp();
     }
 }

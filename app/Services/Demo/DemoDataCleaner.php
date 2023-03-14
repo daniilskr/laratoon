@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\DB;
 class DemoDataCleaner
 {
     public function __construct(
-        public DemoUserPool $pool,
+        protected DemoUserPool $pool,
     ) {
     }
 
-    public function cleanUpDemoUserData(): void
+    public function cleanUp(): void
     {
         $this->cleanUpComments();
         $this->deleteAllSessions();
@@ -61,5 +61,5 @@ class DemoDataCleaner
         User::where('issued_for_demo', true)->update([
             'issued_for_demo' => false,
         ]);
-    }    
+    }
 }

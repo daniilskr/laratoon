@@ -29,7 +29,7 @@ class ComicUserList extends Model
     }
 
     /**
-     * Move comic entry into $this list
+     * Move comic entry into $this list.
      */
     public function moveEntry(User $user, Comic $comic)
     {
@@ -41,8 +41,8 @@ class ComicUserList extends Model
     }
 
     /**
-     * Remove comic entry from whatever list it is in
-     * 
+     * Remove comic entry from whatever list it is in.
+     *
      * @throws ModelNotFoundException
      */
     public static function removeEntry(User $user, Comic $comic)

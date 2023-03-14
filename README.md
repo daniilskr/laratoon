@@ -13,8 +13,8 @@
 #### Откройте MySql 8.0 Command Line Client, пройдите аутентификацию и введите:
 ```sql
 CREATE DATABASE laratoon;
-CREATE USER 'laravel'@'localhost' IDENTIFIED BY 'laravel';
-GRANT ALL PRIVILEGES ON laratoon.* TO 'laravel'@'localhost';
+CREATE USER 'laratoon_user'@'localhost' IDENTIFIED BY 'laratoon_user_password';
+GRANT ALL PRIVILEGES ON laratoon.* TO 'laratoon_user'@'localhost';
 ```
 
 #### Откройте терминал в папке, куда хотите поместить проект, выделите разом все следующие команды и вставьте их в терминал щелчком по правой кнопке мыши:

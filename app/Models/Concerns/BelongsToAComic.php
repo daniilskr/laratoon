@@ -23,7 +23,7 @@ trait BelongsToAComic
 
     public function scopeWhereComic(Builder $query, int|Comic $comic)
     {
-        return $query->where($this->qualifyColumn('comic_id'), ($comic instanceof Comic) ? $comic->id : $comic);
+        return $query->where($this->qualifyColumn('comic_id'), modelKey($comic));
     }
 
     public function scopeWhereComicIn(Builder $query, $comics)

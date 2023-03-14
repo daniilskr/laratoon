@@ -24,11 +24,11 @@ trait BelongsToAUser
 
     public function scopeWhereUser(Builder $query, User|int $user)
     {
-        return $query->where($this->qualifyColumn('user_id'), ($user instanceof User) ? $user->id : $user);
+        return $query->where($this->qualifyColumn('user_id'), modelKey($user));
     }
 
     public function scopeWhereUserNot(Builder $query, User|int $user)
     {
-        return $query->where($this->qualifyColumn('user_id'), '<>', ($user instanceof User) ? $user->id : $user);
+        return $query->where($this->qualifyColumn('user_id'), '<>', modelKey($user));
     }
 }

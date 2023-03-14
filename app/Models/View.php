@@ -41,7 +41,7 @@ class View extends Model implements BelongsToAUser
     public function scopeWhereViewableIn(Builder $query, $viewables)
     {
         if ($viewables instanceof EloquentCollection
-            && $viewables->first() instanceof HasViewable
+            && $viewables->every(fn ($v) => $v instanceof HasViewable)
         ) {
             $viewables = $viewables->loadMissing('viewable')->map(fn (HasViewable $hasViewable) => $hasViewable->viewable);
         }
@@ -51,13 +51,9 @@ class View extends Model implements BelongsToAUser
 
     public function scopeEpisodesOfComic(Builder $query, int|Comic $comic)
     {
-        if ($comic instanceof Comic) {
-            $comic = $comic->id;
-        }
-
         return $query->whereHas('viewable', function (Builder $qV) use ($comic) {
             $qV->whereHasMorph('owner', [Episode::class], function (Builder $qO) use ($comic) {
-                $qO->where('comic_id', $comic);
+                $qO->where('comic_id', modelKey($comic));
             });
         });
     }

@@ -50,7 +50,7 @@ class CachedLatestViewedEpisodesRepository
     {
         $comics = collected($comics)
                     // Filter out previously queried
-                    ->filter(fn (int|Comic $comic) => false === $this->collection->has(
+                    ->reject(fn (int|Comic $comic) => $this->collection->has(
                         $this->getKeyFromUserAndComic($user, $comic),
                     ))
                     // Set default value (null) for all the entities,

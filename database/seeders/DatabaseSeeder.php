@@ -14,7 +14,7 @@ use App\Models\Likeable;
 use App\Models\User;
 use App\Models\View;
 use App\Models\Viewable;
-use App\Services\Demo\DemoUserPool;
+use App\Services\Demo\DemoUsersPool;
 use Carbon\Carbon;
 use Database\Factories\ComicTagFactory;
 use Exception;
@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
 
         $chunk = 20;
 
-        repeat(app(DemoUserPool::class)->maxDemoUserId / $chunk, function () use ($chunk) {
+        repeat(app(DemoUsersPool::class)->maxDemoUserId / $chunk, function () use ($chunk) {
             User::factory($chunk)->create();
         });
     }
@@ -189,7 +189,7 @@ class DatabaseSeeder extends Seeder
         $this->command->line('Seeding comments');
 
         $comicsTotal = $this->ensureComicsSeeded();
-        $users       = collect()->range(1, min(app(DemoUserPool::class)->minDemoUserId, User::count()));
+        $users       = collect()->range(1, min(app(DemoUsersPool::class)->minDemoUserId, User::count()));
         $seeded      = 0;
 
         Comic::with('commentable')->chunk(10, function ($comicsChunk) use (

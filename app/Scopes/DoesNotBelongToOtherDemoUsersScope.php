@@ -2,7 +2,7 @@
 
 namespace App\Scopes;
 
-use App\Services\Demo\DemoUserPool;
+use App\Services\Demo\DemoUsersPool;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
@@ -18,8 +18,8 @@ class DoesNotBelongToOtherDemoUsersScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        /** @var DemoUserPool */
-        $pool = resolve(DemoUserPool::class);
+        /** @var DemoUsersPool */
+        $pool = resolve(DemoUsersPool::class);
 
         $builder->whereHas(
             'user',

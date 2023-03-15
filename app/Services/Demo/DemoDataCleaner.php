@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class DemoDataCleaner
 {
     public function __construct(
-        protected DemoUserPool $pool,
+        protected DemoUsersPool $pool,
     ) {
     }
 

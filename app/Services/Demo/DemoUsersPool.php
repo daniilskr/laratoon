@@ -5,7 +5,7 @@ namespace App\Services\Demo;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
-class DemoUserPool
+class DemoUsersPool
 {
     public function __construct(
         public readonly int $minDemoUserId,

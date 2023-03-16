@@ -15,33 +15,6 @@ if (! function_exists('modelKey')) {
     }
 }
 
-if (! function_exists('isCollectionOfClass')) {
-    /**
-     * Checks whether collection contains instances of $class using instanceof
-     * By default checks first element only
-     * 
-     * @template TKey of array-key
-     * @template TValue
-     * @param Collection<TKey, TValue> $collectionByReference
-     * 
-     * @template ExpectedType
-     * @param class-string<ExpectedType> $class
-     * 
-     * @param-out (TValue is ExpectedType ? Collection<TKey,ExpectedType> : Collection<TKey,TValue>) $collectionByReference
-     * @return (TValue is ExpectedType ? true : false)
-     */
-    function isCollectionOfClass(Collection &$collectionByReference, string $class, bool $checkFirstOnly = true): bool
-    {
-        $collection = collect($collectionByReference);
-
-        if ($checkFirstOnly) {
-            $collection = $collection->take(1);
-        }
-
-        return $collection->every(fn ($item) => is_object($item) && $item instanceof $class);
-    }
-}
-
 if (! function_exists('modelKeys')) {
     /**
      * Если это коллекция моделей, то достает из них значения primary key (оно должно быть интом), иначе мапит элементы коллекции в инты.
@@ -59,9 +32,8 @@ if (! function_exists('modelKeys')) {
         if ($keys instanceof EloquentCollection) {
             $keys = collect($keys->modelKeys());
 
-        } elseif (isCollectionOfClass($keys, Model::class)) {
-            $keys = $keys->map(fn (Model $model) => $model->getKey());
-
+        } elseif (($models = $keys->whereInstanceOf(Model::class))->isNotEmpty()) {
+            $keys = $models->map(fn (Model $model) => $model->getKey());
         }
 
         return $keys->map(fn (int $i) => $i);

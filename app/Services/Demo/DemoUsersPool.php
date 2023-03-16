@@ -39,7 +39,7 @@ class DemoUsersPool
     /**
      * Return all the taken objects back to the pool
      */
-    public function returnAll()
+    public function returnAll(): void
     {
         User::where('issued_for_demo', true)->update([
             'issued_for_demo' => false,

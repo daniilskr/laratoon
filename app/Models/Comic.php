@@ -6,6 +6,10 @@ use App\Models\Contracts\HasCommentable;
 use App\Models\Contracts\HasLikeable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property string $title (max length 256)
@@ -33,42 +37,42 @@ class Comic extends Model implements HasCommentable, HasLikeable
 
     protected array $slugSource = ['title', '-by-', 'author.full_name'];
 
-    public function publicationStatus()
+    public function publicationStatus(): BelongsTo
     {
         return $this->belongsTo(PublicationStatus::class);
     }
 
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(Author::class);
     }
 
-    public function comicPoster()
+    public function comicPoster(): HasOne
     {
         return $this->hasOne(ComicPoster::class);
     }
 
-    public function comicHeaderBackground()
+    public function comicHeaderBackground(): HasOne
     {
         return $this->hasOne(ComicHeaderBackground::class);
     }
 
-    public function comicTags()
+    public function comicTags(): BelongsToMany
     {
         return $this->belongsToMany(ComicTag::class)->withTimestamps();
     }
 
-    public function genres()
+    public function genres(): BelongsToMany
     {
         return $this->belongsToMany(Genre::class)->withTimestamps();
     }
 
-    public function episodes()
+    public function episodes(): HasMany
     {
         return $this->hasMany(Episode::class);
     }
 
-    public function cachedLatestViewedEpisodeByUsers()
+    public function cachedLatestViewedEpisodeByUsers(): HasMany
     {
         return $this->hasMany(CachedLatestViewedEpisodeByUser::class);
     }
@@ -78,17 +82,17 @@ class Comic extends Model implements HasCommentable, HasLikeable
         return $this->cachedLatestViewedEpisodeByUsers()->whereUser(request()->user() ?? -1)->first();
     }
 
-    public function latestEpisode()
+    public function latestEpisode(): HasOne
     {
         return $this->hasOne(Episode::class)->latestOfMany();
     }
 
-    public function characterRoles()
+    public function characterRoles(): HasMany
     {
         return $this->hasMany(CharacterRole::class);
     }
 
-    public function comicUserListEntries()
+    public function comicUserListEntries(): HasMany
     {
         return $this->hasMany(ComicUserListEntry::class);
     }

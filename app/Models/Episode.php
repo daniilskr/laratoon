@@ -8,6 +8,8 @@ use App\Models\Contracts\HasLikeable;
 use App\Models\Contracts\HasViewable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property Comic $comic
@@ -20,12 +22,12 @@ class Episode extends Model implements HasCommentable, HasLikeable, HasViewable
         Concerns\HasViewable,
         Concerns\HasLikeable;
 
-    public function episodePoster()
+    public function episodePoster(): HasOne
     {
         return $this->hasOne(EpisodePoster::class);
     }
 
-    public function episodePages()
+    public function episodePages(): HasMany
     {
         return $this->hasMany(EpisodePage::class);
     }

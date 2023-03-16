@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
@@ -40,12 +42,12 @@ class Likeable extends Model
         return $this->likes()->whereUser($user)->firstOrFail()->delete();
     }
 
-    public function likes()
+    public function likes(): HasMany
     {
         return $this->hasMany(Like::class);
     }
 
-    public function requestUserLike()
+    public function requestUserLike(): HasOne
     {
         return $this->hasOne(Like::class)->where('user_id', request()->user()?->getKey() ?? -1);
     }

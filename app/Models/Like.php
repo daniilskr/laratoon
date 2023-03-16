@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Events\LikeCreated;
 use App\Events\LikeDeleted;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Like extends Model implements BelongsToAUser
 {
@@ -19,7 +20,7 @@ class Like extends Model implements BelongsToAUser
         'deleted' => LikeDeleted::class,
     ];
 
-    public function likeable()
+    public function likeable(): BelongsTo
     {
         return $this->belongsTo(Likeable::class);
     }

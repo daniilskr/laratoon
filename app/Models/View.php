@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use App\Events\ViewCreated;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property ?Viewable $viewable
@@ -30,7 +31,7 @@ class View extends Model implements BelongsToAUser
         'viewable_id',
     ];
 
-    public function viewable()
+    public function viewable(): BelongsTo
     {
         return $this->belongsTo(Viewable::class);
     }

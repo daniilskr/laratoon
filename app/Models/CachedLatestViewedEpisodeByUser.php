@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CachedLatestViewedEpisodeByUser extends Model
 {
@@ -17,7 +18,7 @@ class CachedLatestViewedEpisodeByUser extends Model
         'episode_id',
     ];
 
-    public function episode()
+    public function episode(): BelongsTo
     {
         return $this->belongsTo(Episode::class);
     }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -22,7 +23,7 @@ class Viewable extends Model
         'views_cached_count' => 0,
     ];
 
-    public function views()
+    public function views(): HasMany
     {
         return $this->hasMany(View::class);
     }

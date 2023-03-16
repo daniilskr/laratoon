@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\CharacterRoleType as RoleType;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property RoleEnum $role_type
@@ -23,7 +24,7 @@ class CharacterRole extends Model
         'role_type' => RoleType::class,
     ];
 
-    public function character()
+    public function character(): BelongsTo
     {
         return $this->belongsTo(Character::class);
     }

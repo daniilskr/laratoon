@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Events\CommentCreated;
 use App\Events\CommentDeleted;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property ?Commentable $commentable
@@ -60,17 +61,17 @@ class Comment extends Model implements BelongsToAUser, HasLikeable
         return null;
     }
 
-    public function commentable()
+    public function commentable(): BelongsTo
     {
         return $this->belongsTo(Commentable::class);
     }
 
-    public function rootComment()
+    public function rootComment(): BelongsTo
     {
         return $this->belongsTo(self::class, 'root_comment_id');
     }
 
-    public function parentComment()
+    public function parentComment(): BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_comment_id');
     }

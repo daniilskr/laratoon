@@ -7,6 +7,9 @@ use App\Models\Contracts\HasLikeable;
 use App\Models\Contracts\HasViewable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property string $full_name (max length 128)
@@ -19,17 +22,17 @@ class Character extends Model implements HasCommentable, HasLikeable, HasViewabl
         Concerns\HasViewable,
         Concerns\HasLikeable;
 
-    public function characterRoles()
+    public function characterRoles(): HasMany
     {
         return $this->hasMany(CharacterRole::class);
     }
 
-    public function comics()
+    public function comics(): BelongsToMany
     {
         return $this->belongsToMany(Comic::class, CharacterRole::class)->withTimestamps();
     }
 
-    public function characterPoster()
+    public function characterPoster(): HasOne
     {
         return $this->hasOne(CharacterPoster::class);
     }

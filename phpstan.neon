@@ -12,7 +12,7 @@ parameters:
 	ignoreErrors:
 		- '#Access to an undefined property App\\(Models|Http\\Resources)\\.*#'
 		- '#Call to an undefined method App\\Http\\Resources\\.*#'
-		- '#Method App\\(Models|Http\\Controllers)\\.* has no return type specified\.#'
+		- '#Method App\\Http\\Controllers\\.* has no return type specified\.#'
 		- '#Method App\\Models(\\[a-zA-Z]+)+::scope[a-zA-Z]+\(\) has parameter \$[a-zA-Z]+ with no type specified\.#'
 		- '#Call to an undefined (static )?method Illuminate\\.*#'
 		- '#Unable to resolve the template type (TKey|TValue) in call to function collect.*#'

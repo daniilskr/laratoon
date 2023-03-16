@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property string $name (max length 64)
@@ -23,7 +24,7 @@ class ComicUserList extends Model
         'color',
     ];
 
-    public function comicUserListEntries()
+    public function comicUserListEntries(): HasMany
     {
         return $this->hasMany(ComicUserListEntry::class);
     }

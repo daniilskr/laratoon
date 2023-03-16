@@ -17,7 +17,7 @@ if (! function_exists('modelKey')) {
 
 if (! function_exists('isCollectionOfClass')) {
     /**
-     * Checks whether collection contains $class instances with instanceof
+     * Checks whether collection contains instances of $class using instanceof
      * By default checks first element only
      * 
      * @template TKey of array-key

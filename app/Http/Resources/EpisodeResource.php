@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Services\ViewableViewsByUsersRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EpisodeResource extends JsonResource
@@ -10,8 +11,14 @@ class EpisodeResource extends JsonResource
     {
         $resource->loadMissing([
             'episodePoster.image',
-            'viewable.viewOfRequestUser',
+            'viewable',
         ]);
+
+        if ($resource->isNotEmpty()) {
+            /** @var ViewableViewsByUsersRepository */
+            $repository = app(ViewableViewsByUsersRepository::class);
+            $repository->loadForUserAndViewables(request()->user(), $resource->pluck('viewable'));
+        }
 
         return parent::collection($resource);
     }
@@ -24,6 +31,9 @@ class EpisodeResource extends JsonResource
      */
     public function toArray($request)
     {
+        /** @var ViewableViewsByUsersRepository */
+        $viewsRepository = app(ViewableViewsByUsersRepository::class);
+
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -32,7 +42,7 @@ class EpisodeResource extends JsonResource
             'poster' => new ImageResource($this->whenLoaded('episodePoster', fn () => $this->episodePoster->image)),
             'viewable' => $this->whenLoaded('viewable', fn () => [
                 'viewsCachedCount' => $this->viewable->views_cached_count,
-                'isSeenByUser' => $this->viewable->viewOfRequestUser ? true : false,
+                'isSeenByUser' => $viewsRepository->getForUserAndViewable($request->user(), $this->viewable) ? true : false,
             ]),
         ];
     }

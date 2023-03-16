@@ -28,19 +28,6 @@ class Viewable extends Model
         return $this->hasMany(View::class);
     }
 
-    public function viewOfUser(?User $user = null)
-    {
-        return $this->hasOne(View::class)->whereUser($user ?? -1);
-    }
-
-    /**
-     * Wrapper for $this->viewOfUser(request()->user()).
-     */
-    public function viewOfRequestUser()
-    {
-        return $this->viewOfUser(request()->user());
-    }
-
     public function firstOrCreateViewForUser(User $user): View
     {
         return $this->views()->firstOrCreate(['user_id' => $user->id]);

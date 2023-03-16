@@ -36,6 +36,11 @@ class View extends Model implements BelongsToAUser
         return $this->belongsTo(Viewable::class);
     }
 
+    public function getViewableId(): ?int
+    {
+        return $this->viewable_id;
+    }
+
     /**
      * @param int[]|Viewable[]|HasViewable[]|Collection|EloquentCollection $viewables
      */

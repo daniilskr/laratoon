@@ -18,6 +18,7 @@ use App\Models\Like;
 use App\Models\UserAvatar;
 use App\Models\View;
 use App\Services\CachedLatestViewedEpisodesRepository;
+use App\Services\ViewableViewsByUsersRepository;
 use Illuminate\Database\Eloquent\Model;
 
 class AppServiceProvider extends ServiceProvider
@@ -50,6 +51,7 @@ class AppServiceProvider extends ServiceProvider
     protected function registerScoped()
     {
         $this->app->scoped(CachedLatestViewedEpisodesRepository::class);
+        $this->app->scoped(ViewableViewsByUsersRepository::class);
     }
 
     /**

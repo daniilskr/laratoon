@@ -25,7 +25,7 @@ class Like extends Model implements BelongsToAUser
         return $this->belongsTo(Likeable::class);
     }
 
-    public function scopeWhereCommentOfUser(Builder $query, User|int $user)
+    public function scopeWhereCommentOfUser(Builder $query, User|int $user): Builder
     {
         return $query->whereHas('likeable', function (Builder $qL) use ($user) {
             $qL->whereHasMorph('owner', [Comment::class], function (Builder $qC) use ($user) {

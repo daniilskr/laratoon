@@ -22,12 +22,12 @@ trait BelongsToAUser
         return $this->user()->getParentKey();
     }
 
-    public function scopeWhereUser(Builder $query, User|int $user)
+    public function scopeWhereUser(Builder $query, User|int $user): Builder
     {
         return $query->where($this->qualifyColumn('user_id'), modelKey($user));
     }
 
-    public function scopeWhereUserNot(Builder $query, User|int $user)
+    public function scopeWhereUserNot(Builder $query, User|int $user): Builder
     {
         return $query->where($this->qualifyColumn('user_id'), '<>', modelKey($user));
     }

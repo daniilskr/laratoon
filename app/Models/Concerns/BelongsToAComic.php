@@ -21,12 +21,12 @@ trait BelongsToAComic
         return $this->comic()->getParentKey();
     }
 
-    public function scopeWhereComic(Builder $query, int|Comic $comic)
+    public function scopeWhereComic(Builder $query, int|Comic $comic): Builder
     {
         return $query->where($this->qualifyColumn('comic_id'), modelKey($comic));
     }
 
-    public function scopeWhereComicIn(Builder $query, $comics)
+    public function scopeWhereComicIn(Builder $query, $comics): Builder
     {
         return $query->whereIn($this->qualifyColumn('comic_id'), collected($comics)->map(fn (int|Comic $c) => modelKey($c))->all());
     }

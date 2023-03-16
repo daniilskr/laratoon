@@ -46,12 +46,12 @@ class Viewable extends Model
         return $this->views()->firstOrCreate(['user_id' => $user->id]);
     }
 
-    public function scopeWhereEpisodeIn(Builder $query, $episodes)
+    public function scopeWhereEpisodeIn(Builder $query, $episodes): Builder
     {
         return $query->whereHasMorph('owner', Episode::class, fn ($qE) => whereKeyInRaw($qE, $episodes));
     }
 
-    public function scopeWhereEpisode(Builder $query, int|Episode $episode)
+    public function scopeWhereEpisode(Builder $query, int|Episode $episode): Builder
     {
         return $query->whereEpisodeIn($episode);
     }

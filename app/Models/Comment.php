@@ -81,12 +81,12 @@ class Comment extends Model implements BelongsToAUser, HasLikeable
         return is_null($this->root_comment_id);
     }
 
-    public function scopeRootsOnly(Builder $query)
+    public function scopeRootsOnly(Builder $query): Builder
     {
         return $query->whereNull('root_comment_id');
     }
 
-    public function scopeWhereRoot(Builder $query, self|int $root)
+    public function scopeWhereRoot(Builder $query, self|int $root): Builder
     {
         return $query->where('root_comment_id', modelKey($root));
     }

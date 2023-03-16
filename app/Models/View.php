@@ -39,7 +39,7 @@ class View extends Model implements BelongsToAUser
     /**
      * @param int[]|Viewable[]|HasViewable[]|Collection|EloquentCollection $viewables
      */
-    public function scopeWhereViewableIn(Builder $query, $viewables)
+    public function scopeWhereViewableIn(Builder $query, $viewables): Builder
     {
         if ($viewables instanceof EloquentCollection
             && $viewables->every(fn ($v) => $v instanceof HasViewable)
@@ -50,7 +50,7 @@ class View extends Model implements BelongsToAUser
         return $query->whereIntegerInRaw('viewable_id', modelKeys($viewables));
     }
 
-    public function scopeEpisodesOfComic(Builder $query, int|Comic $comic)
+    public function scopeEpisodesOfComic(Builder $query, int|Comic $comic): Builder
     {
         return $query->whereHas('viewable', function (Builder $qV) use ($comic) {
             $qV->whereHasMorph('owner', [Episode::class], function (Builder $qO) use ($comic) {

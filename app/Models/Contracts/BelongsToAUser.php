@@ -10,5 +10,5 @@ interface BelongsToAUser
 {
     public function user(): BelongsTo;
 
-    public function scopeWhereUser(Builder $query, User|int $user);
+    public function scopeWhereUser(Builder $query, User|int $user): Builder;
 }

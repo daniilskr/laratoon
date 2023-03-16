@@ -44,7 +44,7 @@ class Episode extends Model implements HasCommentable, HasLikeable, HasViewable
     /**
      * Dispatch EpisodeViewedByUser event.
      */
-    public function dispatchViewedByUser(User $user)
+    public function dispatchViewedByUser(User $user): void
     {
         event(new EpisodeViewedByUser($this, $user));
     }

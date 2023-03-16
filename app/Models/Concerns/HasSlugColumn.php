@@ -35,7 +35,7 @@ trait HasSlugColumn
      * @throws Exception
      * @throws LogicException
      */
-    public function updateSlug()
+    public function updateSlug(): void
     {
         if (! property_exists($this, 'slugSource')) {
             throw new LogicException('You have to define the $slugSource property');
@@ -82,7 +82,7 @@ trait HasSlugColumn
         $this->slug = Str::slug($sourceColumnValues->join(' '));
     }
 
-    protected static function bootHasSlugColumn()
+    protected static function bootHasSlugColumn(): void
     {
         static::creating(function (self $instance) {
             if (true === $instance->doNotUpdateSlugWhenCreating) {

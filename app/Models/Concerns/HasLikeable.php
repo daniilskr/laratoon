@@ -12,7 +12,7 @@ trait HasLikeable
         return $this->morphOne(Likeable::class, 'owner');
     }
 
-    protected static function bootHasLikeable()
+    protected static function bootHasLikeable(): void
     {
         static::created(function (self $owner) {
             $owner->likeable()->save(new Likeable());

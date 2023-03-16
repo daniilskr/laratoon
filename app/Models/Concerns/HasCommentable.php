@@ -12,7 +12,7 @@ trait HasCommentable
         return $this->morphOne(Commentable::class, 'owner');
     }
 
-    protected static function bootHasCommentable()
+    protected static function bootHasCommentable(): void
     {
         static::created(function (self $owner) {
             $owner->commentable()->save(new Commentable());

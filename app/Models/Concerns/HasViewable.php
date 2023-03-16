@@ -13,7 +13,7 @@ trait HasViewable
         return $this->morphOne(Viewable::class, 'owner');
     }
 
-    protected static function bootHasViewable()
+    protected static function bootHasViewable(): void
     {
         static::created(function (HasViewableContract $owner) {
             $owner->viewable()->save(new Viewable());

@@ -30,7 +30,10 @@ class Viewable extends Model
 
     public function firstOrCreateViewForUser(User $user): View
     {
-        return $this->views()->firstOrCreate(['user_id' => $user->id]);
+        /** @var View */
+        $view = $this->views()->firstOrCreate(['user_id' => $user->id]);
+
+        return $view;
     }
 
     public function scopeWhereEpisodeIn(Builder $query, $episodes): Builder

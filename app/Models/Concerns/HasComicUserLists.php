@@ -12,7 +12,7 @@ trait HasComicUserLists
         return $this->hasMany(ComicUserList::class);
     }
 
-    protected function attachDefaultComicUserLists(self $owner)
+    protected function attachDefaultComicUserLists(self $owner): void
     {
         $owner->comicUserLists()->saveMany([
             new ComicUserList(['name' => 'reading', 'color' => '#14df71']),
@@ -23,7 +23,7 @@ trait HasComicUserLists
         ]);
     }
 
-    protected static function bootHasComicUserLists()
+    protected static function bootHasComicUserLists(): void
     {
         static::created(function (self $owner) {
             $owner->attachDefaultComicUserLists($owner);

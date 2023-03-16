@@ -76,7 +76,7 @@ class Comment extends Model implements BelongsToAUser, HasLikeable
         return $this->belongsTo(self::class, 'parent_comment_id');
     }
 
-    public function isRoot()
+    public function isRoot(): bool
     {
         return is_null($this->root_comment_id);
     }

@@ -32,7 +32,7 @@ class ComicUserList extends Model
     /**
      * Move comic entry into $this list.
      */
-    public function moveEntry(User $user, Comic $comic)
+    public function moveEntry(User $user, Comic $comic): void
     {
         $comic->comicUserListEntries()->updateOrCreate([
             'user_id' => $user->id,
@@ -46,7 +46,7 @@ class ComicUserList extends Model
      *
      * @throws ModelNotFoundException
      */
-    public static function removeEntry(User $user, Comic $comic)
+    public static function removeEntry(User $user, Comic $comic): void
     {
         $comic->comicUserListEntries()
             ->whereBelongsTo($user)

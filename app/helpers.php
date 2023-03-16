@@ -31,6 +31,12 @@ if (! function_exists('modelKeys')) {
 
         if ($keys instanceof EloquentCollection) {
             $keys = collect($keys->modelKeys());
+        
+        } elseif (
+            $keys instanceof Collection
+            && $keys->first() instanceof Model
+        ) {
+            $keys = $keys->map(fn (Model $model) => $model->getKey());
         }
 
         return $keys->map(fn (int $i) => $i);

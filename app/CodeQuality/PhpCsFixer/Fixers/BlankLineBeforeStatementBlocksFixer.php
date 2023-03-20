@@ -98,16 +98,10 @@ if ($foo === false) {
      */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
-        $analyzer = new TokensAnalyzer($tokens);
-
         for ($index = $tokens->count() - 1; $index > 0; $index--) {
             $token = $tokens[$index];
 
             if (! $token->isGivenKind($this->fixTokenMap)) {
-                continue;
-            }
-
-            if ($token->isGivenKind(T_WHILE) && $analyzer->isWhilePartOfDoWhile($index)) {
                 continue;
             }
 

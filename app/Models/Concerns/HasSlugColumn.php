@@ -64,6 +64,7 @@ trait HasSlugColumn
                 }
 
                 $value = $nestedValue;
+
             } else {
                 $value = $this->getAttributeValue($name);
             }

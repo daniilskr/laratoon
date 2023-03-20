@@ -120,6 +120,7 @@ class Comic extends Model implements HasCommentable, HasLikeable
     {
         if (is_int($comic)) {
             $episodeIds = Episode::whereComic($comic)->pluck('id');
+
         } else {
             $episodeIds = $comic->episodes()->pluck('id');
         }

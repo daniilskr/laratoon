@@ -31,7 +31,6 @@ if (! function_exists('modelKeys')) {
 
         if ($keys instanceof EloquentCollection) {
             $keys = collect($keys->modelKeys());
-
         } elseif ($keys->count() === ($models = $keys->whereInstanceOf(Model::class))->count()) {
             $keys = $models->map(fn (Model $model) => $model->getKey());
         }

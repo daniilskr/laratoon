@@ -37,7 +37,7 @@ class DemoUsersPool
     }
 
     /**
-     * Return all the taken objects back to the pool
+     * Return all the taken objects back to the pool.
      */
     public function returnAll(): void
     {

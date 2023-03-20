@@ -4,7 +4,6 @@ namespace App\Services\Demo;
 
 use App\Models\Comment;
 use App\Models\Likeable;
-use App\Models\User;
 use App\Scopes\DoesNotBelongToOtherDemoUsersScope;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\Facades\DB;

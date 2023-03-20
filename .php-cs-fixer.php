@@ -153,7 +153,7 @@ $rules = [
 
     // Custom rules
     'HorribleFixersUnlimited/blank_line_before_statement_blocks' => [
-        'statements' => ['else', 'elseif'],
+        'statement_blocks' => ['else', 'elseif'],
     ],
 ];
 

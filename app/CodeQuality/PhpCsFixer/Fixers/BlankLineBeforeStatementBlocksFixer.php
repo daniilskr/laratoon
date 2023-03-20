@@ -15,7 +15,6 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixer\Tokenizer\TokensAnalyzer;
 
 /**
  * Is just a slightly modified PhpCsFixer\Fixer\Whitespace\BlankLineBeforeStatementFixer.
@@ -44,7 +43,7 @@ class BlankLineBeforeStatementBlocksFixer extends AbstractFixer implements Confi
 
         $this->fixTokenMap = [];
 
-        foreach ($this->configuration['statements'] as $key) {
+        foreach ($this->configuration['statement_blocks'] as $key) {
             $this->fixTokenMap[$key] = self::$tokenMap[$key];
         }
 
@@ -68,7 +67,7 @@ if ($foo === false) {
 }
 ',
                     [
-                        'statements' => ['else'],
+                        'statement_blocks' => ['else'],
                     ]
                 ),
             ]
@@ -121,7 +120,7 @@ if ($foo === false) {
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('statements', 'List of statements which must be preceded by an empty line.'))
+            (new FixerOptionBuilder('statement_blocks', 'List of statement blocks which must be preceded by an empty line.'))
                 ->setAllowedTypes(['array'])
                 ->setAllowedValues([new AllowedValueSubset(array_keys(self::$tokenMap))])
                 ->setDefault(array_keys(self::$tokenMap))

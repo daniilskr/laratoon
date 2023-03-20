@@ -139,23 +139,17 @@ if ($foo === false) {
     {
         $prevNonWhitespaceToken = $tokens[$prevNonWhitespace];
 
-        if ($prevNonWhitespaceToken->isComment()) {
-            for ($j = $prevNonWhitespace - 1; $j >= 0; $j--) {
-                if (str_contains($tokens[$j]->getContent(), "\n")) {
-                    return false;
-                }
+        if ($prevNonWhitespaceToken->equalsAny([';', '}'])) {
+            $beforeBlockEnding = $tokens->getPrevNonWhitespace($prevNonWhitespace);
 
-                if ($tokens[$j]->isWhitespace() || $tokens[$j]->isComment()) {
-                    continue;
-                }
-
-                return $tokens[$j]->equalsAny([';', '}']);
+            if ($tokens[$beforeBlockEnding]->isComment()) {
+                return $beforeBlockEnding;
             }
+
+            return $prevNonWhitespace;
         }
 
-        return $prevNonWhitespaceToken->equalsAny([';', '}'])
-                ? $prevNonWhitespace
-                : false;
+        return false;
     }
 
     private function insertBlankLine(Tokens $tokens, int $index): void

@@ -106,11 +106,11 @@ if ($foo === false) {
 
             $prevNonWhitespace = $tokens->getPrevNonWhitespace($index);
 
-            if (is_int($indexToAddBlankLineTo = $this->indexToAddBlankLineTo($tokens, $prevNonWhitespace))) {
-                $this->insertBlankLine($tokens, $indexToAddBlankLineTo);
+            if (is_int($indexToInsertBlankLineBefore = $this->indexToInsertBlankLineBefore($tokens, $prevNonWhitespace))) {
+                $this->insertBlankLine($tokens, $indexToInsertBlankLineBefore);
             }
 
-            $index = $indexToAddBlankLineTo ?: $prevNonWhitespace;
+            $index = $indexToInsertBlankLineBefore ?: $prevNonWhitespace;
         }
     }
 
@@ -128,7 +128,7 @@ if ($foo === false) {
         ]);
     }
 
-    private function indexToAddBlankLineTo(Tokens $tokens, int $prevNonWhitespace): int|false
+    private function indexToInsertBlankLineBefore(Tokens $tokens, int $prevNonWhitespace): int|false
     {
         $prevNonWhitespaceToken = $tokens[$prevNonWhitespace];
 

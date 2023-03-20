@@ -1,5 +1,6 @@
 <?php
 
+use App\CodeQuality\PhpCsFixer\Fixers\BlankLineBeforeStatementBlocksFixer;
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
@@ -149,6 +150,11 @@ $rules = [
     'yoda_style' => true,
     'array_indentation' => true,
     'lambda_not_used_import' => true,
+
+    // Custom rules
+    'HorribleFixersUnlimited/blank_line_before_statement_blocks' => [
+        'statements' => ['else', 'elseif'],
+    ],
 ];
 
 
@@ -170,6 +176,7 @@ $config = new Config();
 return $config->setFinder($finder)
     ->setIndent(str_repeat(' ', 4))
     ->setLineEnding(PHP_EOL)
+    ->registerCustomFixers([new BlankLineBeforeStatementBlocksFixer()])
     ->setRules($rules)
     ->setRiskyAllowed(true)
     ->setUsingCache(true);

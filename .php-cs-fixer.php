@@ -1,6 +1,6 @@
 <?php
 
-use App\CodeQuality\PhpCsFixer\Fixers\BlankLineBeforeStatementBlocksFixer;
+use App\CodeQuality\PhpCsFixer\Fixers\BlankLineBeforeElseBlocksFixer;
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
@@ -152,8 +152,8 @@ $rules = [
     'lambda_not_used_import' => true,
 
     // Custom rules
-    'HorribleFixersUnlimited/blank_line_before_statement_blocks' => [
-        'statement_blocks' => ['else', 'elseif'],
+    'HorribleFixersUnlimited/blank_line_before_else_blocks' => [
+        'fix_non_bracket_blocks' => false,
     ],
 ];
 
@@ -176,7 +176,7 @@ $config = new Config();
 return $config->setFinder($finder)
     ->setIndent(str_repeat(' ', 4))
     ->setLineEnding(PHP_EOL)
-    ->registerCustomFixers([new BlankLineBeforeStatementBlocksFixer()])
+    ->registerCustomFixers([new BlankLineBeforeElseBlocksFixer()])
     ->setRules($rules)
     ->setRiskyAllowed(true)
     ->setUsingCache(true);

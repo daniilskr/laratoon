@@ -6,7 +6,6 @@ namespace App\CodeQuality\PhpCsFixer\Fixers;
 
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
-use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
@@ -19,7 +18,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 /**
  * Is just a slightly modified PhpCsFixer\Fixer\Whitespace\BlankLineBeforeStatementFixer.
  */
-class BlankLineBeforeStatementBlocksFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
+class BlankLineBeforeElseBlocksFixer extends AbstractFixer implements ConfigurableFixerInterface, WhitespacesAwareFixerInterface
 {
     /**
      * @var array<string, int>
@@ -34,6 +33,8 @@ class BlankLineBeforeStatementBlocksFixer extends AbstractFixer implements Confi
      */
     private array $fixTokenMap = [];
 
+    protected bool $shouldFixNonBracketBlocks;
+
     /**
      * {@inheritdoc}
      */
@@ -41,13 +42,9 @@ class BlankLineBeforeStatementBlocksFixer extends AbstractFixer implements Confi
     {
         parent::configure($configuration);
 
-        $this->fixTokenMap = [];
+        $this->shouldFixNonBracketBlocks = $this->configuration['fix_non_bracket_blocks'];
 
-        foreach ($this->configuration['statement_blocks'] as $key) {
-            $this->fixTokenMap[$key] = self::$tokenMap[$key];
-        }
-
-        $this->fixTokenMap = array_values($this->fixTokenMap);
+        $this->fixTokenMap = array_values(self::$tokenMap);
     }
 
     /**
@@ -56,7 +53,7 @@ class BlankLineBeforeStatementBlocksFixer extends AbstractFixer implements Confi
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'An empty line feed must precede any configured statement block.',
+            'An empty line feed must precede else\elseif blocks.',
             [
                 new CodeSample(
                     '<?php
@@ -66,8 +63,16 @@ if ($foo === false) {
     $bar = 9000;
 }
 ',
+                ),
+                new CodeSample(
+                    '<?php
+if ($foo === false)
+    $foo = 0;
+else
+    $bar = 9000;
+',
                     [
-                        'statement_blocks' => ['else'],
+                        'fix_non_bracket_blocks' => true,
                     ]
                 ),
             ]
@@ -120,26 +125,48 @@ if ($foo === false) {
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('statement_blocks', 'List of statement blocks which must be preceded by an empty line.'))
-                ->setAllowedTypes(['array'])
-                ->setAllowedValues([new AllowedValueSubset(array_keys(self::$tokenMap))])
-                ->setDefault(array_keys(self::$tokenMap))
+            (new FixerOptionBuilder('fix_non_bracket_blocks', 'Should insert blank line before else block without brackets.'))
+                ->setAllowedTypes(['bool'])
+                ->setDefault(false)
                 ->getOption(),
         ]);
     }
 
     private function indexToInsertBlankLineBefore(Tokens $tokens, int $prevNonWhitespace): int|false
     {
-        $prevNonWhitespaceToken = $tokens[$prevNonWhitespace];
+        $toInsertBefore    = $prevNonWhitespace;
+        $isNonBracketBlock = true;
 
-        if ($prevNonWhitespaceToken->equalsAny([';', '}'])) {
-            $beforeBlockEnding = $tokens->getPrevNonWhitespace($prevNonWhitespace);
+        if (
+            $this->shouldFixNonBracketBlocks
+            && $tokens[$toInsertBefore]->equals(';')
+        ) {
+            return $tokens->getNextNonWhitespace($toInsertBefore);
+        }
+
+        if ($tokens[$toInsertBefore]->equals('}')) {
+            $isNonBracketBlock = false;
+            $beforeBlockEnding = $tokens->getPrevNonWhitespace($toInsertBefore);
 
             if ($tokens[$beforeBlockEnding]->isComment()) {
-                return $beforeBlockEnding;
+                $toInsertBefore = $beforeBlockEnding;
+
+            } else {
+                return $toInsertBefore;
+            }
+        }
+
+        if ($tokens[$toInsertBefore]->isComment()) {
+            while ($tokens[$toInsertBefore]->isComment()) {
+                $firstComment   = $toInsertBefore;
+                $toInsertBefore = $tokens->getPrevNonWhitespace($toInsertBefore);
             }
 
-            return $prevNonWhitespace;
+            if ($isNonBracketBlock && ! $this->shouldFixNonBracketBlocks) {
+                return false;
+            }
+
+            return $firstComment;
         }
 
         return false;

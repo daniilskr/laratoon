@@ -152,9 +152,7 @@ $rules = [
     'lambda_not_used_import' => true,
 
     // Custom rules
-    'HorribleFixersUnlimited/blank_line_before_else_blocks' => [
-        'fix_non_bracket_blocks' => false,
-    ],
+    'HorribleFixersUnlimited/blank_line_before_else_blocks' => true,
 ];
 
 

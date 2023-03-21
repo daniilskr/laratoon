@@ -33,7 +33,7 @@ class BlankLineBeforeElseBlocksFixer extends AbstractFixer implements Configurab
      */
     private array $fixTokenMap = [];
 
-    protected bool $shouldFixNonBracketBlocks;
+    protected bool $shouldFixAlternativeSyntaxBlocks;
 
     /**
      * {@inheritdoc}
@@ -42,7 +42,7 @@ class BlankLineBeforeElseBlocksFixer extends AbstractFixer implements Configurab
     {
         parent::configure($configuration);
 
-        $this->shouldFixNonBracketBlocks = $this->configuration['fix_non_bracket_blocks'];
+        $this->shouldFixAlternativeSyntaxBlocks = $this->configuration['fix_alternative_syntax_blocks'];
 
         $this->fixTokenMap = array_values(self::$tokenMap);
     }
@@ -125,7 +125,7 @@ else
     protected function createConfigurationDefinition(): FixerConfigurationResolverInterface
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder('fix_non_bracket_blocks', 'Should insert blank line before else block without brackets.'))
+            (new FixerOptionBuilder('fix_alternative_syntax_blocks', 'Should insert blank line before alternative syntax else block (the one without braces).'))
                 ->setAllowedTypes(['bool'])
                 ->setDefault(false)
                 ->getOption(),
@@ -134,26 +134,25 @@ else
 
     private function indexToInsertBlankLineBefore(Tokens $tokens, int $prevNonWhitespace): int|false
     {
-        $toInsertBefore    = $prevNonWhitespace;
-        $isNonBracketBlock = true;
+        $toInsertBefore           = $prevNonWhitespace;
+        $isAlternativeSyntaxBlock = true;
 
         if (
-            $this->shouldFixNonBracketBlocks
+            $this->shouldFixAlternativeSyntaxBlocks
             && $tokens[$toInsertBefore]->equals(';')
         ) {
             return $tokens->getNextNonWhitespace($toInsertBefore);
         }
 
         if ($tokens[$toInsertBefore]->equals('}')) {
-            $isNonBracketBlock = false;
-            $beforeBlockEnding = $tokens->getPrevNonWhitespace($toInsertBefore);
+            $isAlternativeSyntaxBlock = false;
+            $beforeBlockEnding        = $tokens->getPrevNonWhitespace($toInsertBefore);
 
-            if ($tokens[$beforeBlockEnding]->isComment()) {
-                $toInsertBefore = $beforeBlockEnding;
-
-            } else {
+            if (! $tokens[$beforeBlockEnding]->isComment()) {
                 return $toInsertBefore;
             }
+
+            $toInsertBefore = $beforeBlockEnding;
         }
 
         if ($tokens[$toInsertBefore]->isComment()) {
@@ -162,7 +161,7 @@ else
                 $toInsertBefore = $tokens->getPrevNonWhitespace($toInsertBefore);
             }
 
-            if ($isNonBracketBlock && ! $this->shouldFixNonBracketBlocks) {
+            if ($isAlternativeSyntaxBlock && ! $this->shouldFixAlternativeSyntaxBlocks) {
                 return false;
             }
 

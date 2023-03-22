@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property string $full_name (max length 128)
- *
  * @property Comic[]|Collection $comics
  */
 class Author extends Model

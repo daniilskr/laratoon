@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\CharacterRoleType as RoleType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Enums\CharacterRoleType as RoleType;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**

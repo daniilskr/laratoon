@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Contracts\BelongsToAUser;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use App\Events\LikeCreated;
 use App\Events\LikeDeleted;
+use App\Models\Contracts\BelongsToAUser;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Like extends Model implements BelongsToAUser

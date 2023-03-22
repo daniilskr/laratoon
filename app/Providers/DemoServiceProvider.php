@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Models\Comment;
 use App\Scopes\DoesNotBelongToOtherDemoUsersScope;
 use App\Services\Demo\DemoUsersPool;
 use Exception;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\ServiceProvider;
 
 class DemoServiceProvider extends ServiceProvider
 {

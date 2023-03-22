@@ -2,18 +2,18 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 use App\Events\EpisodeViewedByUser;
 use App\Events\ViewCreated;
 use App\Listeners\CommentableCacheSubscriber;
 use App\Listeners\IncrementViewableViewCachedCount;
 use App\Listeners\LikeableCacheSubscriber;
-use App\Listeners\UpdateLatestViewedEpisodeByUser;
 use App\Listeners\UpdateCachedLatestViewedEpisodeByUser;
+use App\Listeners\UpdateLatestViewedEpisodeByUser;
 use App\Listeners\UserCacheStatsSubscriber;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {

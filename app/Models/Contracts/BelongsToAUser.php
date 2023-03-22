@@ -3,8 +3,8 @@
 namespace App\Models\Contracts;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 interface BelongsToAUser
 {

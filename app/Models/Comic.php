@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * @property string $title (max length 256)
  * @property string $description (max length 512)
- *
  * @property DateTime $publishing_start
  * @property DateTime $publishing_end
  * @property PublicationStatus $publicationStatus

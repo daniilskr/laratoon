@@ -2,19 +2,20 @@
 
 namespace App\Models;
 
+use App\Events\CommentCreated;
+use App\Events\CommentDeleted;
 use App\Models\Contracts\BelongsToAUser;
 use App\Models\Contracts\HasLikeable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Events\CommentCreated;
-use App\Events\CommentDeleted;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property ?Commentable $commentable
  * @property ?Comment $rootComment
  * @property ?Comment $parentComment
+ *
  * @method static Builder whereRoot(int|Comment $viewables)
  */
 class Comment extends Model implements BelongsToAUser, HasLikeable

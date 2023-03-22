@@ -2,9 +2,9 @@
 
 namespace App\Models\Concerns;
 
+use App\Models\Contracts\HasViewable as HasViewableContract;
 use App\Models\Viewable;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use App\Models\Contracts\HasViewable as HasViewableContract;
 
 trait HasViewable
 {

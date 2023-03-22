@@ -3,12 +3,12 @@
 namespace Database\Seeders;
 
 use App\Enums\CharacterRoleType;
-use App\Models\Comic;
 use App\Models\Author;
 use App\Models\Character;
 use App\Models\CharacterRole;
-use App\Models\Episode;
+use App\Models\Comic;
 use App\Models\Comment;
+use App\Models\Episode;
 use App\Models\Like;
 use App\Models\Likeable;
 use App\Models\User;
@@ -18,8 +18,8 @@ use App\Services\Demo\DemoUsersPool;
 use Carbon\Carbon;
 use Database\Factories\ComicTagFactory;
 use Exception;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder

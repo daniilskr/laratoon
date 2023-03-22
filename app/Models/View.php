@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
+use App\Events\ViewCreated;
 use App\Models\Contracts\BelongsToAUser;
 use App\Models\Contracts\HasViewable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Support\Collection;
-use App\Events\ViewCreated;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Collection;
 
 /**
  * @property ?Viewable $viewable
+ *
  * @method static Builder whereViewableIn(int[]|Viewable[]|HasViewable[]|Collection|EloquentCollection $viewables)
  * @method static Builder episodesOfComic(int|Comic $comic)
  */

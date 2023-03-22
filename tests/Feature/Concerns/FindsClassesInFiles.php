@@ -10,7 +10,6 @@ trait FindsClassesInFiles
     /**
      * Extract the class name from the given file path.
      *
-     * @param  \SplFileInfo  $file
      * @return class-string
      */
     protected static function classFromFile(SplFileInfo $file): string

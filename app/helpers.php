@@ -89,6 +89,7 @@ if (! function_exists('whereHasAllUnique')) {
 if (! function_exists('whereKeyInRaw')) {
     /**
      * обертка whereIntegerInRaw(qualified-key-name, $keys).
+     *
      * @param Model[]|int[]|Collection $keys
      */
     function whereKeyInRaw(EloquentBuilder $query, $keys): EloquentBuilder

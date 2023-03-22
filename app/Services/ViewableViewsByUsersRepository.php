@@ -3,9 +3,9 @@
 namespace App\Services;
 
 use App\Exceptions\Services\LazyLoadDisabled;
-use App\Models\Viewable;
 use App\Models\User;
 use App\Models\View;
+use App\Models\Viewable;
 use Illuminate\Support\Collection;
 
 class ViewableViewsByUsersRepository

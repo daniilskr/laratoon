@@ -2,24 +2,24 @@
 
 namespace App\Providers;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\ServiceProvider;
 use App\Models\Author;
 use App\Models\Character;
-use App\Models\Comic;
-use App\Models\ComicPoster;
 use App\Models\CharacterPoster;
-use App\Models\Episode;
-use App\Models\EpisodePoster;
+use App\Models\Comic;
 use App\Models\ComicHeaderBackground;
+use App\Models\ComicPoster;
 use App\Models\Comment;
+use App\Models\Episode;
 use App\Models\EpisodePage;
+use App\Models\EpisodePoster;
 use App\Models\Like;
 use App\Models\UserAvatar;
 use App\Models\View;
 use App\Services\CachedLatestViewedEpisodesRepository;
 use App\Services\ViewableViewsByUsersRepository;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {

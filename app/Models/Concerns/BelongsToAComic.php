@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @method static Builder whereComic(int|Comic $comic)
+ * @method static Builder whereComicIn(int[]|Comic[]|Collection $comic)
+ * @method static Builder whereComicSlug(string $comicSlug)
  */
 trait BelongsToAComic
 {
@@ -31,7 +33,7 @@ trait BelongsToAComic
         return $query->whereIn($this->qualifyColumn('comic_id'), collected($comics)->map(fn (int|Comic $c) => modelKey($c))->all());
     }
 
-    public function scopeWhereComicSlug(Builder $query, string $comicSlug)
+    public function scopeWhereComicSlug(Builder $query, string $comicSlug): Builder
     {
         return $query->whereHas('comic', fn ($q) => $q->whereSlug($comicSlug));
     }

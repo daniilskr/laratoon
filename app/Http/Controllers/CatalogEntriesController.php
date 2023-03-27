@@ -10,7 +10,7 @@ class CatalogEntriesController extends Controller
 {
     public function __invoke(ComicFiltersRequest $request)
     {
-        $comics = Comic::queryWithFilters($request->getFilters())
+        $comics = Comic::queryWithFilters($request->validated())
                         ->orderByDesc('id')
                         ->cursorPaginate(24);
 

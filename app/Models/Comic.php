@@ -138,7 +138,7 @@ class Comic extends Model implements HasCommentable, HasLikeable
     /**
      * Get validator rules for $filter of self::queryWithFilters($filter)
      */
-    public static function getFilterRules(): array
+    public static function getFiltersRules(): array
     {
         return [
             'tags' => 'array', 

@@ -21,7 +21,7 @@ class ComicFiltersRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->castScalarsToArrays(
-            $this->getKeysWithArrayRule(Comic::getFilterRules()),
+            $this->getKeysWithArrayRule($this->rules()),
         );
     }
 
@@ -32,20 +32,6 @@ class ComicFiltersRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Comic::getFilterRules();
-    }
-
-    /**
-     * @param array{
-     *  'tags'?: list<string>,
-     *  'genres'?: list<string>,
-     *  'statuses'?: list<string>,
-     *  'year_from'?: string,
-     *  'year_to'?: string,
-     * } $filters
-     */
-    public function getFilters(): array
-    {
-        return $this->validated();
+        return Comic::getFiltersRules();
     }
 }

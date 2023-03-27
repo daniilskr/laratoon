@@ -16,7 +16,7 @@ class ComicUserListEntryResource extends JsonResource
 
         if ($user = request()->user()) {
             $resource->loadMissing([
-                'comic.cachedLatestViewedEpisodeByUsers' => fn($q) => $q->whereUser($user)
+                'comic.cachedLatestViewedEpisodeByUsers' => fn ($q) => $q->whereUser($user),
             ]);
 
             $resource->loadMissing([

@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CommentResource extends JsonResource
@@ -16,7 +15,7 @@ class CommentResource extends JsonResource
 
         if ($user = request()->user()) {
             $resource->loadMissing([
-                'likeable.likes' => fn ($q) => $q->whereUser($user) 
+                'likeable.likes' => fn ($q) => $q->whereUser($user),
             ]);
         }
 

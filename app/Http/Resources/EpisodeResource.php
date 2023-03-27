@@ -13,7 +13,6 @@ class EpisodeResource extends JsonResource
             'viewable',
         ]);
 
-
         if ($user = request()->user()) {
             $resource->loadMissing([
                 'viewable.views' => fn ($q) => $q->whereUser($user),

@@ -186,8 +186,8 @@ class LikesTest extends TestCase
         $this->actingAs($user = $this->createUser());
         $this->postLike($likeable = $this->createLikeable());
 
-        $this->assertNotNull($likeable->refresh()->getRequestUserLike());
-        $this->assertEquals($user->id, $likeable->refresh()->getRequestUserLike()->user->id);
+        $this->assertNotNull($likeable->refresh()->getUserLike($user));
+        $this->assertEquals($user->id, $likeable->refresh()->getUserLike($user)->user->id);
     }
 
     protected function postLike(?Likeable $likeable = null): TestResponse

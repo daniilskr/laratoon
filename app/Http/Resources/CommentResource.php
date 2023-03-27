@@ -46,7 +46,7 @@ class CommentResource extends JsonResource
             'likeable' => [
                 'id' => $this->likeable->id,
                 'likesCachedCount' => $this->likeable->likes_cached_count,
-                'isLikedByUser' => ! is_null($this->likeable->getRequestUserLike()),
+                'isLikedByUser' => ! is_null($this->likeable->getUserLike(request()->user())),
             ],
 
             'commentable' => [

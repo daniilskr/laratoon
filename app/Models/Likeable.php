@@ -47,9 +47,9 @@ class Likeable extends Model
         return $this->hasMany(Like::class);
     }
 
-    public function getRequestUserLike(): ?Like
+    public function getUserLike(null|int|User $user): ?Like
     {
-        if (! ($user = request()->user())) {
+        if (is_null($user)) {
             return null;
         }
 
@@ -58,6 +58,6 @@ class Likeable extends Model
                     ? $this->likes
                     : $this->likes();
 
-        return $likes->where('user_id', $user->getKey())->first();
+        return $likes->where('user_id', modelKey($user))->first();
     }
 }

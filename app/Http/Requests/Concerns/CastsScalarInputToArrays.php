@@ -14,8 +14,15 @@ trait CastsScalarInputToArrays
         ));
     }
 
-    protected function castScalarsToArrays(array $keys): void
+    /** 
+     * @param list<string> $keys If not provided will use (not nested) keys from $this->rules() that have 'array' rule  
+     */
+    protected function castScalarsToArrays(array $keys = null): void
     {
+        if (is_null($keys)) {
+            $keys = $this->getKeysWithArrayRule($this->rules());
+        }
+
         foreach ($keys as $key) {
             if (is_scalar($val = $this->input($key))) {
                 $this->merge([

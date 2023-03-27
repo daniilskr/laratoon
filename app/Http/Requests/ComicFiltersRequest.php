@@ -20,9 +20,7 @@ class ComicFiltersRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->castScalarsToArrays(
-            $this->getKeysWithArrayRule($this->rules()),
-        );
+        $this->castScalarsToArrays();
     }
 
     /**

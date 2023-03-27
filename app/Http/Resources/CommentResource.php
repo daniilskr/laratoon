@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CommentResource extends JsonResource
@@ -10,8 +11,14 @@ class CommentResource extends JsonResource
     {
         $resource->loadMissing([
             'user.userAvatar.image',
-            'likeable.requestUserLike:id,likeable_id',
+            'likeable',
         ]);
+
+        if ($user = request()->user()) {
+            $resource->loadMissing([
+                'likeable.likes' => fn ($q) => $q->whereUser($user) 
+            ]);
+        }
 
         return parent::collection($resource);
     }
@@ -39,7 +46,7 @@ class CommentResource extends JsonResource
             'likeable' => [
                 'id' => $this->likeable->id,
                 'likesCachedCount' => $this->likeable->likes_cached_count,
-                'isLikedByUser' => ! is_null($this->likeable->requestUserLike),
+                'isLikedByUser' => ! is_null($this->likeable->getRequestUserLike()),
             ],
 
             'commentable' => [

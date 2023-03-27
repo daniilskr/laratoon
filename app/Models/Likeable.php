@@ -47,8 +47,17 @@ class Likeable extends Model
         return $this->hasMany(Like::class);
     }
 
-    public function requestUserLike(): HasOne
+    public function getRequestUserLike(): ?Like
     {
-        return $this->hasOne(Like::class)->where('user_id', request()->user()?->getKey() ?? -1);
+        if (! ($user = request()->user())) {
+            return null;
+        }
+
+        /** @var Collection|HasMany */
+        $likes = $this->relationLoaded('likes')
+                    ? $this->likes
+                    : $this->likes();
+
+        return $likes->where('user_id', $user->getKey())->first();
     }
 }

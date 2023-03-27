@@ -15,8 +15,6 @@ use App\Models\EpisodePoster;
 use App\Models\Like;
 use App\Models\UserAvatar;
 use App\Models\View;
-use App\Services\CachedLatestViewedEpisodesRepository;
-use App\Services\ViewableViewsByUsersRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
@@ -31,8 +29,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerTelescope();
-        $this->registerSingletons();
-        $this->registerScoped();
     }
 
     protected function registerTelescope()
@@ -41,17 +37,6 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
         }
-    }
-
-    protected function registerSingletons()
-    {
-        //
-    }
-
-    protected function registerScoped()
-    {
-        $this->app->scoped(CachedLatestViewedEpisodesRepository::class);
-        $this->app->scoped(ViewableViewsByUsersRepository::class);
     }
 
     /**

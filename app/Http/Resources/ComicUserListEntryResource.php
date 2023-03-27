@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Services\CachedLatestViewedEpisodesRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ComicUserListEntryResource extends JsonResource
@@ -15,10 +14,10 @@ class ComicUserListEntryResource extends JsonResource
             'comic.latestEpisode',
         ]);
 
-        if ($resource->isNotEmpty()) {
-            /** @var CachedLatestViewedEpisodesRepository */
-            $repository = app(CachedLatestViewedEpisodesRepository::class);
-            $repository->loadForUserAndComics($resource->first()->getUserId(), $resource->pluck('comic'));
+        if ($user = request()->user()) {
+            $resource->loadMissing([
+                'comic.cachedLatestViewedEpisodeByUsers' => fn($q) => $q->whereUser($user)
+            ]);
         }
 
         return parent::collection($resource);
@@ -32,13 +31,7 @@ class ComicUserListEntryResource extends JsonResource
      */
     public function toArray($request)
     {
-        /** @var CachedLatestViewedEpisodesRepository */
-        $repository = app(CachedLatestViewedEpisodesRepository::class);
-
-        $cachedLatestViewedEpisode = $repository->getForUserAndComic(
-            $this->getUserId(),
-            $this->comic,
-        );
+        $cachedLatestViewedEpisode = $this->comic->getCachedLatestViewedEpisodeByUser($request->user());
 
         return [
             'id' => $this->id,

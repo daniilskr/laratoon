@@ -4,12 +4,14 @@ namespace App\Models;
 
 use App\Models\Contracts\HasCommentable;
 use App\Models\Contracts\HasLikeable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Arr;
 
 /**
  * @property string $title (max length 256)
@@ -131,5 +133,61 @@ class Comic extends Model implements HasCommentable, HasLikeable
     public function getTotalViews(): int
     {
         return self::getTotalViewsForComic($this);
+    }
+
+    /**
+     * Get validator rules for $filter of self::queryWithFilters($filter)
+     */
+    public static function getFilterRules(): array
+    {
+        return [
+            'tags' => 'array', 
+            'tags.*' => 'alpha_dash:ascii', 
+
+            'genres' => 'array', 
+            'genres.*' => 'alpha_dash:ascii', 
+
+            'statuses' => 'array', 
+            'statuses.*' => 'alpha_dash:ascii',
+
+            'year_from' => 'integer',
+            'year_to' => 'integer',
+        ];
+    }
+
+    /**
+     * @param array{
+     *  'tags'?: list<string>,
+     *  'genres'?: list<string>,
+     *  'statuses'?: list<string>,
+     *  'year_from'?: string,
+     *  'year_to'?: string,
+     * } $filters
+     */
+    public static function queryWithFilters(array $filters): Builder
+    {
+        $query = self::query();
+
+        if (array_key_exists('tags', $filters)) {
+            whereHasAllUnique($query, 'comicTags', 'slug', collect($filters['tags']));
+        }
+
+        if (array_key_exists('genres', $filters)) {
+            whereHasAllUnique($query, 'genres', 'slug', collect($filters['genres']));
+        }
+
+        if (array_key_exists('statuses', $filters)) {
+            whereHasIn($query, 'publicationStatus', 'slug', collect($filters['statuses']));
+        }
+
+        if (array_key_exists('year_from', $filters)) {
+            $query->whereYear('publishing_start', '>=', (string) $filters['year_from']);
+        }
+
+        if (array_key_exists('year_to', $filters)) {
+            $query->whereYear('publishing_end', '<=', (string) $filters['year_to']);
+        }
+
+        return $query;
     }
 }

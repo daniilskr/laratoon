@@ -10,7 +10,7 @@ class EpisodeMainInfoController extends Controller
     public function __invoke(string $comicSlug, int $episodeNumber)
     {
         /** @var Episode */
-        $episode = Episode::whereHas('comic', fn ($q) => $q->whereSlug($comicSlug))
+        $episode = Episode::whereComicSlug($comicSlug)
                             ->whereNumber($episodeNumber)
                             ->firstOrFail();
 

@@ -30,4 +30,9 @@ trait BelongsToAComic
     {
         return $query->whereIn($this->qualifyColumn('comic_id'), collected($comics)->map(fn (int|Comic $c) => modelKey($c))->all());
     }
+
+    public function scopeWhereComicSlug(Builder $query, string $comicSlug)
+    {
+        return $query->whereHas('comic', fn ($q) => $q->whereSlug($comicSlug));
+    }
 }

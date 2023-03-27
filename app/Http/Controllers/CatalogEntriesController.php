@@ -10,9 +10,8 @@ class CatalogEntriesController extends Controller
 {
     public function __invoke(ComicFiltersRequest $request)
     {
-        $query = Comic::queryWithFilters($request->getFilters());
-
-        $comics = $query->orderByDesc('id')
+        $comics = Comic::queryWithFilters($request->getFilters())
+                        ->orderByDesc('id')
                         ->cursorPaginate(24);
 
         return ComicCardResource::collection($comics);

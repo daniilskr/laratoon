@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Contracts\HasCommentable;
 use App\Models\Contracts\HasLikeable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -76,9 +77,18 @@ class Comic extends Model implements HasCommentable, HasLikeable
         return $this->hasMany(CachedLatestViewedEpisodeByUser::class);
     }
 
-    public function getCachedLatestViewedEpisodeByRequestUser(): ?CachedLatestViewedEpisodeByUser
+    public function getCachedLatestViewedEpisodeByUser(null|int|User $user): ?CachedLatestViewedEpisodeByUser
     {
-        return $this->cachedLatestViewedEpisodeByUsers()->whereUser(request()->user() ?? -1)->first();
+        if (is_null($user)) {
+            return null;
+        }
+
+        /** @var Collection|HasMany */
+        $views = $this->relationLoaded('cachedLatestViewedEpisodeByUsers')
+                    ? $this->cachedLatestViewedEpisodeByUsers
+                    : $this->cachedLatestViewedEpisodeByUsers();
+
+        return $views->where('user_id', modelKey($user))->first();
     }
 
     public function latestEpisode(): HasOne
@@ -97,7 +107,7 @@ class Comic extends Model implements HasCommentable, HasLikeable
     }
 
     /**
-     * Is using complex queries, use $this->getCachedLatestViewedEpisodeByRequestUser() instead.
+     * Is using complex queries, use $this->getCachedLatestViewedEpisodeByUser() instead.
      */
     public static function getLatestViewedEpisodeByUserForComic(int|User $user, int|self $comic): ?int
     {
@@ -108,7 +118,7 @@ class Comic extends Model implements HasCommentable, HasLikeable
     }
 
     /**
-     * Is using complex queries, use $this->getCachedLatestViewedEpisodeByRequestUser() instead.
+     * Is using complex queries, use $this->getCachedLatestViewedEpisodeByUser() instead.
      */
     public function getLatestViewedEpisodeByUser(int|User $user): ?int
     {

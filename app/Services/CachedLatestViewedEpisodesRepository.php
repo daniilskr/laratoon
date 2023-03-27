@@ -8,6 +8,14 @@ use App\Models\Comic;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
+/**
+ * 
+ * T O D O
+ * 
+ * Replace repositories with constrained relationships loading
+ * 
+ * 
+ */
 class CachedLatestViewedEpisodesRepository
 {
     /**

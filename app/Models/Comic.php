@@ -28,7 +28,8 @@ class Comic extends Model implements HasCommentable, HasLikeable
     use HasFactory,
         Concerns\HasCommentable,
         Concerns\HasLikeable,
-        Concerns\HasSlugColumn;
+        Concerns\HasSlugColumn,
+        Concerns\LoadsConstrainedRelationships;
 
     protected $casts = [
         'publishing_start' => 'datetime',
@@ -79,16 +80,7 @@ class Comic extends Model implements HasCommentable, HasLikeable
 
     public function getCachedLatestViewedEpisodeByUser(null|int|User $user): ?CachedLatestViewedEpisodeByUser
     {
-        if (is_null($user)) {
-            return null;
-        }
-
-        /** @var Collection|HasMany */
-        $views = $this->relationLoaded('cachedLatestViewedEpisodeByUsers')
-                    ? $this->cachedLatestViewedEpisodeByUsers
-                    : $this->cachedLatestViewedEpisodeByUsers();
-
-        return $views->where('user_id', modelKey($user))->first();
+        return $this->getModelForUserFromRelation($user, 'cachedLatestViewedEpisodeByUsers');
     }
 
     public function latestEpisode(): HasOne

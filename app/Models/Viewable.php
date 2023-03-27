@@ -17,7 +17,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Viewable extends Model
 {
     use HasFactory,
-        Concerns\BelongsToMorphOwner;
+        Concerns\BelongsToMorphOwner,
+        Concerns\LoadsConstrainedRelationships;
 
     protected $attributes = [
         'views_cached_count' => 0,
@@ -38,16 +39,7 @@ class Viewable extends Model
 
     public function getUserView(null|int|User $user): ?View
     {
-        if (is_null($user)) {
-            return null;
-        }
-
-        /** @var Collection|HasMany */
-        $views = $this->relationLoaded('views')
-                    ? $this->views
-                    : $this->views();
-
-        return $views->where('user_id', modelKey($user))->first();
+        return $this->getModelForUserFromRelation($user, 'views');
     }
 
     public function scopeWhereEpisodeIn(Builder $query, $episodes): Builder

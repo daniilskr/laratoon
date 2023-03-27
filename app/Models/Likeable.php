@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Likeable extends Model
 {
     use HasFactory,
-        Concerns\BelongsToMorphOwner;
+        Concerns\BelongsToMorphOwner,
+        Concerns\LoadsConstrainedRelationships;
 
     protected $attributes = [
         'likes_cached_count' => 0,
@@ -49,15 +50,6 @@ class Likeable extends Model
 
     public function getUserLike(null|int|User $user): ?Like
     {
-        if (is_null($user)) {
-            return null;
-        }
-
-        /** @var Collection|HasMany */
-        $likes = $this->relationLoaded('likes')
-                    ? $this->likes
-                    : $this->likes();
-
-        return $likes->where('user_id', modelKey($user))->first();
+        return $this->getModelForUserFromRelation($user, 'likes');
     }
 }

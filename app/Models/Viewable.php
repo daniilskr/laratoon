@@ -36,6 +36,20 @@ class Viewable extends Model
         return $view;
     }
 
+    public function getUserView(null|int|User $user): ?View
+    {
+        if (is_null($user)) {
+            return null;
+        }
+
+        /** @var Collection|HasMany */
+        $views = $this->relationLoaded('views')
+                    ? $this->views
+                    : $this->views();
+
+        return $views->where('user_id', modelKey($user))->first();
+    }
+
     public function scopeWhereEpisodeIn(Builder $query, $episodes): Builder
     {
         return $query->whereHasMorph('owner', Episode::class, fn ($qE) => whereKeyInRaw($qE, $episodes));

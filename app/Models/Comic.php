@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Arr;
 
 /**
  * @property string $title (max length 256)
@@ -141,13 +140,13 @@ class Comic extends Model implements HasCommentable, HasLikeable
     public static function getFiltersRules(): array
     {
         return [
-            'tags' => 'array', 
-            'tags.*' => 'alpha_dash:ascii', 
+            'tags' => 'array',
+            'tags.*' => 'alpha_dash:ascii',
 
-            'genres' => 'array', 
-            'genres.*' => 'alpha_dash:ascii', 
+            'genres' => 'array',
+            'genres.*' => 'alpha_dash:ascii',
 
-            'statuses' => 'array', 
+            'statuses' => 'array',
             'statuses.*' => 'alpha_dash:ascii',
 
             'year_from' => 'integer',

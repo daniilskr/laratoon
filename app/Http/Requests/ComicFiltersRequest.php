@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Models\Comic;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Arr;
 
 class ComicFiltersRequest extends FormRequest
 {

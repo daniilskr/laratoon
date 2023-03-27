@@ -14,8 +14,8 @@ trait CastsScalarInputToArrays
         ));
     }
 
-    /** 
-     * @param list<string> $keys If not provided will use (not nested) keys from $this->rules() that have 'array' rule  
+    /**
+     * @param list<string> $keys If not provided will use (not nested) keys from $this->rules() that have 'array' rule
      */
     protected function castScalarsToArrays(array $keys = null): void
     {

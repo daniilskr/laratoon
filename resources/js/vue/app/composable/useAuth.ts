@@ -20,7 +20,15 @@ export const useAuth = function () {
     currentUser.value = parseCurrentUser(user);
   };
 
-  const fetchCurrentUser = async function () {
+  const fetchCurrentUser = async function () {   
+    // Get Server side pre-fetched user data
+    if (! currentUser.value) {
+      /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+      currentUser.value = JSON.parse((window as any)?.userDataJson) || null;
+
+      if (currentUser.value) return;
+    }
+
     try {
       const response = await axios.get(`${BACKEND_URL}/api/current-user`);
       setCurrentUser(response.data.data);

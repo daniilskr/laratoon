@@ -8,6 +8,9 @@
     @vite(['resources/js/vue/app/main.ts'])
   </head>
     <body>
+        <script>
+          window.userDataJson = {{ Illuminate\Support\Js::from($userDataJson) }};
+        </script>
         <div id="app"></div>
     </body>
 </html>

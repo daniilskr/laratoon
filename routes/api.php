@@ -56,6 +56,5 @@ Route::middleware('auth')->group(function () {
 
     Route::apiResource('commentables.comments', CommentsController::class)->shallow()->only(['store']);
     Route::apiResource('comments.replies', CommentRepliesController::class)->only('store');
-    Route::post('likeables/{likeable}/like', [LikesController::class, 'store'])->name('likeables.like.store');
-    Route::delete('likeables/{likeable}/like', [LikesController::class, 'destroy'])->name('likeables.like.destroy');
+    Route::apiSingleton('likeables.like', LikesController::class)->only(['store', 'destory'])->creatable();
 });

@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Comic;
+use App\Queries\ComicsByCatalogFiltersQuery;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ComicFiltersRequest extends FormRequest
+class ComicsByCatalogFiltersRequest extends FormRequest
 {
     use Concerns\CastsScalarInputToArrays;
 
@@ -29,6 +29,6 @@ class ComicFiltersRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Comic::getFiltersRules();
+        return ComicsByCatalogFiltersQuery::getRules();
     }
 }

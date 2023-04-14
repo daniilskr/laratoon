@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ComicFiltersRequest;
+use App\Http\Requests\ComicsByCatalogFiltersRequest;
 use App\Http\Resources\ComicCardResource;
-use App\Models\Comic;
+use App\Queries\ComicsByCatalogFiltersQuery;
 
 class CatalogEntriesController extends Controller
 {
-    public function __invoke(ComicFiltersRequest $request)
+    public function __invoke(ComicsByCatalogFiltersRequest $request)
     {
-        $comics = Comic::queryWithFilters($request->validated())
+        $comics = ComicsByCatalogFiltersQuery::newQuery($request->validated())
                         ->orderByDesc('id')
                         ->cursorPaginate(24);
 

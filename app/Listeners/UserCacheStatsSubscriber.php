@@ -35,11 +35,11 @@ class UserCacheStatsSubscriber
     {
         $owner           = $event->like->likeable->owner;
         $isComment       = Comment::class === $owner::class;
-        $isByTheSameUser = ($comment = $owner)->getUserId() === $event->like->getUserId();
+        $isByTheSameUser = fn () => $owner->getUserId() === $event->like->getUserId();
 
-        if ($isComment && ! $isByTheSameUser) {
-            $action = $this->getActionForEvent($event);
-
+        if ($isComment && ! $isByTheSameUser()) {
+            $comment = $owner;
+            $action  = $this->getActionForEvent($event);
             $comment->user->$action('stars_cached_count');
         }
     }

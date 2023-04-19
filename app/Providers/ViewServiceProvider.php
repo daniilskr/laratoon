@@ -1,16 +1,13 @@
 <?php
- 
+
 namespace App\Providers;
 
 use App\Http\Resources\CurrentUserResource;
-use App\View\Composers\ProfileComposer;
 use App\View\Composers\VueAppComposer;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\View as ViewFacade;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
- 
+
 class ViewServiceProvider extends ServiceProvider
 {
     /**
@@ -20,7 +17,7 @@ class ViewServiceProvider extends ServiceProvider
     {
         // ...
     }
- 
+
     /**
      * Bootstrap any application services.
      */

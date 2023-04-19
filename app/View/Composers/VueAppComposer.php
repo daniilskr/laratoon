@@ -1,9 +1,9 @@
 <?php
- 
+
 namespace App\View\Composers;
- 
+
 use Illuminate\View\View;
- 
+
 class VueAppComposer
 {
     /**
@@ -11,8 +11,9 @@ class VueAppComposer
      */
     public function __construct(
         protected null|string $userDataJson,
-    ) {}
- 
+    ) {
+    }
+
     /**
      * Bind data to the view.
      */

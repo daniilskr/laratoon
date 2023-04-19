@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Api\Controllers;
 
-use App\Models\Comic;
 use App\Models\ComicTag;
 use App\Models\Genre;
 use App\Models\PublicationStatus;
@@ -10,7 +9,6 @@ use Database\Factories\ComicTagFactory;
 use Database\Factories\GenreFactory;
 use Database\Factories\PublicationStatusFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
